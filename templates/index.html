@@ -3,6 +3,19 @@
 {% block content %}
 
     {% include 'parts/navbar.html' %}
-    {% include 'parts/testimonial.html' %}
+    {% include 'parts/popup.html' %}
 
 {% endblock content %}
+
+
+{% block main %}
+    {% include 'parts/home.html' %}
+    {% include 'parts/about.html' %}
+    {% include 'parts/stats.html' %}
+    {% include 'parts/service.html' %}
+    {% include 'parts/theme.html' %}
+{% endblock main %}
+
+{% block footer %}
+    {% include 'parts/footer.html' %}
+{% endblock footer %}
