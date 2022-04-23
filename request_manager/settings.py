@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'home',
     'account',
+    'import_export',
 ]
 
 MIDDLEWARE = [
@@ -139,3 +140,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 AUTH_USER_MODEL = 'account.User'
+
+IMPORT_EXPORT_USE_TRANSACTIONS = True
+
+IMPORT_EXPORT_IMPORT_PERMISSION_CODE = 'delete' 
+IMPORT_EXPORT_EXPORT_PERMISSION_CODE = 'delete'

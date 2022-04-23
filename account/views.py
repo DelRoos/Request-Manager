@@ -3,6 +3,8 @@ from .forms import SignUpForm, LoginForm
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from .models import User
+from .resources import UserResource
+from tablib import Dataset
 
 
 
@@ -107,3 +109,18 @@ def user_login(request):
 
     context = {}
     return render(request, 'index.html', context)
+
+
+def simple_upload(request):
+    if request.method == 'POST':
+        user_resource = UserResource()
+        dataset = Dataset()
+        new_persons = request.FILES['myfile']
+
+        imported_data = dataset.load(new_persons.read())
+        result = user_resource.import_data(dataset, dry_run=True)  # Test the data import
+
+        if not result.has_errors():
+            user_resource.import_data(dataset, dry_run=False)  # Actually import now
+
+    return render(request, 'accoiunt/simple_upload.html')
