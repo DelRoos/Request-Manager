@@ -10,6 +10,11 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.hashers import make_password, check_password
 
+from django.contrib import messages
+from django.template.loader import render_to_string
+from django.core.mail import EmailMessage
+from django.conf import settings
+
 
 
 class CsvImportForm(forms.Form):
@@ -55,6 +60,21 @@ class UserAdmin(admin.ModelAdmin):
                     last_name = fields[3],
                     email = fields[-1],
                     )
+
+                print(f"{fields[-1]}")
+
+                html_template = 'register_email.html'
+                html_message = render_to_string(html_template)
+                subject = 'Welcome to Request-Manager'
+                email_from = settings.EMAIL_HOST_USER
+                recipient_list = [f"{fields[-1]}".replace("\r", "")]
+                message = EmailMessage(subject, html_message,
+                                    email_from, recipient_list)
+                message.content_subtype = 'html'
+                message.send()
+
+
+
             url = reverse('admin:index')
             return HttpResponseRedirect(url)
 

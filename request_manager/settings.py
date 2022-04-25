@@ -145,3 +145,10 @@ IMPORT_EXPORT_USE_TRANSACTIONS = True
 
 IMPORT_EXPORT_IMPORT_PERMISSION_CODE = 'delete' 
 IMPORT_EXPORT_EXPORT_PERMISSION_CODE = 'delete'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'ngounouloic675@gmail.com'
+EMAIL_HOST_PASSWORD = 'P@yloads500'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
