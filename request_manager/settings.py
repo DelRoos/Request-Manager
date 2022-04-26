@@ -28,7 +28,7 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, "templates")
 SECRET_KEY = 'django-insecure-1zv9a+buoz+#$k5(h72rd%2py$etbv=!z7n15%z67jh^&yr=b_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -42,7 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'widget_tweaks',
     'home',
+    'account',
+    'import_export',
 ]
 
 MIDDLEWARE = [
@@ -60,7 +63,7 @@ ROOT_URLCONF = 'request_manager.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATE_DIR],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -109,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'fr'
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'UTC'
 
@@ -132,3 +135,20 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+AUTH_USER_MODEL = 'account.User'
+
+IMPORT_EXPORT_USE_TRANSACTIONS = True
+
+IMPORT_EXPORT_IMPORT_PERMISSION_CODE = 'delete' 
+IMPORT_EXPORT_EXPORT_PERMISSION_CODE = 'delete'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'ngounouloic853@gmail.com'
+EMAIL_HOST_PASSWORD = 'ngounouloic@500'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

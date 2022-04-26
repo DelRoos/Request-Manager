@@ -1,0 +1,54 @@
+{% load widget_tweaks %}
+{% load static %}
+
+
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    {% comment %} <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <title>Multiple user login</title> {% endcomment %}
+  </head>
+  <body>
+<!-- quote form start here -->
+<section class="quote-form" style="background-image: url({% static 'images/img02.jpg' %});" data-scroll-index="1">
+	<h2 class="form-heading text-center text-uppercase">Se connecter</h2>
+	<span class="form-title text-center">Vos compte sont cree directement par le responsavle de votre filiere. Si vous ne posseder pas un veiller le contacter.</span>
+	{% comment %} <span class="mb-0 text-muted">
+		{% if msg %}
+			{{ msg | safe }}
+		{% else %}
+			Login page
+		{% endif %}
+	</span> {% endcomment %}
+	{% comment %} <form id="contactForm" data-toggle="validator" method="POST"> {% endcomment %}
+	<form action="{% url 'account:user_login' %}" method="POST">
+		{% csrf_token %}
+		<fieldset>
+			<div class="form-group first">
+				<input type="email" name="email" id="name" placeholder="Votre adresse email" class="form-control" required data-error="NEW ERROR MESSAGE">
+			</div>
+			<div class="form-group last mb-4">
+				<input type="password" name="password" id="password" placeholder="Votre mot de passe" class="form-control" required data-error="NEW ERROR MESSAGE">
+			</div>
+			<div id="msgSubmit" class="form-message hidden"></div>
+			<span class="info"><i class="fa fa-info-circle main-color" aria-hidden="true"></i>Mot de passe oublie? <a style="cursor: pointer">reinitialiser</a></span>
+			<button class="btn btn-default main-bg-color" type="submit" id="form-submit">Connexion</button>
+		</fieldset>
+	</form>
+</section>
+<!-- quote form end here -->
+</body>
+</html>
