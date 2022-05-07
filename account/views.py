@@ -90,7 +90,7 @@ def user_login(request):
 
         if userSch == None:
             messages.error(request, 'Utilisateur non trouvé !')
-            return render(request, 'login.html')
+            return render(request, 'index.html')
         else:
             username = userSch.username
             user = authenticate(
@@ -100,7 +100,7 @@ def user_login(request):
             return redirect('jury')
         elif user is not None and user.is_teacher:
             login(request, user)
-            return redirect('teacher')
+            return redirect('account:teacher')
         elif user is not None and user.is_student:
             login(request, user)
             return redirect('account:student')

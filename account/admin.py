@@ -58,6 +58,10 @@ class UserAdmin(admin.ModelAdmin):
                     username = fields[1],
                     first_name = fields[2],
                     last_name = fields[3],
+                    phone = fields[4],
+                    matricule = fields[5],
+                    filiere = fields[6],
+                    niveau = fields[7],
                     email = fields[-1],
                     )
 
