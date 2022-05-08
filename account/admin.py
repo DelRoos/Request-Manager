@@ -58,13 +58,17 @@ class UserAdmin(admin.ModelAdmin):
                     username = fields[1],
                     first_name = fields[2],
                     last_name = fields[3],
+                    phone = fields[4],
+                    matricule = fields[5],
+                    filiere = fields[6],
+                    niveau = fields[7],
                     email = fields[-1],
                     )
 
                 print(f"{fields[-1]}")
 
                 html_template = 'register_email.html'
-                html_message = render_to_string(html_template)
+                html_message = render_to_string(html_template, {"username": fields[1], "password": fields[0]})
                 subject = 'Welcome to Request-Manager'
                 email_from = settings.EMAIL_HOST_USER
                 recipient_list = [f"{fields[-1]}".replace("\r", "")]
