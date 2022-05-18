@@ -190,7 +190,7 @@
                 <p>A</P>
                 <select title="options" onChange="update()" name = "teacher" id = "id_teacher" style="width: 350px; height:35px; font-size: 18px">
                     {% for teachers in teacher %}
-                    <option value = "{{ teachers }}"> {{ teachers }} --- {{ teachers.email }} </option>
+                    <option id="options" value = "{{ teachers.id }}"> {{ teachers }} --- {{ teachers.email }} </option>
                     {% endfor %}
                 </select>
             </div>
@@ -220,7 +220,7 @@
         <SECTION>
             <DIV id="dropzone">
                 <FORM class="dropzone needsclick" id="demo-upload" action="/upload">
-                    <DIV class="dz-message needsclick">    
+                    <DIV id="files" class="dz-message needsclick">    
                         Drop files here or click to upload.<BR>
                         {% comment %} <SPAN class="note needsclick">(This is just a demo dropzone. Selected 
                         files are <STRONG>not</STRONG> actually uploaded.)</SPAN> {% endcomment %}
@@ -279,12 +279,13 @@
             </div>
         </div>
         <br>
-        <button class="" data-toggle="modal" data-target="#success_tic" id="fetch-call" style="width:200px; height:50px; margin-bottom:50px; font-size:19px; color:grey; font-weight: 700; border: 2px solid grey; background-color: #FFFFFF;" type="submit">Enregistrer</button>
+        {% comment %} <button class="" data-toggle="modal" data-target="#success_tic" id="fetch-call" style="width:200px; height:50px; margin-bottom:50px; font-size:19px; color:grey; font-weight: 700; border: 2px solid grey; background-color: #FFFFFF;" type="submit">Enregistrer</button> {% endcomment %}
+        <button id="fetch-call" style="width:200px; height:50px; margin-bottom:50px; font-size:19px; color:grey; font-weight: 700; border: 2px solid grey; background-color: #FFFFFF;" type="submit">Enregistrer</button>
         <br>
 
         
         <!-- Modal -->
-        <div id="success_tic" class="modal fade" role="dialog">
+        {% comment %} <div id="success_tic" class="modal fade" role="dialog">
             <div class="modal-dialog">
         
             <!-- Modal content-->
@@ -305,16 +306,14 @@
         </div>
             </div>
         
-            </div>
+            </div> {% endcomment %}
         <br>
-        <h4>NOTIFICATION AU RESPONSABLE</h4>
-        {% comment %} <br>
-        <label style="font-size: 20px">Email: </label> {% endcomment %}
+        {% comment %} <h4>NOTIFICATION AU RESPONSABLE</h4>
         <form action="{% url 'request:notification' %}" method="POST">
             {% csrf_token %}
             <input id="Teacher-Email" name="email" type="email" style="width: 40%; height: 40px; font-size: 18px; border: 1px solid grey"><br><br>
             <button id="fetch-call" style="width:200px; height:50px; margin-bottom:50px; font-size:19px; color:grey; font-weight: 700; border: 2px solid grey; background-color: #FFFFFF;" type="submit">Notifier</button>
-        </form>
+        </form> {% endcomment %}
 
     </body>
 
@@ -416,6 +415,24 @@
 
 
 <script>
+    function getCookie(name) {
+        let cookieValue = null;
+
+        if(document.cookie && document.cookie != "") {
+            const cookies = document.cookie.split(";");
+            
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+
+                if (cookie.substring(0, name.length+1) === name+"=") {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length+1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
     document.querySelector("#fetch-call").addEventListener("click", event => {
         event.preventDefault();
     
@@ -425,17 +442,25 @@
         form.append("note1", document.querySelector("#note1").innerText);
         form.append("note2", document.querySelector("#note2").innerText);
         form.append("commentaire", document.querySelector("#comment").value);
+        form.append("responsable", document.querySelector("#id_teacher").value);
+        form.append("file", document.querySelector("#files").file);
     
         //let csrfTokenValue = document.querySelector('[name=csrfmiddlewaretoken]').value;
         let request = new Request("{% url 'request:operation_requete' %}", {method: 'POST',
                                                         body: form,
-                                                        //headers: {"X-CSRFToken": csrfTokenValue}
+                                                        headers: {"X-CSRFToken": getCookie("csrftoken")}
                                                         })
         fetch(request)
-            .then(response => response.json())
-            .then(result => {
-                let resultParagraph = document.querySelector("#operation");
-                resultParagraph.innerHTML = result["operation_result"];
+            .then(response => 
+                response.json()
+            
+            )
+            .then(data => {
+               //console.log(request)
+                window.location.href ="http://127.0.0.1:8000/preview/"+data["id"]
+                console.log(data);
+                //let resultParagraph = document.querySelector("#operation");
+                //resultParagraph.innerHTML = result["operation_result"];
             })
     })
 </script>

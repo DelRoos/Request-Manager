@@ -1,11 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404
 from account.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import datetime
-from  . import models
 from django.conf import settings
 from django.core.mail import send_mail
+from django import forms
+from .models import Template
 
 # Create your views here.
 
@@ -32,12 +34,18 @@ def operation_requete(request):
     b = request.POST.get("note1")
     c = request.POST.get("note2")
     d = request.POST.get("commentaire")
+    e = request.POST.get("responsable")
+    teacher = User.objects.filter(pk=int(e))[0]
+    print(teacher)
+    f = request.POST.get("file")
 
-    template = models.Template.objects.create(
+    template = Template.objects.create(
         examen = a, 
         note1 = b,
         note2 = c,
-        commentaire = d
+        commentaire = d,
+        responsable = teacher,
+        file = f
     )
     # account_sid = 'AC25fffecc0550d63d0eb20cd5793236b3'
     # auth_token = '4d01a37db834e77914780908a65492dc'
@@ -57,14 +65,71 @@ def operation_requete(request):
     #     message = 'Une requête est en attente'
     #     email = select_option.email
     #     send_mail(subject, message, settings.EMAIL_HOST_USER, [email], fail_silently=False)
-
-    return JsonResponse({"operation_result": f"{template.examen} - {template.note1} - {template.note2} - {template.commentaire}"})
+    # return redirect(f'request/preview/{template.id}')
+    return JsonResponse({"id":f"{template.id}","operation_result": f"{template.examen} - {template.note1} - {template.note2} - {template.commentaire} -"})
 
 
 def notification(request):
-    if request.method == 'POST':
-        subject = 'Notification'
-        message = 'Une requête est en attente \n lien de la plateforme: http://delroos.pythonanywhere.com/'
-        email = request.POST.get('email')
-        send_mail(subject, message, settings.EMAIL_HOST_USER, [email], fail_silently=False)
-        return render(request, 'request/email_sent.html', {'email':email})
+    # if request.method == 'POST':
+    #     subject = 'Notification'
+    #     message = 'Une requête est en attente \n lien de la plateforme: http://delroos.pythonanywhere.com/'
+    #     email = request.POST.get('email')
+    #     send_mail(subject, message, settings.EMAIL_HOST_USER, [email], fail_silently=False)
+    #     return render(request, 'request/email_sent.html', {'email':email})
+    subject = 'Notification'
+    message = 'Une requête est en attente \n lien de la plateforme: http://delroos.pythonanywhere.com/'
+    email = request.POST.get('user.email')
+    send_mail(subject, message, settings.EMAIL_HOST_USER, [email], fail_silently=False)
+    return render(request, 'request/email_sent.html', {'email':email})
+
+
+def preview(request, id):
+    template = get_object_or_404(Template, pk = id)
+    examen = template.examen,
+    note1 = template.note1,
+    note2 = template.note2,
+    commentaire = template.commentaire,
+    responsable = template.responsable,
+    print(responsable)
+    file = template.file
+
+    currentdate = datetime.date.today()
+    return render(request, "request/preview.html", {
+        'first_name': request.user.first_name,
+        'last_name': request.user.last_name,
+        'matricule': request.user.matricule,
+        'email': request.user.email,
+        'niveau': request.user.niveau,
+        'filiere': request.user.filiere,
+        'telephone': request.user.phone,
+        'examen':examen, 
+        'note1':note1, 
+        'note2':note2, 
+        'commentaire':commentaire,
+        'responsable':responsable,
+        'file':file,
+        'current_date':currentdate
+    })
+
+
+def delete_template(request, template_id):
+    template = Template.objects.get(pk=template_id)
+    template.delete()
+    messages.info(request, 'Template successfully delete')
+    return redirect('index')
+
+
+def edit(request):
+    currentdate = datetime.date.today()
+    teacher = User.objects.filter(is_teacher=True)
+    return render(request, 'request/note-request.html', context={
+        'first_name': request.user.first_name,
+        'last_name': request.user.last_name,
+        'matricule': request.user.matricule,
+        'email': request.user.email,
+        'niveau': request.user.niveau,
+        'filiere': request.user.filiere,
+        'telephone': request.user.phone,
+        'current_date':currentdate,
+        'teacher':teacher
+    })
