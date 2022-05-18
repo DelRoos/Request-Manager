@@ -58,7 +58,7 @@
                 <button onclick="location.href='{% url 'request:preview' %}'" style="width:180px; height:50px; margin-bottom:50px; font-size:19px; color:#fff; font-weight: 700; border:none; background-color: #55761a; cursor: pointer" type="submit">Soumettre</button> {% endcomment %}
             {% comment %} </form> {% endcomment %}
             {% comment %} <a href="{% url 'request:delete-template' 20 %}">delete</a> {% endcomment %}
-            <a href="{% url 'request:edit' %}">Edit</a>
+            <a href="{% url 'request:edit' %}?req={{template.id}}">Edit</a>
             <a href="{% url 'request:notification' %}">Soumettre</a>
         </div>
         <br>

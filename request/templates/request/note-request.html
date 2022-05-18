@@ -168,13 +168,13 @@
     <div style="margin-left: 100px; margin-right: 100px; margin-top: 100px; font-size: 18px">
         <div style="display: flex; justify-content: space-between">
             <div>
-                <p>Nom: {{ last_name }}</p>
-                <p>Prenom: {{ first_name }}</p>
-                <p>Matricule: {{ matricule }}</p>
-                <p>Email: {{ email }}</p>
-                <p>Niveau: {{ niveau }}</p>
-                <p>Filiere: {{ filiere }}</p>
-                <p>Telephone: {{ telephone }}</p>
+                <p>Nom: {{ student.last_name }}</p>
+                <p>Prenom: {{ student.first_name }}</p>
+                <p>Matricule: {{ student.matricule }}</p>
+                <p>Email: {{ student.email }}</p>
+                <p>Niveau: {{ student.niveau }}</p>
+                <p>Filiere: {{ student.filiere }}</p>
+                <p>Telephone: {{ student.telephone }}</p>
             </div>
             <div>
                 {% language 'fr' %}
@@ -437,6 +437,13 @@
         event.preventDefault();
     
         let form = new FormData();
+        let current_uri = new URL(document.URL);
+        let request_uri = "{% url 'request:operation_requete' %}";
+        let req_id = current_uri.searchParams.get("req");
+
+        
+
+        console.log(request_uri)
         
         form.append("examen", document.querySelector("#examen").innerText);
         form.append("note1", document.querySelector("#note1").innerText);
@@ -446,10 +453,14 @@
         form.append("file", document.querySelector("#files").file);
     
         //let csrfTokenValue = document.querySelector('[name=csrfmiddlewaretoken]').value;
-        let request = new Request("{% url 'request:operation_requete' %}", {method: 'POST',
+        let request = new Request(
+            req_id == null ?request_uri : request_uri+"?req=6", {method: 'POST',
                                                         body: form,
                                                         headers: {"X-CSRFToken": getCookie("csrftoken")}
                                                         })
+     
+       
+
         fetch(request)
             .then(response => 
                 response.json()
@@ -457,7 +468,7 @@
             )
             .then(data => {
                //console.log(request)
-                window.location.href ="http://127.0.0.1:8000/preview/"+data["id"]
+                window.location.href = current_uri.origin+"/preview/"+data["id"]
                 console.log(data);
                 //let resultParagraph = document.querySelector("#operation");
                 //resultParagraph.innerHTML = result["operation_result"];

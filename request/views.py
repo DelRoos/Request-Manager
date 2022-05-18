@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, Http404
 from account.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
@@ -15,17 +15,26 @@ def NoteRequest(request):
     print(request.user)
     currentdate = datetime.date.today()
     teacher = User.objects.filter(is_teacher=True)
-    return render(request,'request/note-request.html', context={
-        'first_name': request.user.first_name,
-        'last_name': request.user.last_name,
-        'matricule': request.user.matricule,
-        'email': request.user.email,
-        'niveau': request.user.niveau,
-        'filiere': request.user.filiere,
-        'telephone': request.user.phone,
-        'current_date':currentdate,
-        'teacher':teacher
-    })
+    if request.GET == {}:
+        return render(request,'request/note-request.html', context={
+                "student": request.user,
+            'current_date':currentdate,
+            'teacher':teacher
+        })
+    else:
+        # try except logic
+        try:
+            req = request.GET.get("req")
+            queryset = Template.objects.get(student=request.user, pk=req)
+            return render(request,'request/note-request.html', context={
+                "student": request.user,
+            'current_date':currentdate,
+                'teacher':teacher
+            })
+        except Template.DoesNotExist:
+            raise Http404("Vous ne pouvez pas accerdez a cette requette")
+    
+
 
 
 @csrf_exempt
@@ -36,37 +45,39 @@ def operation_requete(request):
     d = request.POST.get("commentaire")
     e = request.POST.get("responsable")
     teacher = User.objects.filter(pk=int(e))[0]
-    print(teacher)
     f = request.POST.get("file")
 
-    template = Template.objects.create(
-        examen = a, 
-        note1 = b,
-        note2 = c,
-        commentaire = d,
-        responsable = teacher,
-        file = f
-    )
-    # account_sid = 'AC25fffecc0550d63d0eb20cd5793236b3'
-    # auth_token = '4d01a37db834e77914780908a65492dc'
-    # client = Client(account_sid, auth_token)
-
-    # message = client.messages.create(
-    #     body=f"Votre a bien été enregistré et envoyé",
-    #     from_='+19378264862',
-    #     to='+237697161353'
-    # )
-
-    # print(message.sid)
-   
-    # select_option = request.POST.get('options')
-    # if select_option:
-    #     subject = 'Notification'
-    #     message = 'Une requête est en attente'
-    #     email = select_option.email
-    #     send_mail(subject, message, settings.EMAIL_HOST_USER, [email], fail_silently=False)
-    # return redirect(f'request/preview/{template.id}')
-    return JsonResponse({"id":f"{template.id}","operation_result": f"{template.examen} - {template.note1} - {template.note2} - {template.commentaire} -"})
+    if request.GET == {}:
+        template = Template.objects.create(
+            examen = a, 
+            note1 = b,
+            note2 = c,
+            commentaire = d,
+            student=request.user,
+            responsable = teacher,
+            file = f
+        )
+        return JsonResponse(
+            {
+                "id":f"{template.id}",
+                "operation_result": f"{template.examen} - {template.note1} - {template.note2} - {template.commentaire} -"
+            }
+        )
+    else:
+        print("an request for all")
+        try:
+            req = request.GET.get("req")
+            template = Template.objects.get(student=request.user, pk=req)
+            
+            return JsonResponse(
+                {
+                    "id":f"{template.id}",
+                    "operation_result": f"{template.examen} - {template.note1} - {template.note2} - {template.commentaire} -"
+                }
+            )
+        except Template.DoesNotExist:
+            raise Http404("Vous ne pouvez pas accerdez a cette requette")
+    
 
 
 def notification(request):
@@ -103,12 +114,13 @@ def preview(request, id):
         'filiere': request.user.filiere,
         'telephone': request.user.phone,
         'examen':examen, 
-        'note1':note1, 
+        'note1':note1,
         'note2':note2, 
         'commentaire':commentaire,
         'responsable':responsable,
         'file':file,
-        'current_date':currentdate
+        'current_date':currentdate,
+        'template': template,
     })
 
 
