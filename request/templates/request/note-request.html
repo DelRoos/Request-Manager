@@ -454,7 +454,7 @@
 
         
 
-        console.log(request_uri)
+        {% comment %} console.log(request_uri) {% endcomment %}
         
         form.append("examen", document.querySelector("#examen").innerText);
         form.append("note1", document.querySelector("#note1").innerText);
@@ -462,9 +462,18 @@
         form.append("commentaire", document.querySelector("#comment").value);
         form.append("responsable", document.querySelector("#id_teacher").value);
         form.append("file", document.querySelector("#files").file);
-    
+        let url_request = "";
+        if(current_uri.pathname.search("/edit/") >= 0) {
+            
+            url_request = current_uri.origin+"/operation_edit_requete/"+current_uri.pathname.split("/")[2]+"/";
+        } else {
+            url_request = current_uri.origin+"/operation_requete/";
+        }
+
+        console.log(url_request)
+        
         //let csrfTokenValue = document.querySelector('[name=csrfmiddlewaretoken]').value;
-        let request = new Request(current_uri.pathname.search("/edit/") >= 0 ? current_uri.origin+"/operation_edit_requete/"+{{template.id}}+"/" : request_uri, {method: 'POST',
+        let request = new Request(url_request, {method: 'POST',
                                                         body: form,
                                                         headers: {"X-CSRFToken": getCookie("csrftoken")}
                                                         })
