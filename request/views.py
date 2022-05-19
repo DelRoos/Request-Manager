@@ -80,17 +80,18 @@ def operation_requete(request):
     
 
 
-def notification(request):
+def notification(request, id):
     # if request.method == 'POST':
     #     subject = 'Notification'
     #     message = 'Une requête est en attente \n lien de la plateforme: http://delroos.pythonanywhere.com/'
     #     email = request.POST.get('email')
     #     send_mail(subject, message, settings.EMAIL_HOST_USER, [email], fail_silently=False)
     #     return render(request, 'request/email_sent.html', {'email':email})
+    template = get_object_or_404(Template, pk = id)
     subject = 'Notification'
     message = 'Une requête est en attente \n lien de la plateforme: http://delroos.pythonanywhere.com/'
     # email = request.POST.get('user.email')
-    email = responsable.email
+    email = template.responsable.email
     send_mail(subject, message, settings.EMAIL_HOST_USER, [email], fail_silently=False)
     return render(request, 'request/email_sent.html', {'email':email})
 

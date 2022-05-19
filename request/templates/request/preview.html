@@ -59,7 +59,7 @@
             {% comment %} </form> {% endcomment %}
             {% comment %} <a href="{% url 'request:delete-template' 20 %}">delete</a> {% endcomment %}
             <a href="{% url 'request:edit' %}?req={{template.id}}">Edit</a>
-            <a href="{% url 'request:notification' %}">Soumettre</a>
+            <a href="{% url 'request:notification' template.id %}">Soumettre</a>
         </div>
         <br>
     </div>
