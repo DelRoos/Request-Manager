@@ -5,6 +5,7 @@ from django.contrib import messages
 from .models import User
 from .resources import UserResource
 from tablib import Dataset
+from request.models import Template
 
 
 
@@ -25,6 +26,10 @@ def teacher(request):
 def student(request):
     return render(request,'student.html')
 
+
+
+def studenttable(request):
+    return render(request,'student-table.html')
 
 
 
