@@ -8,7 +8,8 @@ class Template(models.Model):
     note1 = models.CharField(max_length = 10)
     note2 = models.CharField(max_length = 10)
     commentaire = models.TextField()
-    responsable = models.ForeignKey(User, on_delete = models.CASCADE)
+    student = models.ForeignKey(User, on_delete = models.CASCADE, related_name="student_request")
+    responsable = models.ForeignKey(User, on_delete = models.CASCADE, related_name="responsable_request")
     file = models.FileField()
 
     def __str__(self):

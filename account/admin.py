@@ -51,7 +51,8 @@ class UserAdmin(admin.ModelAdmin):
                     break
                 
                 hashed_pwd = make_password(fields[0])
-                # check_password(fields[0],hashed_pwd) 
+                # check_password(fields[0],hashed_pwd)
+                
                  
                 created = User.objects.update_or_create(
                     password = hashed_pwd,
@@ -62,7 +63,9 @@ class UserAdmin(admin.ModelAdmin):
                     matricule = fields[5],
                     filiere = fields[6],
                     niveau = fields[7],
-                    email = fields[-1],
+                    email = fields[8],
+                    is_student = f"{fields[-1]}".replace("\r", "") == "stud",
+                    is_teacher = f"{fields[-1]}".replace("\r", "") == "eng",
                     )
 
                 print(f"{fields[-1]}")
@@ -71,7 +74,7 @@ class UserAdmin(admin.ModelAdmin):
                 html_message = render_to_string(html_template, {"username": fields[1], "password": fields[0]})
                 subject = 'Welcome to Request-Manager'
                 email_from = settings.EMAIL_HOST_USER
-                recipient_list = [f"{fields[-1]}".replace("\r", "")]
+                recipient_list = [f"{fields[8]}".replace("\r", "")]
                 message = EmailMessage(subject, html_message,
                                     email_from, recipient_list)
                 message.content_subtype = 'html'
