@@ -12,10 +12,10 @@ from .models import Template
 # Create your views here.
 
 def NoteRequest(request):
-    print(request.user)
     currentdate = datetime.date.today()
     teacher = User.objects.filter(is_teacher=True)
     if request.GET == {}:
+        
         return render(request,'request/note-request.html', context={
             "student": request.user,
             'current_date':currentdate,
@@ -25,11 +25,12 @@ def NoteRequest(request):
         # try except logic
         try:
             req = request.GET.get("req")
-            queryset = Template.objects.get(student=request.user, pk=req)
+            template = Template.objects.get(student=request.user, pk=req)
             return render(request,'request/note-request.html', context={
                 "student": request.user,
-            'current_date':currentdate,
-                'teacher':teacher
+                'current_date': currentdate,
+                'teacher': teacher,
+                "template": template,
             })
         except Template.DoesNotExist:
             raise Http404("Vous ne pouvez pas accerdez a cette requette")
@@ -47,38 +48,51 @@ def operation_requete(request):
     teacher = User.objects.filter(pk=int(e))[0]
     f = request.POST.get("file")
 
-    if request.GET == {}:
-        template = Template.objects.create(
-            examen = a, 
-            note1 = b,
-            note2 = c,
-            commentaire = d,
-            student=request.user,
-            responsable = teacher,
-            file = f
-        )
+    template = Template.objects.create(
+        examen = a, 
+        note1 = b,
+        note2 = c,
+        commentaire = d,
+        student=request.user,
+        responsable = teacher,
+        file = f
+    )
+    return JsonResponse(
+        {
+            "id":f"{template.id}",
+            "operation_result": f"{template.examen} - {template.note1} - {template.note2} - {template.commentaire} -"
+        }
+    )
+    
+@csrf_exempt
+def operation_edit_requete(request, id):
+    a = request.POST.get("examen")
+    b = request.POST.get("note1")
+    c = request.POST.get("note2")
+    d = request.POST.get("commentaire")
+    e = request.POST.get("responsable")
+    teacher = User.objects.filter(pk=int(e))[0]
+    f = request.POST.get("file")
+    
+    try:
+        template = Template.objects.get(student=request.user, pk=id)
+        template.examen = a
+        template.note1 = b
+        template.note2 = c
+        template.commentaire = d
+        template.responsale = teacher
+        template.file = f
+        
+        template.save()
+        
         return JsonResponse(
             {
                 "id":f"{template.id}",
                 "operation_result": f"{template.examen} - {template.note1} - {template.note2} - {template.commentaire} -"
             }
         )
-    else:
-        print("an request for all")
-        try:
-            req = request.GET.get("req")
-            template = Template.objects.get(student=request.user, pk=req)
-            
-            return JsonResponse(
-                {
-                    "id":f"{template.id}",
-                    "operation_result": f"{template.examen} - {template.note1} - {template.note2} - {template.commentaire} -"
-                }
-            )
-        except Template.DoesNotExist:
-            raise Http404("Vous ne pouvez pas accerdez a cette requette")
-    
-
+    except Template.DoesNotExist:
+        raise Http404("Vous ne pouvez pas accerdez a cette requette")
 
 def notification(request, id):
     # if request.method == 'POST':
@@ -133,17 +147,19 @@ def delete_template(request, template_id):
     return redirect('index')
 
 
-def edit(request):
+def edit(request, id = None):
     currentdate = datetime.date.today()
     teacher = User.objects.filter(is_teacher=True)
-    return render(request, 'request/note-request.html', context={
-        'first_name': request.user.first_name,
-        'last_name': request.user.last_name,
-        'matricule': request.user.matricule,
-        'email': request.user.email,
-        'niveau': request.user.niveau,
-        'filiere': request.user.filiere,
-        'telephone': request.user.phone,
-        'current_date':currentdate,
-        'teacher':teacher
-    })
+    try:
+        template = Template.objects.get(student=request.user, pk=id)
+        # print(template.id)
+       
+        return render(request, 'request/note-request.html', context={
+            "student": request.user,
+            'current_date':currentdate,
+            'teacher':teacher,
+            "template": template,
+        })
+    except Template.DoesNotExist:
+        raise Http404("Vous ne pouvez pas accerdez a cette requette")
+        
