@@ -17,7 +17,7 @@ def NoteRequest(request):
     teacher = User.objects.filter(is_teacher=True)
     if request.GET == {}:
         return render(request,'request/note-request.html', context={
-                "student": request.user,
+            "student": request.user,
             'current_date':currentdate,
             'teacher':teacher
         })
