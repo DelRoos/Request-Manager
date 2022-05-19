@@ -78,7 +78,8 @@ def notification(request):
     #     return render(request, 'request/email_sent.html', {'email':email})
     subject = 'Notification'
     message = 'Une requête est en attente \n lien de la plateforme: http://delroos.pythonanywhere.com/'
-    email = request.POST.get('user.email')
+    # email = request.POST.get('user.email')
+    email = responsable.email
     send_mail(subject, message, settings.EMAIL_HOST_USER, [email], fail_silently=False)
     return render(request, 'request/email_sent.html', {'email':email})
 
