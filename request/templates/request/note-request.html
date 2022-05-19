@@ -188,9 +188,14 @@
             </div>
             <div>
                 <p>A</P>
-                <select title="options" onChange="update()" name = "teacher" id = "id_teacher" style="width: 350px; height:35px; font-size: 18px">
+                    <select title="options" onChange="update()" name = "teacher" id = "id_teacher" style="width: 350px; height:35px; font-size: 18px">
+                        <option  disabled selected>Selectioner un</option>
                     {% for teachers in teacher %}
-                    <option id="options" value = "{{ teachers.id }}"> {{ teachers }} --- {{ teachers.email }} </option>
+                        {% if template.responsable.id == teachers.id %}
+                            <option id="options" selected value = "{{ teachers.id }}"> {{ teachers }} --- {{ teachers.email }} </option>
+                        {% else %}
+                            <option id="options" value = "{{ teachers.id }}"> {{ teachers }} --- {{ teachers.email }} </option>
+                        {% endif %}
                     {% endfor %}
                 </select>
             </div>
@@ -213,7 +218,13 @@
         </div>
         <br>
         <h4>COMMENTAIRE*</h4>
+
+        {% if template %}
+        <textarea id="comment" style="height:200px; width:96.5%; padding: 20px; font-size: 18px" placeholder="Une brève description de votre problème ..." required>{{template.commentaire}}</textarea> 
+        {% else %}
         <textarea id="comment" style="height:200px; width:96.5%; padding: 20px; font-size: 18px" placeholder="Une brève description de votre problème ..." required></textarea> 
+        {% endif %}
+
         <br><br>    
         <h4>PIECES JOINTES</h4>
 
@@ -438,7 +449,7 @@
     
         let form = new FormData();
         let current_uri = new URL(document.URL);
-        let request_uri = "{% url 'request:operation_requete' %}";
+        let request_uri =   "{% url 'request:operation_requete' %}";
         let req_id = current_uri.searchParams.get("req");
 
         
@@ -453,12 +464,11 @@
         form.append("file", document.querySelector("#files").file);
     
         //let csrfTokenValue = document.querySelector('[name=csrfmiddlewaretoken]').value;
-        let request = new Request(
-            req_id == null ?request_uri : request_uri+"?req=6", {method: 'POST',
+        let request = new Request(current_uri.pathname.search("/edit/") >= 0 ? current_uri.origin+"/operation_edit_requete/"+{{template.id}}+"/" : request_uri, {method: 'POST',
                                                         body: form,
                                                         headers: {"X-CSRFToken": getCookie("csrftoken")}
                                                         })
-     
+                                                        
        
 
         fetch(request)
@@ -468,7 +478,7 @@
             )
             .then(data => {
                //console.log(request)
-                window.location.href = current_uri.origin+"/preview/"+data["id"]
+                window.location.href = current_uri.origin+"/preview/"+data["id"]+"/"
                 console.log(data);
                 //let resultParagraph = document.querySelector("#operation");
                 //resultParagraph.innerHTML = result["operation_result"];
