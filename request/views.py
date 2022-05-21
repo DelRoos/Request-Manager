@@ -108,7 +108,8 @@ def notification(request, id):
     # email = request.POST.get('user.email')
     email = template.responsable.email
     send_mail(subject, message, settings.EMAIL_HOST_USER, [email], fail_silently=False)
-    return render(request, 'request/email_sent.html', {'email':email})
+    return redirect('account:studenttable')
+    return render(request, {'email':email})
 
 
 def preview(request, id):

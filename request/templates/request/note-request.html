@@ -164,8 +164,9 @@
         </style>
     </head>
 
-    <body>
-    <div style="margin-left: 100px; margin-right: 100px; margin-top: 100px; font-size: 18px">
+    <body style="border: 5px double #111; margin: 30px">
+    <div style="border: 1px solid #11; margin: px">
+    <div style="margin-left: 100px; margin-right: 100px; margin-top: 50px; font-size: 18px">
         <div style="display: flex; justify-content: space-between">
             <div>
                 <p>Nom: {{ student.last_name }}</p>
@@ -217,7 +218,9 @@
             </p>
         </div>
         <br>
-        <h4>COMMENTAIRE*</h4>
+        <div style="background-color:#eee; padding-top: 1px; padding-bottom: 1px; padding-left:5px; margin-bottom: 10px">
+            <h4 style="color:#111">COMMENTAIRE*</h4>
+        </div>
 
         {% if template %}
         <textarea id="comment" style="height:200px; width:96.5%; padding: 20px; font-size: 18px" placeholder="Une brève description de votre problème ..." required>{{template.commentaire}}</textarea> 
@@ -226,7 +229,9 @@
         {% endif %}
 
         <br><br>    
-        <h4>PIECES JOINTES</h4>
+        <div style="background-color:#eee; padding-top: 1px; padding-bottom: 1px; padding-left:5px; margin-bottom: 10px">
+            <h4 style="color:#111">PIECES JOINTES*</h4>
+        </div>
 
         <SECTION>
             <DIV id="dropzone">
@@ -325,7 +330,7 @@
             <input id="Teacher-Email" name="email" type="email" style="width: 40%; height: 40px; font-size: 18px; border: 1px solid grey"><br><br>
             <button id="fetch-call" style="width:200px; height:50px; margin-bottom:50px; font-size:19px; color:grey; font-weight: 700; border: 2px solid grey; background-color: #FFFFFF;" type="submit">Notifier</button>
         </form> {% endcomment %}
-
+    </div>
     </body>
 
 
