@@ -6,6 +6,7 @@ from .models import User
 from .resources import UserResource
 from tablib import Dataset
 from request.models import Template
+from django.db.models.query import QuerySet
 
 
 
@@ -29,7 +30,8 @@ def student(request):
 
 
 def studenttable(request):
-    return render(request,'student-table.html')
+    template = Template.objects.all()
+    return render(request,'student-table.html', {'template':template})
 
 
 
@@ -108,7 +110,10 @@ def user_login(request):
             return redirect('account:teacher')
         elif user is not None and user.is_student:
             login(request, user)
-            return redirect('account:student')
+            if Template.objects.filter(examen='TP').exists() or Template.objects.filter(examen='CC').exists() or Template.objects.filter(examen='SN').exists():
+                return redirect('account:studenttable')
+            else:
+                return redirect('account:student')
         else:
             messages.error(request, 'Incorrect Email OR password')
 
