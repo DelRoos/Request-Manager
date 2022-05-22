@@ -8,7 +8,6 @@ urlpatterns = [
     # path('login/', views.login_view, name='login_view'),
     path('login/', views.user_login, name='user_login'),
     path('register/', views.register, name='register'),
-    path('jurypage/', views.jury, name='jury'),
     path('teacher/', views.teacher, name='teacher'),
     path('student/', views.student, name='student'),
     path('studenttable/', views.studenttable, name='studenttable'),

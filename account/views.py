@@ -9,31 +9,20 @@ from request.models import Template
 from django.db.models.query import QuerySet
 
 
-
-# def index(request):
-#     return render(request, 'index.html')
-
-
-def jury(request):
-    return render(request,'jury.html')
-
-
-
 def teacher(request):
     return render(request,'teacher.html')
-
 
 
 def student(request):
     return render(request,'student.html')
 
 
-
 def studenttable(request):
-    template = Template.objects.all()
+    template = Template.objects.filter(student=request.user.id)
+    if not template.exists():
+        return redirect('account:student')
+        
     return render(request,'student-table.html', {'template':template})
-
-
 
 
 def register(request):
@@ -51,38 +40,7 @@ def register(request):
     return render(request,'register.html', {'form': form, 'msg': msg})
 
 
-
-# def login_view(request):
-#     form = LoginForm(request.POST or None)
-#     msg = None
-#     if request.method == 'POST':
-#         if form.is_valid():
-#             username = form.cleaned_data.get('username')
-#             password = form.cleaned_data.get('password')
-#             user = authenticate(username=username, password=password)
-#             if user is not None and user.is_jury:
-#                 login(request, user)
-#                 return redirect('jurypage')
-#             elif user is not None and user.is_teacher:
-#                 login(request, user)
-#                 return redirect('teacher')
-#             elif user is not None and user.is_student:
-#                 login(request, user)
-#                 return redirect('student')
-#             else:
-#                 msg= 'invalid credentials'
-#         else:
-#             msg = 'error validating form'
-#     return render(request, 'login.html', {'form': form, 'msg': msg})
-
 def user_login(request):
-    # if request.user.is_authenticated and user.is_jury:
-    #     return redirect('jury')
-    # elif request.user.is_authenticated and user.is_teacher:
-    #     return redirect('teacher')
-    # elif request.user.is_authenticated and user.is_student:
-    #     return redirect('student')
-    # else:
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
@@ -102,15 +60,12 @@ def user_login(request):
             username = userSch.username
             user = authenticate(
                 request, username=username, password=password)
-        if user is not None and user.is_jury:
-            login(request, user)
-            return redirect('jury')
-        elif user is not None and user.is_teacher:
+        if user is not None and user.is_teacher:
             login(request, user)
             return redirect('account:teacher')
         elif user is not None and user.is_student:
             login(request, user)
-            if Template.objects.filter(examen='TP').exists() or Template.objects.filter(examen='CC').exists() or Template.objects.filter(examen='SN').exists():
+            if Template.objects.filter(student=user).exists():
                 return redirect('account:studenttable')
             else:
                 return redirect('account:student')

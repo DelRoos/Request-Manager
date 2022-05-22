@@ -175,7 +175,7 @@
                 <p>Email: {{ student.email }}</p>
                 <p>Niveau: {{ student.niveau }}</p>
                 <p>Filiere: {{ student.filiere }}</p>
-                <p>Telephone: {{ student.telephone }}</p>
+                <p>Telephone: {{ student.phone }}</p>
             </div>
             <div>
                 {% language 'fr' %}
@@ -203,7 +203,8 @@
         </div>
         <div style="display: flex; justify-content: space-between">
             <div>
-                <p><span style="text-decoration:underline; font-weight: bold">Objet: </span>Rectification de notes</p>
+                <p>
+                    <span style="text-decoration:underline; font-weight: bold">Objet: </span><span id="objects" style="text-decoration:none; font-weight: normal">Rectification de notes<span></p>
             </div>
             <div>
 
@@ -212,9 +213,9 @@
         <div>
             <p>
                 En effet lors de l'examen <a href="#" id="examen"></a> j'ai eu la note de 
-                <a href="#" id="note1" data-type="text" data-placement="right" data-title="Note de base">16/20</a>
+                <a href="#" id="note1" data-type="text" data-placement="right" data-title="Note de base">{{template.note1}}</a>/20
                 mais après sorti des notes je reretrouve avec la note de 
-                <a href="#" id="note2" data-type="text" data-placement="right" data-title="Note mise">12/20</a>.
+                <a href="#" id="note2" data-type="text" data-placement="right" data-title="Note mise">{{template.note2}}</a>/20.
             </p>
         </div>
         <br>
@@ -249,7 +250,7 @@
         {% comment %} <hr size="3" noshade color="#F00000"> {% endcomment %}
 
         {% comment %} <div style="font-size: 0.8em;">
-        <p>If you find this demo useful, please consider <a href="https://www.paypal.me/RobertGravelle/1" target="_blank">donating $1 dollar</a> for a coffee (secure PayPal link) or purchasing one of my songs from <a href="https://ax.itunes.apple.com/WebObjects/MZSearch.woa/wa/search?term=rob%20gravelle" target="_blank">iTunes.com</a> or <a href="http://www.amazon.com/s/ref=ntt_srch_drd_B001ES9TTK?ie=UTF8&field-keywords=Rob%20Gravelle&index=digital-music&search-type=ss" target="_blank">Amazon.com</a> for only 0.99 cents each.</p>
+        <p>If you find this demo useful, please consider <a href="https://www.paypal.me/RobertGravelle/1" target="_blank">donating $1 dollar</a> for a coffee (secure PayPal link) or purchasing one of my songs from <a href="https://ax.itunes.apple.com/WebObjectss/MZSearch.woa/wa/search?term=rob%20gravelle" target="_blank">iTunes.com</a> or <a href="http://www.amazon.com/s/ref=ntt_srch_drd_B001ES9TTK?ie=UTF8&field-keywords=Rob%20Gravelle&index=digital-music&search-type=ss" target="_blank">Amazon.com</a> for only 0.99 cents each.</p>
         <p>Rob uses and recommends <a href="http://www.mochahost.com/2425.html" target="_blank">MochaHost</a>, which provides Web Hosting for as low as $1.95 per month, as well as unlimited emails and disk space!</p>
         </div>   {% endcomment %}
         <div id="preview-template" style="display: none;">
@@ -300,36 +301,7 @@
         <br>
 
         
-        <!-- Modal -->
-        {% comment %} <div id="success_tic" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-        
-            <!-- Modal content-->
-            <div class="modal-content">
-                <a class="close" href="#" data-dismiss="modal">&times;</a>
-                <div class="page-body">
-            <div class="head">  
-                <h3 style="margin-top:5px;">SUCCESS</h3>
-                <h4>Vos données ont bien été enregistrées et et soumises. </h4>
-            </div>
-        
-            <h1 style="text-align:center;"><div class="checkmark-circle">
-            <div class="background"></div>
-            <div class="checkmark draw"></div>
-        </div><h1>
-        
-            </div>
-        </div>
-            </div>
-        
-            </div> {% endcomment %}
         <br>
-        {% comment %} <h4>NOTIFICATION AU RESPONSABLE</h4>
-        <form action="{% url 'request:notification' %}" method="POST">
-            {% csrf_token %}
-            <input id="Teacher-Email" name="email" type="email" style="width: 40%; height: 40px; font-size: 18px; border: 1px solid grey"><br><br>
-            <button id="fetch-call" style="width:200px; height:50px; margin-bottom:50px; font-size:19px; color:grey; font-weight: 700; border: 2px solid grey; background-color: #FFFFFF;" type="submit">Notifier</button>
-        </form> {% endcomment %}
     </div>
     </body>
 
@@ -354,11 +326,6 @@
                 {value: 2, text: 'TP'},
                 {value: 3, text: 'SN'}
             ]
-            /*
-            //uncomment these lines to send data on server
-            ,pk: 1
-            ,url: '/post'
-            */
         });
     });
 </script>
@@ -462,11 +429,14 @@
         {% comment %} console.log(request_uri) {% endcomment %}
         
         form.append("examen", document.querySelector("#examen").innerText);
+        form.append("object", document.querySelector("#objects").innerText);
         form.append("note1", document.querySelector("#note1").innerText);
         form.append("note2", document.querySelector("#note2").innerText);
         form.append("commentaire", document.querySelector("#comment").value);
         form.append("responsable", document.querySelector("#id_teacher").value);
-        form.append("file", document.querySelector("#files").file);
+        form.append("asset", document.querySelector("#files").file);
+
+
         let url_request = "";
         if(current_uri.pathname.search("/edit/") >= 0) {
             
