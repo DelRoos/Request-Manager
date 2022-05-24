@@ -170,25 +170,47 @@
                 max-width: 600px;
                 position: relative;
             }
-              .one h1:before {
+            .one h1:before {
                 content: "";
                 display: block;
                 width: 230px;
-                height: 10px;
+                height: 5px;
                 background: #698cf0;
                 left: -200px;
                 top: 40%;
                 position: absolute;
             }
-              .one h1:after {
+            .one h1:after {
                 content: "";
                 display: block;
                 width: 230px;
-                height: 10px;
+                height: 5px;
                 background: #698cf0;
                 right: -200px;
                 top: 40%;
                 position: absolute;
+            }
+            .two{
+                width:180px;
+                height:50px;
+                margin-bottom:50px;
+                font-size:19px;
+                color:#fff;
+                font-weight: 300;
+                border:none;
+                background-color: #698cf0;
+                transition: background-color 1s;
+            }
+            .two:hover{
+                color: #698cf0;
+                background-color: #fff;
+                border: 1px solid #698cf0;
+                transition: background-color 1s;
+            }
+            .two:focus,
+            .two   :active {
+                background-color: ;
+                transition: none;
             }
         </style>
     </head>
@@ -199,7 +221,7 @@
             <h1>MODELE POUR GESTION DE NOTES</h1>
         </div>
     </div>
-    <div style="border: 1px solid #11; border: 5px double #111; margin: 30px">
+    <div style="border: 1px solid #11; border: 5px double #698cf0; margin: 30px">
     <div style="margin-left: 100px; margin-right: 100px; margin-top: 50px; font-size: 18px">
         <div style="display: flex; justify-content: space-between">
             <div>
@@ -253,7 +275,7 @@
             </p>
         </div>
         <br>
-        <div style="background-color:#eee; padding-top: 1px; padding-bottom: 1px; padding-left:5px; margin-bottom: 10px">
+        <div style="background-color:; padding-top: 1px; padding-bottom: 1px; padding-left:5px; margin-bottom: 10px">
             <h4 style="color:#111">COMMENTAIRE*</h4>
         </div>
 
@@ -264,7 +286,7 @@
         {% endif %}
 
         <br><br>    
-        <div style="background-color:#eee; padding-top: 1px; padding-bottom: 1px; padding-left:5px; margin-bottom: 10px">
+        <div style="background-color:; padding-top: 1px; padding-bottom: 1px; padding-left:5px; margin-bottom: 10px">
             <h4 style="color:#111">PIECES JOINTES*</h4>
         </div>
 
@@ -331,7 +353,7 @@
         </div>
         <br>
         {% comment %} <button class="" data-toggle="modal" data-target="#success_tic" id="fetch-call" style="width:200px; height:50px; margin-bottom:50px; font-size:19px; color:grey; font-weight: 700; border: 2px solid grey; background-color: #FFFFFF;" type="submit">Enregistrer</button> {% endcomment %}
-        <button id="fetch-call" style="width:200px; height:50px; margin-bottom:50px; font-size:19px; color:grey; font-weight: 700; border: 2px solid grey; background-color: #FFFFFF;" type="submit">Enregistrer</button>
+        <button id="fetch-call" class="two" type="submit">Enregistrer</button>
         <br>
 
         

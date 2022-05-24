@@ -161,9 +161,90 @@
                     opacity: 1;
                 }
             }
+            .one h1 {
+                font-family: sans-serif;
+                margin: auto;
+                color: #111;
+                text-align: center;
+                font-size: 30px;
+                max-width: 600px;
+                position: relative;
+            }
+            .one h1:before {
+                content: "";
+                display: block;
+                width: 230px;
+                height: 5px;
+                background: #698cf0;
+                left: -50px;
+                top: 40%;
+                position: absolute;
+            }
+            .one h1:after {
+                content: "";
+                display: block;
+                width: 230px;
+                height: 5px;
+                background: #698cf0;
+                right: -50px;
+                top: 40%;
+                position: absolute;
+            }
+            .btn1{
+                width:180px;
+                height:50px;
+                margin-bottom:50px;
+                font-size:19px;
+                color:#fff;
+                font-weight: 300;
+                border:none;
+                color: #698cf0;
+                background-color: #fff;
+                border: 1px solid #698cf0;
+                transition: background-color 1s;
+                
+            }
+            .btn1:hover{
+                color: #fff;
+                background-color: #698cf0;
+                transition: background-color 1s;
+            }
+            .btn1:focus,
+            .btn1   :active {
+                background-color: ;
+                transition: none;
+            }
+            .btn2{
+                width:180px;
+                height:50px;
+                margin-bottom:50px;
+                font-size:19px;
+                color:#fff;
+                font-weight: 300;
+                border:none;
+                background-color: #698cf0;
+                transition: background-color 1s;
+            }
+            .btn2:hover{
+                color: #698cf0;
+                background-color: #fff;
+                border: 1px solid #698cf0;
+                transition: background-color 1s;
+            }
+            .btn2:focus,
+            .btn2   :active {
+                background-color: ;
+                transition: none;
+            }
         </style>
     </head>
 <body>
+    <div class="zero" style="margin-left: 30px; margin-right: 30px; margin-top: 30px;">
+        <div class="one">
+            <h1>VERIFICATION</h1>
+        </div>
+    </div>
+    <div style="border: 1px solid #11; border: 5px double #698cf0; margin: 30px">
     <div style="margin-left: 100px; margin-right: 100px; margin-top: 100px; font-size: 18px">
         <div style="display: flex; justify-content: space-between">
             <div>
@@ -207,18 +288,22 @@
             </p>
         </div>
         <br>
-        <h4>COMMENTAIRE*</h4>
+        <div style="background-color:; padding-top: 1px; padding-bottom: 1px; padding-left:5px; margin-bottom: 10px">
+            <h4 style="color:#111">COMMENTAIRE*</h4>
+        </div>
         {{template.commentaire}}             
         <br><br>    
-        <h4>PIECES JOINTES</h4>
+        <div style="background-color:; padding-top: 1px; padding-bottom: 1px; padding-left:5px; margin-bottom: 30px">
+            <h4 style="color:#111">PIECES JOINTES*</h4>
+        </div>
         {{ file }}
         <br>
         <div style="text-align: right">
             {% comment %} <form method="POST" action="{% url 'request:delete_view' template.id %}">
                 {% csrf_token %}
                 <button style="width:180px; height:50px; margin-bottom:50px; font-size:19px; color:#fff; font-weight: 700; border:none; background-color: #b33a3a; cursor: pointer" type="submit">Supprimer</button> {% endcomment %}
-                <button class="btn1" onclick="location.href='{% url 'request:edit' template.id %}'" style="width:180px; height:50px; margin-bottom:50px; font-size:19px; color:#fff; font-weight: 700; border:none; color: #e5af2f; background-color: #fff; border: 3px solid #e5af2f; cursor: pointer;" type="submit">Editer</button>
-                <button onclick="location.href='{% url 'request:notification' template.id %}'" class="btn2" data-toggle="modal" data-target="#success_tic" style="width:180px; height:50px; margin-bottom:50px; font-size:19px; color:#fff; font-weight: 700; border:none; background-color: #55761a; cursor: pointer" type="submit">Soumettre</button> 
+                <button class="btn1" onclick="location.href='{% url 'request:edit' template.id %}'" style="" type="submit">Editer</button>
+                <button onclick="location.href='{% url 'request:notification' template.id %}'" class="btn2" data-toggle="modal" data-target="#success_tic" style="" type="submit">Soumettre</button> 
             {% comment %} </form> {% endcomment %}
             {% comment %} <a href="{% url 'request:delete-template' 20 %}">delete</a> {% endcomment %}
             {% comment %} <a href="{% url 'request:edit' %}?req={{template.id}}">Edit</a> {% endcomment %}
@@ -248,5 +333,6 @@
         
             </div>
         <br>
+    </div>
     </div>
 </body>

@@ -14,7 +14,8 @@
 <style>
 body {
 	color: #566787;
-	background: #f5f5f5;
+	/*background: #f5f5f5;*/
+	background: #fff;
 	font-family: 'Varela Round', sans-serif;
 	font-size: 13px;
 }
@@ -22,7 +23,8 @@ body {
     margin: 30px 0;
 }
 .table-wrapper {
-	background: #fff;
+	/*background: #fff;*/
+	background: #f5f5f5;
 	padding: 20px 25px;
 	border-radius: 3px;
 	min-width: 1000px;
@@ -30,7 +32,7 @@ body {
 }
 .table-title {        
 	padding-bottom: 15px;
-	background: #435d7d;
+	background: #698cf0;
 	color: #fff;
 	padding: 16px 30px;
 	min-width: 100%;
@@ -236,6 +238,35 @@ table.table .avatar {
 .modal form label {
 	font-weight: normal;
 }	
+.one h1 {
+	font-family: sans-serif;
+	margin: auto;
+	color: #111;
+	text-align: center;
+	font-size: 30px;
+	max-width: 600px;
+	position: relative;
+}
+.one h1:before {
+	content: "";
+	display: block;
+	width: 230px;
+	height: 5px;
+	background: #698cf0;
+	left: -120px;
+	top: 40%;
+	position: absolute;
+}
+.one h1:after {
+	content: "";
+	display: block;
+	width: 230px;
+	height: 5px;
+	background: #698cf0;
+	right: -120px;
+	top: 40%;
+	position: absolute;
+}
 </style>
 <script>
 $(document).ready(function(){
@@ -265,7 +296,11 @@ $(document).ready(function(){
 </head>
 <body>
 <div class="container-xl">
-    <h1 style="margin-top: 50px; margin-bottom: 50px">Toutes mes requêtes</h1>
+    <div class="zero" style="margin-left: 30px; margin-right: 30px; margin-top: 30px;">
+        <div class="one">
+            <h1>TOUTES MES REQUETES</h1>
+        </div>
+    </div>
 	<div class="table-responsive">
 		<div class="table-wrapper">
 			<div class="table-title">
