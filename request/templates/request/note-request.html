@@ -17,6 +17,7 @@
 
         <!-- x-editable (bootstrap version) -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.6/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.6/bootstrap-editable/js/bootstrap-editable.min.js"></script>
         <style>
             #success_tic .page-body{
@@ -212,6 +213,50 @@
                 background-color: ;
                 transition: none;
             }
+            .mab{
+                position: relative;
+                background: #dddddd;
+                display: inline-flex;
+            }
+            .mab__button{
+                background: none;
+                border: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 8px 12px;
+                color: #333333;
+                cursor: pointer;
+            }
+            .mab__button:hover{
+                /*background: rgba(0, 0, 0, 0.5);*/
+                background: #698cf0;
+            }
+            .mab__button--primary .mab__icon{
+                margin-right: 8px;
+            }
+            .mab__button--secondary{
+                width: 100%;
+                justify-content: flex-start;
+            }
+            .mab__text{
+                font-family: 'Readex Pro', sans-serif;
+            }
+            .mab__list{
+                position: absolute;
+                display: none;
+                top: 115%;
+                right: 0px;
+                padding: 5px 0;
+                background: #ffffff;
+                box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+            }
+            .mab__list--visible{
+                display: initial;
+            }
+            .position{
+               margin-right: 30px;
+            }
         </style>
     </head>
 
@@ -219,6 +264,26 @@
     <div class="zero" style="margin-left: 30px; margin-right: 30px; margin-top: 30px;">
         <div class="one">
             <h1>MODELE POUR GESTION DE NOTES</h1>
+        </div>
+    </div>
+    <div class="position" align="right">
+        <h5>Définir la position de la requête:</h5>
+        <div class="mab">
+            <button type="button" class="mab__button mab__button--primary">
+                <span class="material-icons mab__icon">save</span>
+                <span class="mab__text">POSITION</span>
+            </button>
+            <button type="button" class="mab__button mab__button--menu">
+                <span class="material-icons mab__icon">expand_more</span>
+            </button>
+            <div class="mab__list">
+                <button type="button" class="mab__button mab__button--secondary">
+                    <span class="mab__text">Etudiant</span>
+                </button>
+                <button type="button" class="mab__button mab__button--secondary">
+                    <span class="mab__text">Responsable</span>
+                </button>
+            </div>
         </div>
     </div>
     <div style="border: 1px solid #11; border: 5px double #698cf0; margin: 30px">
@@ -537,4 +602,32 @@
         document.getElementById('Teacher-Email').value = option.text.split("--- ")[1];
     }
     update();
+</script>
+<script>
+    //Muti-Action button
+    {
+        //Enable all menu buttons
+        document.querySelectorAll(".mab").forEach(multiAction => {
+            const menuButton = multiAction.querySelector(".mab__button--menu");
+            const list = multiAction.querySelector(".mab__list");
+
+            menuButton.addEventListener("click", () => {
+                list.classList.toggle("mab__list--visible");
+            });
+        });
+        // Hide all lists when clicking elsewhere on the page
+        document.addEventListener("click", e => {
+            const keepOpen = (
+                e.target.matches(".mab__list")
+                || e.target.matches(".mab__button--menu")
+                || e.target.closest(".mab__button--menu")
+            );
+
+            if (keepOpen) return;
+
+            document.querySelectorAll(".mab__list").forEach(list => {
+                list.classList.remove("mab__list--visible");
+            });
+        });
+    }
 </script>
