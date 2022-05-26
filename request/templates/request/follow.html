@@ -315,60 +315,104 @@
             #comments form textarea {
                 height:100px;
             }
+           
+
+
+
+
             
-            #comments .media {
-                border-top:1px dashed #DDDDDD;
-                padding:20px 0;
-                margin:0;
-            }
-            
-            #comments .media > .pull-left {
-                margin-right:20px;
-            }
-            
-            #comments .media img {
-                max-width:100px;
-            }
-            
-            #comments .media h4 {
-                margin:0 0 10px;
-            }
-            
-            #comments .media h4 span {
-                font-size:14px;
-                float:right;
-                color:#999999;
-            }
-            
-            #comments .media p {
-                margin-bottom:15px;
-                text-align:justify;
-            }
-            
-            #comments .media-detail {
-                margin:0;
-            }
-            
-            #comments .media-detail li {
-                color:#AAAAAA;
-                font-size:12px;
-                padding-right: 10px;
-                font-weight:600;
-            }
-            
-            #comments .media-detail a:hover {
-                text-decoration:underline;
-            }
-            
-            #comments .media-detail li:last-child {
-                padding-right:0;
-            }
-            
-            #comments .media-detail li i {
-                color:#666666;
-                font-size:15px;
-                margin-right:10px;
-            }
+           
+
+.popup
+{
+  /*z-index: 10;
+width:450px;
+height:480px;*/
+/*position:relative;
+margin:20px auto;
+display:block;*/
+padding-bottom: 20px;
+text-align:center;
+-moz-background-clip: padding;
+-o-background-clip: padding;
+-webkit-background-clip: padding-box;
+background-clip: padding-box; /* prevents bg color from leaking outside the border */
+background-color: #fff; /* layer fill content */
+-moz-box-shadow: 0 0 10px rgba(0,0,0,.18); /* drop shadow */
+-webkit-box-shadow: 0 0 10px rgba(0,0,0,.18); /* drop shadow */
+-o-box-shadow: 0 0 10px rgba(0,0,0,.18); /* drop shadow */
+box-shadow: 0 0 10px rgba(0,0,0,.18); /* drop shadow */
+-webkit-transform-origin:top center;
+-moz-transform-origin:top center;
+-o-transform-origin:top center;
+transform-origin:top center;
+-webkit-animation: iconosani 1.2s forwards;
+animation: iconosani 1.2s forwards;
+-moz-animation: iconosani 1.2s forwards;
+-o-animation: iconosani 1.2s forwards;
+}
+
+
+
+
+.popScroll h1
+{
+  height: 60px;
+  position: relative;
+  color: #fff;
+  font: 25px/60px sans-serif;
+  text-align: center;
+  text-transform: uppercase;
+  background: #3D79D0;
+}
+
+
+.popScroll p { padding: 1px 5px; 	font-family: 'Open Sans'; font-size: 17px; margin-bottom: 10px;  }
+
+
+#option { position: relative; }
+
+.boxi {
+	display: inline-block;
+	width: 169px;
+	line-height: 42px;
+	color: #fff;
+	text-align: center;
+	text-decoration: none;
+	-webkit-transition: all 0.1s linear;
+	-moz-transition: all 0.1s linear;
+	-o-transition: all 0.1s linear;
+	}
+
+#home { 
+	background: #3D79D0;
+	}
+
+#close { 
+	background: #D21111;
+	}
+
+.popScroll em {
+	width: 42px;
+	display: inline-block;
+	position: relative;
+	margin: 0 -20px;
+	line-height: 42px;
+	background: #fff;
+	color: #777;
+	text-align: center;
+	border-radius: 50px;
+	}
+
+#home:hover { background: #1852C7;  }
+#close:hover { background: #B30E0E; }
+
+
+
+
+
+
+
             
         </style>
     </head>
@@ -618,72 +662,67 @@
                 <div class="col-sm-8">   
                     <form>
                         <h3 class="pull-left" style="color:#698cf0; font-weight:bold">COMMENTAIRES</h3>
-                        <button type="submit" class="pull-right btn1" style="">Submit</button>
+                        <button data-toggle="modal" data-target="#terminers" type="submit" class="pull-right btn1" style="">Submit</button>
                         <fieldset>
                             <div class="row" style="display: flex;">
                                 <div class="col-sm-3 col-lg-2 hidden-xs">
                                     <img class="img-responsive" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-9 col-lg-10" style="margin-left: 5px; margin-top: 0px">
-                                    <textarea class="form-control" id="message" placeholder="Your message" required=""></textarea>
+                                    <textarea class="form-control" id="message" placeholder="votre commentaire" required=""></textarea>
                                 </div>
                             </div>  	
                         </fieldset>
                     </form>
-                    
-                    <h3 style="color:#698cf0; font-weight:bold">2 Commentaires</h3>
-                    
-                    <!-- COMMENT 1 - START -->
-                    <div class="media">
-                        <a class="pull-left" href="#"><img class="media-object" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt=""></a>
-                        <div class="media-body">
-                            <h4 class="media-heading">Dr. Messi</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            <ul class="list-unstyled list-inline media-detail pull-left">
-                                <li><i class="fa fa-calendar"></i>26/05/2022</li>
-                        </div>
-                    </div>
-                    <!-- COMMENT 1 - END -->
-                    
-                    <!-- COMMENT 2 - START -->
-                    <div class="media">
-                        <a class="pull-left" href="#"><img class="media-object" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt=""></a>
-                        <div class="media-body">
-                            <h4 class="media-heading">Delano Roosvelt</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            <ul class="list-unstyled list-inline media-detail pull-left">
-                                <li><i class="fa fa-calendar"></i>26/05/2022</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- COMMENT 2 - END -->
-
-                
                 </div>
             </div>
         </div>
     </section>
 
-    <button id="btn" style="font-size: 20px; font-weight: 700; width:180px; height:50px; color: #fff; border: 1px; margin-left:100px; margin-bottom: 50px">STATUS</button>
-    <button id="" style="font-size: 20px; font-weight: 700; width:180px; height:50px; background-color: #698cf0; border: 1px; color: #ffffff; border: 1px; margin-left:100px; margin-bottom: 50px">TRANSFERER</button>
+    <button id="" data-toggle="modal" data-target="#terminer" style="font-size: 20px; font-weight: 300; width:180px; height:50px; background-color: #698cf0; border: 1px; color: #ffffff; border: 1px; margin-left:100px; margin-bottom: 50px">Terminé</button>
+    <button id="" data-toggle="modal" data-target="#transferer" style="font-size: 20px; font-weight: 300; width:180px; height:50px; background-color: #698cf0; border: 1px; color: #ffffff; border: 1px; margin-left:100px; margin-bottom: 50px">Transférer</button>
 
+    <!-- popup -->
+    <div class="popScroll modal fade" id="terminer" role="dialog">
+        <div class="popup"> 
+            <h1>REQUEST-MANAGER</h1>
+            <div class="subscribe-widget">
+            </div>
+            <p>Etes-vous d'avoir terminé avec la requête ?</p>
+            <div id="option">
+                <a href="#" id="home" class="boxi">OUI</a> 
+                <em>ou</em>
+                <a href="#" id="close" class="boxi closei">NON</a>
+            </div>
+        </div>
+    </div>
+    <!-- popup -->
+    <div class="popScroll modal fade" id="transferer" role="dialog">
+        <div class="popup"> 
+            <h1>REQUEST-MANAGER</h1>
+            <div class="subscribe-widget">
+            </div>
+            <p>Etes-vous sur de vouloir transférer la requête ?</p>
+            <div id="option">
+                <a href="#" id="home" class="boxi">OUI</a> 
+                <em>ou</em>
+                <a href="#" id="close" class="boxi closei">NON</a>
+            </div>
+        </div>
+    </div>
+    <!-- popup -->
+    <div class="popScroll modal fade" id="terminers" role="dialog">
+        <div class="popup"> 
+            <h1>REQUEST-MANAGER</h1>
+            <div class="subscribe-widget">
+            </div>
+            <p>Etes-vous sur de vouloir soumettre le commentaire ?</p>
+            <div id="option">
+                <a href="#" id="home" class="boxi">OUI</a> 
+                <em>ou</em>
+                <a href="#" id="close" class="boxi closei">NON</a>
+            </div>
+        </div>
+    </div>
+    
 </body>
-<script>
-    const btn = document.getElementById('btn');
-
-let index = 0;
-let indexe = 0;
-
-const colors = ['gold','tomato', 'green'];
-const text = ['EN ATTENTE','EN COURS', 'TERMINE'];
-
-btn.addEventListener('click', function onClick() {
-  btn.style.backgroundColor = colors[index];
-  btn.textContent = text[indexe];
-  btn.style.color = 'white';
-
-  index = index >= colors.length - 1 ? 0 : index + 1;
-  indexe = indexe >= text.length - 1 ? 0 : indexe + 1;
-});
-
-</script>
