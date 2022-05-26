@@ -176,4 +176,26 @@ def edit(request, id = None):
         })
     except Template.DoesNotExist:
         raise Http404("Vous ne pouvez pas accerdez a cette requette")
-        
+
+
+
+def follow(request):
+    # template = get_object_or_404(Template, pk = id)
+    templates = Template.objects.all()
+    for template in templates:
+        examen = template.examen,
+        note1 = template.note1,
+        note2 = template.note2,
+        commentaire = template.commentaire,
+        responsable = template.responsable,
+        asset = template.asset
+
+        currentdate = datetime.date.today()
+    return render(request, "request/follow.html", {
+        'examen': examen,
+        'note1': note1,
+        'note2': note2,
+        'commentaire': commentaire,
+        'responsable': responsable,
+        'asset': asset
+    })  

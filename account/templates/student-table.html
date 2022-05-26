@@ -340,7 +340,7 @@ $(document).ready(function(){
 								</span>
 							</td>
 							<td> {{ element.objet }} </td>
-							<td> {{ element.responsable }} </td>
+							<td> <a href="{% url 'request:follow' %}" style="text-decoration: none"> {{ element.responsable }} </a> </td>
 							<td> {{ element.publish_date }} </td>
 							<td>  <span class="badge badge-primary">{{ element.status }}</span> </td>
 							<td> {{ date.today }} </td>
