@@ -5,7 +5,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>Preview</title>
+        <title>Follow</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- bootstrap -->
@@ -500,7 +500,7 @@
             </div>
             <div class="TimelineItem-body">
                 <p> <span style="background-color: #698cf0; padding: 5px">26, Avril 2022</span></p> 
-                <h3> Dr. Messi</h3>
+                <h3> M. Moyou</h3>
                 <p style="max-width: 800px; margin-bottom: 50px">
                     Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
                     Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
@@ -530,7 +530,7 @@
             </div>
             <div class="TimelineItem-body">
                 <p> <span style="background-color: #698cf0; padding: 5px">27, Avril 2022</span></p> 
-                <h3> Dr. Messi</h3>
+                <h3> Dr. Monthe</h3>
                 <p style="max-width: 800px; margin-bottom: 50px">
                     Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
                     Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
@@ -561,7 +561,7 @@
             </div>
             <div class="TimelineItem-body">
                 <p> <span style="background-color: #698cf0; padding: 5px">28, Avril 2022</span></p> 
-                <h3> Dr. Messi</h3>
+                <h3> Dr. Aminou</h3>
                 <p style="max-width: 800px; margin-bottom: 50px">
                     Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
                     Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
@@ -663,4 +663,27 @@
             </div>
         </div>
     </section>
+
+    <button id="btn" style="font-size: 20px; font-weight: 700; width:180px; height:50px; color: #fff; border: 1px; margin-left:100px; margin-bottom: 50px">STATUS</button>
+    <button id="" style="font-size: 20px; font-weight: 700; width:180px; height:50px; background-color: #698cf0; border: 1px; color: #ffffff; border: 1px; margin-left:100px; margin-bottom: 50px">TRANSFERER</button>
+
 </body>
+<script>
+    const btn = document.getElementById('btn');
+
+let index = 0;
+let indexe = 0;
+
+const colors = ['gold','tomato', 'green'];
+const text = ['EN ATTENTE','EN COURS', 'TERMINE'];
+
+btn.addEventListener('click', function onClick() {
+  btn.style.backgroundColor = colors[index];
+  btn.textContent = text[indexe];
+  btn.style.color = 'white';
+
+  index = index >= colors.length - 1 ? 0 : index + 1;
+  indexe = indexe >= text.length - 1 ? 0 : indexe + 1;
+});
+
+</script>
