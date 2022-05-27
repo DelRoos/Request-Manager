@@ -349,7 +349,7 @@ $(document).ready(function(){
 									<a class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
 								{% endif %}
 	
-								<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+								<a href="#deleteEmployeeModal" class="delete" data-toggle="modal" onclick="changeID('{{ element.id }}', '{{ element.responsable }}', '{{ element.objet }}');"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
 							</td>
 						</tr>
 					{% endfor %} 
@@ -359,25 +359,40 @@ $(document).ready(function(){
 	</div>        
 </div>
 <!-- Delete Modal HTML -->
-<div id="deleteEmployeeModal" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<form>
-				<div class="modal-header">						
-					<h4 class="modal-title">Supprimer une requete</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
-				<div class="modal-body">					
-					{% comment %} <p>Ete vous sur de vouloir supprimer la requete {{element.}}</p> {% endcomment %}
-					<p class="text-warning"><small>This action cannot be undone.</small></p>
-				</div>
-				<div class="modal-footer">
-					<input type="button" class="btn btn-default" data-dismiss="modal" value="Annuler">
-					<input type="submit" class="btn btn-danger" value="Supprimer">
-				</div>
-			</form>
+	<div id="deleteEmployeeModal" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form>
+					<div class="modal-header">						
+						<h4 class="modal-title">Supprimer une requete</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">					
+						{% comment %} <p>Ete vous sur de vouloir supprimer la requete {{element.}}</p> {% endcomment %}
+						<p class=""><small>Etes-vous sûr de vouloir supprimer la requête concernant <span id="obj" style="color: black"></span> 
+							adréssé à l'enseignant <span id="res" style="color: black"></span> ?</small></p>
+					</div>
+					<div class="modal-footer">
+						<input type="button" class="btn btn-default" data-dismiss="modal" value="Annuler">
+						<input type="submit" class="btn btn-danger" value="Supprimer" id="delete">
+					</div>
+				</form>
+			</div>
 		</div>
 	</div>
-</div>
 </body>
+<script>
+	var id;
+
+	const changeID = (val, respo, objet) => {
+		let res = document.getElementById("res")
+		let obj = document.getElementById("obj")
+		res.innerHTML = respo;
+		obj.innerHTML = objet;
+		id = val
+		//console.log("+++++++++",id);
+	}
+
+
+</script>
 </html>
