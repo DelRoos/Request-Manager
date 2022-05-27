@@ -5,12 +5,23 @@ from django.contrib import messages
 from .models import User
 from .resources import UserResource
 from tablib import Dataset
-from request.models import Template
+from request.models import Template, RequestHistory, Comment
 from django.db.models.query import QuerySet
 
 
 def teacher(request):
-    return render(request,'teacher.html')
+    templates = Template.objects.filter(responsable=request.user.id)
+    requests = []
+    # print(templates)
+    
+    
+    for template in templates:
+        list_history = RequestHistory.objects.filter(request=template).last()
+        print(list_history.responsable.id == request.user.id)
+        if list_history.responsable.id == request.user.id:
+            requests.append(template)
+        
+    return render(request, 'teacher.html', {'templates': requests})
 
 
 def student(request):

@@ -33,3 +33,20 @@ class Template(models.Model):
 
     def __str__(self):
         return self.examen
+    
+class RequestHistory(models.Model):
+    request = models.ForeignKey(Template, on_delete = models.CASCADE, related_name="request_history")
+    responsable = models.ForeignKey(User, on_delete = models.CASCADE, related_name="new_responsable")
+    is_student = models.BooleanField(default=False)
+    transfert_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.responsable} - {self.request.objet}"
+    
+class Comment(models.Model):
+    request_history = models.ForeignKey(RequestHistory, on_delete = models.CASCADE, related_name="request_comment")
+    user = models.ForeignKey(User, on_delete = models.CASCADE, related_name="user_comment")
+    content = models.TextField()
+
+    def __str__(self):
+        return self.content

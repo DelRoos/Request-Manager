@@ -526,129 +526,48 @@ animation: iconosani 1.2s forwards;
     </div> <br>
   
     {% comment %} <div class="d-flex flex-justify-center"> {% endcomment %}
+
+
     <div class="" style="margin-left:100px; margin-bottom:50px">
-        <div class="d-flex flex-column" style="">
-          <div class="TimelineItem TimelineItem--condensed">
-            <div class="TimelineItem-badge" >
-              <svg class="octicon octicon-git-commit" width="16" height="18" 
-                   viewBox="0 0 16 18"
-                   aria-hidden="true" >
-                <path fill-rule="evenodd" 
-                      d="M10.86 7c-.45-1.72-2-3-3.86-3-1.86 0-3.41 
-                      1.28-3.86 3H0v2h3.14c.45 1.72 2 3 3.86 3 1.86 
-                      0 3.41-1.28 3.86-3H14V7h-3.14zM7 10.2c-1.22 
-                      0-2.2-.98-2.2-2.2 0-1.22.98-2.2 2.2-2.2 1.22 0 
-                      2.2.98 2.2 2.2 0 1.22-.98 2.2-2.2 2.2z">
-                </path>
-              </svg>
-            </div>
-            <div class="TimelineItem-body">
-                <p> <span style="background-color: #698cf0; padding: 5px">26, Avril 2022</span></p> 
-                <h3> M. Moyou</h3>
-                <p style="max-width: 800px; margin-bottom: 50px">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                    when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-                    It has survived not only five centuries, but also the leap into electronic typesetting,
-                    remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset 
-                    sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus 
-                    PageMaker including versions of Lorem Ipsum.
-                </p>
+        {% for histry in histories %}
+        
+            <div class="d-flex flex-column" style="">
+                <div class="TimelineItem TimelineItem--condensed">
+                <div class="TimelineItem-badge" >
+                    <svg class="octicon octicon-git-commit" width="16" height="18" 
+                        viewBox="0 0 16 18"
+                        aria-hidden="true" >
+                    <path fill-rule="evenodd" 
+                            d="M10.86 7c-.45-1.72-2-3-3.86-3-1.86 0-3.41 
+                            1.28-3.86 3H0v2h3.14c.45 1.72 2 3 3.86 3 1.86 
+                            0 3.41-1.28 3.86-3H14V7h-3.14zM7 10.2c-1.22 
+                            0-2.2-.98-2.2-2.2 0-1.22.98-2.2 2.2-2.2 1.22 0 
+                            2.2.98 2.2 2.2 0 1.22-.98 2.2-2.2 2.2z">
+                    </path>
+                    </svg>
+                </div>
+                <div class="TimelineItem-body">
+                    <p> <span style="background-color: #698cf0; padding: 5px">{{histry.transfert_date.date}}</span></p> 
+                    
+                    {% for comment in histry.request_comment.all %}
+                        {% if user != comment.user  %}
+                            <h3>M. {{comment.user.first_name}} - {{comment.user.last_name}} </h3>
+                        {% else %}
+                            <h3>Vous</h3>
+                        {% endif %}
 
+                        <p style="max-width: 800px; margin-bottom: 50px">
+                            {{comment.content}}
+                        </p>
+                    {% endfor %}
+                    
+    
+                </div>
+                </div>
+                
             </div>
-          </div>
-            
-          <div class="TimelineItem TimelineItem--condensed">
-            <div class="TimelineItem-badge">
-              <svg class="octicon octicon-git-commit" width="16" height="18" 
-                   viewBox="0 0 16 18"
-                   aria-hidden="true" >
-                <path fill-rule="evenodd" 
-                      d="M10.86 7c-.45-1.72-2-3-3.86-3-1.86 0-3.41 
-                      1.28-3.86 3H0v2h3.14c.45 1.72 2 3 3.86 3 1.86 
-                      0 3.41-1.28 3.86-3H14V7h-3.14zM7 10.2c-1.22 
-                      0-2.2-.98-2.2-2.2 0-1.22.98-2.2 2.2-2.2 1.22 0 
-                      2.2.98 2.2 2.2 0 1.22-.98 2.2-2.2 2.2z">
-                </path>
-              </svg>
-            </div>
-            <div class="TimelineItem-body">
-                <p> <span style="background-color: #698cf0; padding: 5px">27, Avril 2022</span></p> 
-                <h3> Dr. Monthe</h3>
-                <p style="max-width: 800px; margin-bottom: 50px">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                    when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-                    It has survived not only five centuries, but also the leap into electronic typesetting,
-                    remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset 
-                    sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus 
-                    PageMaker including versions of Lorem Ipsum.
-                </p>
-            </div>
-          </div>
-  
-          <div class="TimelineItem TimelineItem--condensed">
-            <div class="TimelineItem-badge">
-              <svg class="octicon octicon-git-commit"
-                   width="16" 
-                   height="18" 
-                   viewBox="0 0 16 18"
-                   aria-hidden="true" >
-                <path fill-rule="evenodd" 
-                      d="M10.86 7c-.45-1.72-2-3-3.86-3-1.86 0-3.41 
-                      1.28-3.86 3H0v2h3.14c.45 1.72 2 3 3.86 3 1.86 
-                      0 3.41-1.28 3.86-3H14V7h-3.14zM7 10.2c-1.22 
-                      0-2.2-.98-2.2-2.2 0-1.22.98-2.2 2.2-2.2 1.22 0 
-                      2.2.98 2.2 2.2 0 1.22-.98 2.2-2.2 2.2z">
-                </path>
-              </svg>
-            </div>
-            <div class="TimelineItem-body">
-                <p> <span style="background-color: #698cf0; padding: 5px">28, Avril 2022</span></p> 
-                <h3> Dr. Aminou</h3>
-                <p style="max-width: 800px; margin-bottom: 50px">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                    when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-                    It has survived not only five centuries, but also the leap into electronic typesetting,
-                    remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset 
-                    sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus 
-                    PageMaker including versions of Lorem Ipsum.
-                </p>
-            </div>
-          </div>
+        {% endfor %}
 
-          <div class="TimelineItem TimelineItem--condensed">
-            <div class="TimelineItem-badge">
-              <svg class="octicon octicon-git-commit"
-                   width="16" 
-                   height="18" 
-                   viewBox="0 0 16 18"
-                   aria-hidden="true" >
-                <path fill-rule="evenodd" 
-                      d="M10.86 7c-.45-1.72-2-3-3.86-3-1.86 0-3.41 
-                      1.28-3.86 3H0v2h3.14c.45 1.72 2 3 3.86 3 1.86 
-                      0 3.41-1.28 3.86-3H14V7h-3.14zM7 10.2c-1.22 
-                      0-2.2-.98-2.2-2.2 0-1.22.98-2.2 2.2-2.2 1.22 0 
-                      2.2.98 2.2 2.2 0 1.22-.98 2.2-2.2 2.2z">
-                </path>
-              </svg>
-            </div>
-            <div class="TimelineItem-body">
-                <p> <span style="background-color: #698cf0; padding: 5px">28, Avril 2022</span></p> 
-                <h3> Dr. Messi</h3>
-                <p style="max-width: 800px; margin-bottom: 50px">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                    when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-                    It has survived not only five centuries, but also the leap into electronic typesetting,
-                    remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset 
-                    sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus 
-                    PageMaker including versions of Lorem Ipsum.
-                </p>
-            </div>
-          </div>
-        </div>
     </div>
 
 
@@ -656,13 +575,41 @@ animation: iconosani 1.2s forwards;
 
 
 
+    {% if history.is_student and user.is_student %}
+
+        <section class="content-item" id="comments">
+            <div class="containr">   
+                <div class="row">
+                    <div class="col-sm-8">   
+                        <form>
+                            <h3 class="pull-left" style="color:#698cf0; font-weight:bold">COMMENTAIRES</h3>
+                            <button data-toggle="modal" data-target="#terminers" type="submit" id="comment-btn" class="pull-right btn1" style="">Submit</button>
+                            <fieldset>
+                                <div class="row" style="display: flex;">
+                                    <div class="col-sm-3 col-lg-2 hidden-xs">
+                                        <img class="img-responsive" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                                    </div>
+                                    <div class="form-group col-xs-12 col-sm-9 col-lg-10" style="margin-left: 5px; margin-top: 0px">
+                                        <textarea class="form-control" id="message" placeholder="votre commentaire" required=""></textarea>
+                                    </div>
+                                </div>  	
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    <button id="shared-resp-stud" data-toggle="modal" data-target="" style="font-size: 20px; font-weight: 300; width:180px; height:50px; background-color: #698cf0; border: 1px; color: #ffffff; border: 1px; margin-left:100px; margin-bottom: 50px">Renvoyer a l'enseignant</button>
+
+    {% elif not history.is_student and user.is_teacher %}
+
     <section class="content-item" id="comments">
         <div class="containr">   
             <div class="row">
                 <div class="col-sm-8">   
                     <form>
                         <h3 class="pull-left" style="color:#698cf0; font-weight:bold">COMMENTAIRES</h3>
-                        <button data-toggle="modal" data-target="#terminers" type="submit" class="pull-right btn1" style="">Submit</button>
+                        <button data-toggle="modal" data-target="#terminers" type="submit" id="comment-btn" class="pull-right btn1" style="">Submit</button>
                         <fieldset>
                             <div class="row" style="display: flex;">
                                 <div class="col-sm-3 col-lg-2 hidden-xs">
@@ -678,9 +625,14 @@ animation: iconosani 1.2s forwards;
             </div>
         </div>
     </section>
-
+    <button id="shared-resp-stud" data-toggle="modal" data-target="" style="font-size: 20px; font-weight: 300; width:180px; height:50px; background-color: #698cf0; border: 1px; color: #ffffff; border: 1px; margin-left:100px; margin-bottom: 50px">Renvoyer a l'etudiant</button>
     <button id="" data-toggle="modal" data-target="#terminer" style="font-size: 20px; font-weight: 300; width:180px; height:50px; background-color: #698cf0; border: 1px; color: #ffffff; border: 1px; margin-left:100px; margin-bottom: 50px">Terminé</button>
-    <button id="" data-toggle="modal" data-target="#transferer" style="font-size: 20px; font-weight: 300; width:180px; height:50px; background-color: #698cf0; border: 1px; color: #ffffff; border: 1px; margin-left:100px; margin-bottom: 50px">Transférer</button>
+    <button id="transfert"  style="font-size: 20px; font-weight: 300; width:180px; height:50px; background-color: #698cf0; border: 1px; color: #ffffff; border: 1px; margin-left:100px; margin-bottom: 50px">Transférer</button>
+
+    {% endif %}
+   {% comment %} <h1>{{template.id}}</h1> {% endcomment %}
+   
+    
 
     <!-- popup -->
     <div class="popScroll modal fade" id="terminer" role="dialog">
@@ -725,4 +677,122 @@ animation: iconosani 1.2s forwards;
         </div>
     </div>
     
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+
+        if(document.cookie && document.cookie != "") {
+            const cookies = document.cookie.split(";");
+            
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+
+                if (cookie.substring(0, name.length+1) === name+"=") {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length+1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    document.querySelector("#comment-btn").addEventListener("click", event => {
+        event.preventDefault();
+    
+        let form = new FormData();
+        let message = document.querySelector("#message").value;
+
+        let template = "{{template.id}}";
+        let history = "{{history.id}}";
+        
+        let url_request = "{% url 'request:post_comment' %}"
+
+
+        form.append("content", message);
+        form.append("req", history);
+        form.append("template", template);
+
+        //let csrfTokenValue = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        let request = new Request(url_request, {method: 'POST',
+                                                        body: form,
+                                                        headers: {"X-CSRFToken": getCookie("csrftoken")}
+                                                        })  
+                                                        
+       
+
+        fetch(request)
+            .then(response => 
+                response.json()
+            
+            )
+            .then(data => {
+               //console.log(request)
+                window.location.reload();
+                console.log(data);
+                //let resultParagraph = document.querySelector("#operation");
+                //resultParagraph.innerHTML = result["operation_result"];
+            })
+    })
+
+
+    document.querySelector("#shared-resp-stud").addEventListener("click", event => {
+        event.preventDefault();
+    
+        let form = new FormData();
+
+        let history = "{{history.id}}";
+        let template = "{{template.id}}";
+        
+        let url_request = "{% url 'request:change_state' %}"
+
+
+        form.append("req", history);
+        form.append("template", template);
+
+        //let csrfTokenValue = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        let request = new Request(url_request, {method: 'POST',
+                                                        body: form,
+                                                        headers: {"X-CSRFToken": getCookie("csrftoken")}
+                                                        })  
+                                                        
+        fetch(request)
+            .then(response => 
+                response.json()
+            )
+            .then(data => {
+                window.location.reload();
+                console.log(data);
+            })
+    })
+
+    document.querySelector("#transfert").addEventListener("click", event => {
+        event.preventDefault();
+    
+        let form = new FormData();
+
+        let history = "{{history.id}}";
+        let template = "{{template.id}}";
+        
+        let url_request = "{% url 'request:transfert_request' %}"
+
+
+        form.append("req", history);
+        form.append("template", template);
+        form.append("to_teacher", 7);
+
+        //let csrfTokenValue = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        let request = new Request(url_request, {method: 'POST',
+                                                        body: form,
+                                                        headers: {"X-CSRFToken": getCookie("csrftoken")}
+                                                        })  
+                                                        
+        fetch(request)
+            .then(response => 
+                response.json()
+            )
+            .then(data => {
+                window.location.replace(current_uri.origin+"/teacher/")
+            })
+    })
+</script>
 </body>
