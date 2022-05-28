@@ -178,7 +178,8 @@ def edit(request, id = None):
 
 def follow(request, id):
     try:
-        templates = Template.objects.filter((Q(responsable=request.user) | Q(student=request.user)) & Q(id = id))[0]
+        teachers = User.objects.filter(is_teacher=True)
+        templates = Template.objects.filter(id = id)[0]
         list_history = RequestHistory.objects.filter(request=templates)
         
 
@@ -187,6 +188,7 @@ def follow(request, id):
             "user": request.user,
             "template": templates,
             "history": list_history.last(),
+            'teachers':teachers
         })
     except Template.DoesNotExist:
         raise Http404("Vous ne pouvez pas accerdez a cette requette")
@@ -276,7 +278,7 @@ def transfert_request(request):
         user = request.user
         
         template = Template.objects.get(id=template_id)
-        to_teacher = request.user
+        to_teacher = User.objects.get(id = to_teach_id)
         
         
         request_history = RequestHistory.objects.create(

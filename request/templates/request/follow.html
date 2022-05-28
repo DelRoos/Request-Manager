@@ -547,7 +547,13 @@ animation: iconosani 1.2s forwards;
                     </svg>
                 </div>
                 <div class="TimelineItem-body">
-                    <p> <span style="background-color: #698cf0; padding: 5px">{{histry.transfert_date.date}}</span></p> 
+                    <p> <span style="background-color: #698cf0; padding: 5px">{{histry.transfert_date.date}}
+
+                        
+                        {% if not forloop.first  %}
+                        tranfert de la requete a {{histry.responsable.first_name}}
+                        {% endif %}
+                    </span></p> 
                     
                     {% for comment in histry.request_comment.all %}
                         {% if user != comment.user  %}
@@ -583,7 +589,7 @@ animation: iconosani 1.2s forwards;
                     <div class="col-sm-8">   
                         <form>
                             <h3 class="pull-left" style="color:#698cf0; font-weight:bold">COMMENTAIRES</h3>
-                            <button data-toggle="modal" data-target="#terminers" type="submit" id="comment-btn" class="pull-right btn1" style="">Submit</button>
+                            <button data-toggle="modal" data-target="" type="submit" id="comment-btn" class="pull-right btn1" style="">Submit</button>
                             <fieldset>
                                 <div class="row" style="display: flex;">
                                     <div class="col-sm-3 col-lg-2 hidden-xs">
@@ -625,9 +631,9 @@ animation: iconosani 1.2s forwards;
             </div>
         </div>
     </section>
-    <button id="shared-resp-stud" data-toggle="modal" data-target="" style="font-size: 20px; font-weight: 300; width:180px; height:50px; background-color: #698cf0; border: 1px; color: #ffffff; border: 1px; margin-left:100px; margin-bottom: 50px">Renvoyer a l'etudiant</button>
+    <button id="shared-resp-stud" data-toggle="modal" data-target="" style="font-size: 20px; font-weight: 300; width:200px; height:50px; background-color: #698cf0; border: 1px; color: #ffffff; border: 1px; margin-left:100px; margin-bottom: 50px">Renvoyer a l'etudiant</button>
     <button id="" data-toggle="modal" data-target="#terminer" style="font-size: 20px; font-weight: 300; width:180px; height:50px; background-color: #698cf0; border: 1px; color: #ffffff; border: 1px; margin-left:100px; margin-bottom: 50px">Terminé</button>
-    <button id="transfert"  style="font-size: 20px; font-weight: 300; width:180px; height:50px; background-color: #698cf0; border: 1px; color: #ffffff; border: 1px; margin-left:100px; margin-bottom: 50px">Transférer</button>
+    <button id="" data-toggle="modal" data-target="#transferer"  style="font-size: 20px; font-weight: 300; width:180px; height:50px; background-color: #698cf0; border: 1px; color: #ffffff; border: 1px; margin-left:100px; margin-bottom: 50px">Transférer</button>
 
     {% endif %}
    {% comment %} <h1>{{template.id}}</h1> {% endcomment %}
@@ -649,19 +655,33 @@ animation: iconosani 1.2s forwards;
         </div>
     </div>
     <!-- popup -->
-    <div class="popScroll modal fade" id="transferer" role="dialog">
-        <div class="popup"> 
-            <h1>REQUEST-MANAGER</h1>
-            <div class="subscribe-widget">
-            </div>
-            <p>Etes-vous sur de vouloir transférer la requête ?</p>
-            <div id="option">
-                <a href="#" id="home" class="boxi">OUI</a> 
-                <em>ou</em>
-                <a href="#" id="close" class="boxi closei">NON</a>
-            </div>
-        </div>
-    </div>
+    <!-- Delete Modal HTML -->
+	<div id="transferer" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form>
+					<div class="modal-header">						
+						<h4 class="modal-title">Transférer une requete</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+                        <select title="options"  name = "teacher" id = "id_teacher" style="width: 350px; height:35px; font-size: 18px">
+                            {% comment %} <option selected>Selectioner un</option> {% endcomment %}
+                            {% for teacher in teachers %}
+                                {% if teacher != user %}
+                                    <option id="options" value="{{ teacher.id }}"> {{ teacher }} </option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>		
+					</div>
+					<div class="modal-footer">
+						<input type="button" class="btn btn-default" data-dismiss="modal" value="Annuler">
+						<input type="submit" class="btn btn-danger" value="envoyer" id="transfert">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
     <!-- popup -->
     <div class="popScroll modal fade" id="terminers" role="dialog">
         <div class="popup"> 
@@ -772,13 +792,14 @@ animation: iconosani 1.2s forwards;
 
         let history = "{{history.id}}";
         let template = "{{template.id}}";
-        
+        let idteacher = document.querySelector("#id_teacher").value
+        console.log(id_teacher);
         let url_request = "{% url 'request:transfert_request' %}"
 
 
         form.append("req", history);
         form.append("template", template);
-        form.append("to_teacher", 7);
+        form.append("to_teacher", idteacher);
 
         //let csrfTokenValue = document.querySelector('[name=csrfmiddlewaretoken]').value;
         let request = new Request(url_request, {method: 'POST',
@@ -791,7 +812,7 @@ animation: iconosani 1.2s forwards;
                 response.json()
             )
             .then(data => {
-                window.location.replace(current_uri.origin+"/teacher/")
+                window.location.replace(document.location.origin+"/teacher/")
             })
     })
 </script>

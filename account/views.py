@@ -10,15 +10,16 @@ from django.db.models.query import QuerySet
 
 
 def teacher(request):
-    templates = Template.objects.filter(responsable=request.user.id)
+    templates = Template.objects.filter()
     requests = []
     # print(templates)
     
     
     for template in templates:
         list_history = RequestHistory.objects.filter(request=template).last()
-        print(list_history.responsable.id == request.user.id)
+        # print(list_history.responsable.username)
         if list_history.responsable.id == request.user.id:
+            print(list_history.responsable.username)
             requests.append(template)
         
     return render(request, 'teacher.html', {'templates': requests})
