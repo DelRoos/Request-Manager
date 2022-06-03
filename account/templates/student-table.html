@@ -106,7 +106,7 @@ table.table td a:hover {
 table.table td a.edit {
 	color: #FFC107;
 }
-table.table td a.delete {
+a.delete {
 	color: #F44336;
 }
 table.table td i {
@@ -239,34 +239,277 @@ table.table .avatar {
 	font-weight: normal;
 }	
 .one h1 {
-	font-family: sans-serif;
-	margin: auto;
-	color: #111;
+	/*color: #999;*/
+	color: #111111;
 	text-align: center;
-	font-size: 30px;
-	max-width: 600px;
 	position: relative;
 }
-.one h1:before {
-	content: "";
-	display: block;
-	width: 230px;
-	height: 5px;
-	background: #698cf0;
-	left: -120px;
-	top: 40%;
+.one h1::after{
+	content:"";
 	position: absolute;
-}
-.one h1:after {
-	content: "";
 	display: block;
-	width: 230px;
+	left: 28%;
+	bottom: -10px;
+	width: 20%;
 	height: 5px;
-	background: #698cf0;
-	right: -120px;
-	top: 40%;
-	position: absolute;
+	background-color: #698cf0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* #Navigation
+================================================== */
+
+.start-header {
+	opacity: 1;
+	transform: translateY(0);
+	padding: 20px 0;
+	box-shadow: 0 10px 30px 0 rgba(138, 155, 165, 0.15);
+	-webkit-transition : all 0.3s ease-out;
+	transition : all 0.3s ease-out;
+}
+.start-header.scroll-on {
+	box-shadow: 0 5px 10px 0 rgba(138, 155, 165, 0.15);
+	padding: 10px 0;
+	-webkit-transition : all 0.3s ease-out;
+	transition : all 0.3s ease-out;
+}
+.start-header.scroll-on .navbar-brand img{
+	height: 24px;
+	-webkit-transition : all 0.3s ease-out;
+	transition : all 0.3s ease-out;
+}
+.navigation-wrap{
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+	-webkit-transition : all 0.3s ease-out;
+	transition : all 0.3s ease-out;
+}
+.navbar{
+	padding: 0;
+}
+.navbar-brand img{
+	height: 28px;
+	width: auto;
+	display: block;
+  filter: brightness(10%);
+	-webkit-transition : all 0.3s ease-out;
+	transition : all 0.3s ease-out;
+}
+.navbar-toggler {
+	float: right;
+	border: none;
+	padding-right: 0;
+}
+.navbar-toggler:active,
+.navbar-toggler:focus {
+	outline: none;
+}
+.navbar-light .navbar-toggler-icon {
+	width: 24px;
+	height: 17px;
+	background-image: none;
+	position: relative;
+	border-bottom: 1px solid #000;
+    transition: all 300ms linear;
+}
+.navbar-light .navbar-toggler-icon:after, 
+.navbar-light .navbar-toggler-icon:before{
+	width: 24px;
+	position: absolute;
+	height: 1px;
+	background-color: #000;
+	top: 0;
+	left: 0;
+	content: '';
+	z-index: 2;
+    transition: all 300ms linear;
+}
+.navbar-light .navbar-toggler-icon:after{
+	top: 8px;
+}
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon:after {
+	transform: rotate(45deg);
+}
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon:before {
+	transform: translateY(8px) rotate(-45deg);
+}
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+	border-color: transparent;
+}
+.nav-link{
+	color: #212121 !important;
+	font-weight: 500;
+    transition: all 200ms linear;
+}
+.nav-item:hover .nav-link{
+	color: #698cf0 !important;
+}
+.nav-item.active .nav-link{
+	color: #777 !important;
+}
+.nav-link {
+	position: relative;
+	padding: 5px 0 !important;
+	display: inline-block;
+}
+.nav-item:after{
+	position: absolute;
+	bottom: -5px;
+	left: 0;
+	width: 100%;
+	height: 2px;
+	content: '';
+	background-color: #698cf0;
+	opacity: 0;
+    transition: all 200ms linear;
+}
+.nav-item:hover:after{
+	bottom: 0;
+	opacity: 1;
+}
+.nav-item.active:hover:after{
+	opacity: 0;
+}
+.nav-item{
+	position: relative;
+    transition: all 200ms linear;
+}
+
+
+
+
+
+
+
+
+
+
+.fab {
+	width: 70px;
+	height: 70px;
+	background-color: #698cf0;
+	border-radius: 50%;
+	box-shadow: 0 6px 10px 0 #666;
+	cursor: pointer;
+	
+	font-size: 50px;
+	line-height: 70px;
+	color: white;
+	text-align: center;
+	
+	position: fixed;
+	right: 50px;
+	bottom: 50px;
+	
+   transition: all 0.1s ease-in-out;
+ }
+ 
+ .fab:hover {
+	box-shadow: 0 6px 14px 0 #666;
+	transform: scale(1.05);
+ }
+
+
+
+
+
+
+
+
+
+
+
+ .c-dashboardInfo {
+	margin-bottom: 15px;
+  }
+  .c-dashboardInfo .wrap {
+	background: #ffffff;
+	box-shadow: 2px 10px 20px rgba(0, 0, 0, 0.1);
+	border-radius: 7px;
+	text-align: center;
+	position: relative;
+	overflow: hidden;
+	padding: 40px 25px 20px;
+	height: 100%;
+  }
+  .c-dashboardInfo__title,
+  .c-dashboardInfo__subInfo {
+	color: #6c6c6c;
+	font-size: 1.18em;
+  }
+  .c-dashboardInfo span {
+	display: block;
+  }
+  .c-dashboardInfo__count {
+	font-weight: 600;
+	font-size: 2.5em;
+	line-height: 64px;
+	color: #323c43;
+  }
+  .c-dashboardInfo .wrap:after {
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 10px;
+	content: "";
+  }
+  
+  .c-dashboardInfo:nth-child(1) .wrap:after {
+	background: linear-gradient(81.67deg, #0084f4 0%, #1a4da2 100%);
+  }
+  .c-dashboardInfo:nth-child(2) .wrap:after {
+	background: linear-gradient(82.59deg, #00c48c 0%, #00a173 100%);
+  }
+  .c-dashboardInfo:nth-child(3) .wrap:after {
+	background: linear-gradient(69.83deg, #0084f4 0%, #00c48c 100%);
+  }
+  .c-dashboardInfo:nth-child(4) .wrap:after {
+	background: linear-gradient(81.67deg, #ff647c 0%, #1f5dc5 100%);
+  }
+  .c-dashboardInfo__title svg {
+	color: #d7d7d7;
+	margin-left: 5px;
+  }
+  .MuiSvgIcon-root-19 {
+	fill: currentColor;
+	width: 1em;
+	height: 1em;
+	display: inline-block;
+	font-size: 24px;
+	transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+	user-select: none;
+	flex-shrink: 0;
+  }
+  
+
+
+
+
+
+
+
+
+
+
+
+
 </style>
 <script>
 $(document).ready(function(){
@@ -295,23 +538,126 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
+
+
+
+
+
+
+
+
+
+
+
+	<div class="navigation-wrap bg-light start-header start-style">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<nav class="navbar navbar-expand-md navbar-light">
+					
+						{% comment %} <a class="navbar-brand" href="https://front.codes/" target="_blank"><img src="https://assets.codepen.io/1462889/fcy.png" alt=""></a>	 {% endcomment %}
+						<a class="navbar-brand" href="#" style="font-weight: 700; font-size: 25px"> R-M </a>
+
+						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+						
+						<div class="collapse navbar-collapse" id="navbarSupportedContent">
+							<ul class="navbar-nav ml-auto py-4 py-md-0">
+								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+									<a class="nav-link" style="font-size: 15px" href="#">Home</a>
+								</li>
+								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+									<a class="nav-link" style="font-size: 15px" href="#">Portfolio</a>
+								</li>
+								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+									<a class="nav-link" style="font-size: 15px" href="#">Agency</a>
+								</li>
+								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+									<a class="nav-link" style="font-size: 15px" href="#">Journal</a>
+								</li>
+								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+									<a class="nav-link" style="font-size: 15px" href="#">Contact</a>
+								</li>
+								<li style="cursor: pointer" class="nav- pl-4 pl-md-0 ml-0 ml-md-4">
+									<i id="dropdownMenuButton" data-toggle="dropdown" style="font-size: 30px" class="fa fa-user"></i>
+									<div class="dropdown">
+										{% comment %} <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button> {% endcomment %}
+										<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+											<a class="dropdown-item" href="{% url 'account:user_login' %}">Logout<i class="fa fa-arrow"></i></a>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</nav>		
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+	
+
+
+
+
+
+
 <div class="container-xl">
-    <div class="zero" style="margin-left: 30px; margin-right: 30px; margin-top: 30px;">
-        <div class="one">
+    <div class="zero" style="margin-left: 30px; margin-right: 30px; margin-top: 130px; margin-bottom: 50px;">
+        {% comment %} <div class="one">
             <h1>TOUTES MES REQUETES</h1>
-        </div>
+        </div> {% endcomment %}
     </div>
-	<div class="table-responsive">
+	{% for element in template %}
+	<div id="root">
+		<div class="container pt-5">
+		  <div class="row align-items-stretch">
+			<div class="c-dashboardInfo col-lg-4 col-md-6">
+			  <div class="wrap">
+				  <p style="float: right; color: #ccc"> {{ element.publish_date }} </p><br>
+				{% comment %} <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Portfolio Balance<svg
+					class="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
+					<path fill="none" d="M0 0h24v24H0z"></path>
+					<path
+					  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
+					</path>
+				  </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count">€10,500</span> {% endcomment %}
+				  <p style="float: left; color: black; font-weight: bold">Responsable: <a href="{% url 'request:follow' element.id %}" style="text-decoration: none"> {{ element.responsable }} </a> </p><br><br>
+				  <p style="float: left; color: black"> Objet: {{ element.objet }} </p><br><br>
+				  <div style="display: flex; justify-content: space-between">
+					  <div>
+				  		<span class="badge badge-primary">{{ element.status }}</span>
+					  </div>
+					  <div>
+						{% if element.status == "loading"  %}
+							<a class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+						{% endif %}
+						<a href="#deleteEmployeeModal" class="delete" data-toggle="modal" onclick="changeID('{{ element.id }}', '{{ element.responsable }}', '{{ element.objet }}');"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+					  </div>
+				  </div>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	  {% endfor %}
+	{% comment %} <div class="table-responsive">
 		<div class="table-wrapper">
 			<div class="table-title">
 				<div class="row">
 					<div class="col-sm-6">
 						<h2>Liste de <b>Requêtes</b></h2>
 					</div>
-					<div class="col-sm-6">
-						<a href="{% url 'account:student' %}" class="btn btn-success" ><i class="material-icons">&#xE147;</i> <span>Ajouter une requête</span></a>
+					<div class="col-sm-6"> {% endcomment %}
+						{% comment %} <a href="{% url 'account:student' %}" class="btn btn-success" ><i class="material-icons">&#xE147;</i> <span>Ajouter une requête</span></a> {% endcomment %}
 						{% comment %} <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>						 {% endcomment %}
-					</div>
+					{% comment %} </div>
 				</div>
 			</div>
 			<table class="table table-striped table-hover">
@@ -330,8 +676,8 @@ $(document).ready(function(){
 						<th>Actions</th>
 					</tr>
 				</thead>
-				<tbody>
-                    {% for element in template %}
+				<tbody> {% endcomment %}
+                    {% comment %} {% for element in template %}
 						<tr>
 							<td>
 								<span class="custom-checkbox">
@@ -352,11 +698,11 @@ $(document).ready(function(){
 								<a href="#deleteEmployeeModal" class="delete" data-toggle="modal" onclick="changeID('{{ element.id }}', '{{ element.responsable }}', '{{ element.objet }}');"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
 							</td>
 						</tr>
-					{% endfor %} 
-				</tbody>
+					{% endfor %}  {% endcomment %}
+				{% comment %} </tbody>
 			</table>
 		</div>
-	</div>        
+	</div>         {% endcomment %}
 </div>
 <!-- Delete Modal HTML -->
 	<div id="deleteEmployeeModal" class="modal fade">
@@ -380,6 +726,7 @@ $(document).ready(function(){
 			</div>
 		</div>
 	</div>
+	<a href="{% url 'account:student' %}"><div class="fab"> + </div></a>
 </body>
 <script>
 	var id;
@@ -392,7 +739,64 @@ $(document).ready(function(){
 		id = val
 		//console.log("+++++++++",id);
 	}
+</script>
 
 
+
+
+
+
+
+
+
+
+
+<script>
+	(function($) { "use strict";
+
+	$(function() {
+		var header = $(".start-style");
+		$(window).scroll(function() {    
+			var scroll = $(window).scrollTop();
+		
+			if (scroll >= 10) {
+				header.removeClass('start-style').addClass("scroll-on");
+			} else {
+				header.removeClass("scroll-on").addClass('start-style');
+			}
+		});
+	});		
+		
+	//Animation
+	
+	$(document).ready(function() {
+		$('body.hero-anime').removeClass('hero-anime');
+	});
+
+	//Menu On Hover
+		
+	$('body').on('mouseenter mouseleave','.nav-item',function(e){
+			if ($(window).width() > 750) {
+				var _d=$(e.target).closest('.nav-item');_d.addClass('show');
+				setTimeout(function(){
+				_d[_d.is(':hover')?'addClass':'removeClass']('show');
+				},1);
+			}
+	});	
+	
+	//Switch light/dark
+	
+	$("#switch").on('click', function () {
+		if ($("body").hasClass("dark")) {
+			$("body").removeClass("dark");
+			$("#switch").removeClass("switched");
+		}
+		else {
+			$("body").addClass("dark");
+			$("#switch").addClass("switched");
+		}
+	});  
+	
+  })(jQuery); 
 </script>
 </html>
