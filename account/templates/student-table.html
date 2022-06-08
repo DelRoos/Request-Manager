@@ -565,16 +565,10 @@ $(document).ready(function(){
 						<div class="collapse navbar-collapse" id="navbarSupportedContent">
 							<ul class="navbar-nav ml-auto py-4 py-md-0">
 								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-									<a class="nav-link" style="font-size: 15px" href="#">Home</a>
+									<a class="nav-link" style="font-size: 15px" href="#">Dashboard</a>
 								</li>
 								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-									<a class="nav-link" style="font-size: 15px" href="#">Portfolio</a>
-								</li>
-								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-									<a class="nav-link" style="font-size: 15px" href="#">Agency</a>
-								</li>
-								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-									<a class="nav-link" style="font-size: 15px" href="#">Journal</a>
+									<a class="nav-link" style="font-size: 15px" href="{% url 'account:student' %}">Model</a>
 								</li>
 								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
 									<a class="nav-link" style="font-size: 15px" href="#">Contact</a>
@@ -614,11 +608,12 @@ $(document).ready(function(){
             <h1>TOUTES MES REQUETES</h1>
         </div> {% endcomment %}
     </div>
+	<div class="row">
 	{% for element in template %}
 	<div id="root">
-		<div class="container pt-5">
+		<div class="container pt-5 m-4">
 		  <div class="row align-items-stretch">
-			<div class="c-dashboardInfo col-lg-4 col-md-6">
+			<div class="c-dashboardInfo ">
 			  <div class="wrap">
 				  <p style="float: right; color: #ccc"> {{ element.publish_date }} </p><br>
 				{% comment %} <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Portfolio Balance<svg
@@ -647,6 +642,7 @@ $(document).ready(function(){
 		</div>
 	  </div>
 	  {% endfor %}
+	</div>
 	{% comment %} <div class="table-responsive">
 		<div class="table-wrapper">
 			<div class="table-title">
