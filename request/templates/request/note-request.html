@@ -429,31 +429,31 @@
 
 
 
-    <div class="container">
+    {% comment %} <div class="container"> {% endcomment %}
         <div class="zero" style="margin-left: 30px; margin-right: 30px; margin-top: 130px; margin-bottom: 50px;">
             {% comment %} <div class="one">
                 <h1>TOUTES MES REQUETES</h1>
             </div> {% endcomment %}
         </div>
-        <div class="row">
+        {% comment %} <div class="row col-12"> {% endcomment %}
         <div id="root">
-            <div class="container pt-8 m-8">
-              <div class="h">
+            <div class="container">
+              <div class="">
                 <div class="c-dashboardInfo ">
                   <div class="wrap">
                     <div style="display: flex; justify-content: space-between">
                         <div>
-                            <p>Nom: {{ student.last_name }}</p>
-                            <p>Prenom: {{ student.first_name }}</p>
-                            <p>Matricule: {{ student.matricule }}</p>
-                            <p>Email: {{ student.email }}</p>
-                            <p>Niveau: {{ student.niveau }}</p>
-                            <p>Filiere: {{ student.filiere }}</p>
-                            <p>Telephone: {{ student.phone }}</p>
+                            <p style="font-weight: bold">Nom: {{ student.last_name }}</p>
+                            <p style="font-weight: bold">Prenom: {{ student.first_name }}</p>
+                            <p style="font-weight: bold">Matricule: {{ student.matricule }}</p>
+                            <p style="font-weight: bold">Email: {{ student.email }}</p>
+                            <p style="font-weight: bold">Niveau: {{ student.niveau }}</p>
+                            <p style="font-weight: bold">Filiere: {{ student.filiere }}</p>
+                            <p style="font-weight: bold">Télephone: {{ student.phone }}</p>
                         </div>
                         <div>
                             {% language 'fr' %}
-                                <p>date: Le, {{current_date}}</span></p>
+                                <p style="font-weight: bold">date: Le, {{current_date}}</span></p>
                             {% endlanguage %}
                         </div>
                     </div>
@@ -493,14 +493,14 @@
                         </p>
                     </div>
                     <br>
-                    <div style="background-color:; padding-top: 1px; padding-bottom: 1px; padding-left:5px; margin-bottom: 10px">
+                    <div style="background-color:; padding-top: 1px; padding-bottom: 1px; padding-left:5px; margin-bottom: 10px;">
                         <h4 style="color:#111">COMMENTAIRE*</h4>
                     </div>
         
                     {% if template %}
-                        <textarea id="comment" style="height:200px; width:96.5%; padding: 20px; font-size: 18px" placeholder="Une brève description de votre problème ..." required>{{template.commentaire}}</textarea> 
+                        <textarea id="comment" style="height:200px; width:100%; padding: 20px; font-size: 18px" placeholder="Une brève description de votre problème ..." required>{{template.commentaire}}</textarea> 
                     {% else %}
-                        <textarea id="comment" style="height:200px; width:96.5%; padding: 20px; font-size: 18px" placeholder="Une brève description de votre problème ..." required></textarea> 
+                        <textarea id="comment" style="height:200px; width:100%; padding: 20px; font-size: 18px" placeholder="Une brève description de votre problème ..." required></textarea> 
                     {% endif %}
         
                     <br><br>    
