@@ -110,6 +110,12 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+# new
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.request',
+)
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
