@@ -412,31 +412,103 @@ animation: iconosani 1.2s forwards;
 
 
 
+.c-dashboardInfo {
+    margin-bottom: 15px;
+  }
+  .c-dashboardInfo .wrap {
+    background: #ffffff;
+    box-shadow: 2px 10px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 7px;
+    text-align: cente;
+    position: relative;
+    overflow: hidden;
+    padding: 40px 25px 20px;
+    height: 100%;
+  }
+  .c-dashboardInfo__title,
+  .c-dashboardInfo__subInfo {
+    color: #6c6c6c;
+    font-size: 1.18em;
+  }
+  .c-dashboardInfo span {
+    display: block;
+  }
+  .c-dashboardInfo__count {
+    font-weight: 600;
+    font-size: 2.5em;
+    line-height: 64px;
+    color: #323c43;
+  }
+  .c-dashboardInfo .wrap:after {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    content: "";
+  }
+  
+  .c-dashboardInfo:nth-child(1) .wrap:after {
+    background: linear-gradient(81.67deg, #0084f4 0%, #1a4da2 100%);
+  }
+  .c-dashboardInfo:nth-child(2) .wrap:after {
+    background: linear-gradient(82.59deg, #00c48c 0%, #00a173 100%);
+  }
+  .c-dashboardInfo:nth-child(3) .wrap:after {
+    background: linear-gradient(69.83deg, #0084f4 0%, #00c48c 100%);
+  }
+  .c-dashboardInfo:nth-child(4) .wrap:after {
+    background: linear-gradient(81.67deg, #ff647c 0%, #1f5dc5 100%);
+  }
+  .c-dashboardInfo__title svg {
+    color: #d7d7d7;
+    margin-left: 5px;
+  }
+  .MuiSvgIcon-root-19 {
+    fill: currentColor;
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    font-size: 24px;
+    transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    user-select: none;
+    flex-shrink: 0;
+  }
+
+
+
+
+
+
 
             
         </style>
     </head>
 <body>
     <div class="zero" style="margin-left: 30px; margin-right: 30px; margin-top: 30px;">
-        <div class="one">
+        {% comment %} <div class="one">
             <h1>SUIVI</h1>
-        </div>
+        </div> {% endcomment %}
     </div>
-    <div style="border: 1px solid #11; border: 5px double #698cf0; margin: 30px">
-    <div style="margin-left: 100px; margin-right: 100px; margin-top: 100px; font-size: 18px">
-        <div style="display: flex; justify-content: space-between">
-            <div>
-                <p>Nom: {{ template.student.last_name }}</p>
-                <p>Prenom: {{ template.student.first_name }}</p>
-                <p>Matricule: {{ template.student.matricule }}</p>
-                <p>Email: {{ template.student.email }}</p>
-                <p>Niveau: {{ template.student.niveau }}</p>
-                <p>Filiere: {{ template.student.filiere }}</p>
-                <p>Telephone: {{ template.student.phone }}</p>
-            </div>
+    <div id="root">
+        <div class="container">
+          <div class="">
+            <div class="c-dashboardInfo ">
+              <div class="wrap">
+                <div style="display: flex; justify-content: space-between">
+                    <div>
+                        <p style="font-weight: bold">Nom: {{ template.student.last_name }}</p>
+                        <p style="font-weight: bold">Prenom: {{ template.student.first_name }}</p>
+                        <p style="font-weight: bold">Matricule: {{ template.student.matricule }}</p>
+                        <p style="font-weight: bold">Email: {{ template.student.email }}</p>
+                        <p style="font-weight: bold">Niveau: {{ template.student.niveau }}</p>
+                        <p style="font-weight: bold">Filiere: {{ template.student.filiere }}</p>
+                        <p style="font-weight: bold">Telephone: {{ template.student.phone }}</p>
+                    </div>
             <div>
                 {% language 'fr' %}
-                    <p>date: Le, {{template.publish_date}}</span></p>
+                    <p style="font-weight: bold">date: Le, {{template.publish_date}}</span></p>
                 {% endlanguage %}
             </div>
         </div>
@@ -445,8 +517,8 @@ animation: iconosani 1.2s forwards;
 
             </div>
             <div>
-                <p>A</P>
-                <p> {{ template.responsable }}</p>
+                <p style="font-weight: bold">A  &nbsp;&nbsp;&nbsp;&nbsp; {{ template.responsable }}</P>
+                <p> </p>
             </div>
         </div>
         <div style="display: flex; justify-content: space-between">
@@ -511,6 +583,9 @@ animation: iconosani 1.2s forwards;
         
             </div>
         <br>
+        </div>
+    </div>
+</div>
     </div>
     </div>
 
@@ -521,7 +596,7 @@ animation: iconosani 1.2s forwards;
 
 
     <div class="text-center">
-        <h1 class="" style="color:#698cf0"> TIME LINE </h1>
+        <h1 class="" style="color:#698cf0"> Ligne Temporelle </h1>
         <h3> Pour le suivi de la requête de l'étudiant </h3>
     </div> <br>
   
@@ -583,45 +658,18 @@ animation: iconosani 1.2s forwards;
 
     {% if history.is_student and user.is_student %}
 
-        <section class="content-item" id="comments">
-            <div class="containr">   
-                <div class="row">
-                    <div class="col-sm-8">   
-                        <form>
-                            <h3 class="pull-left" style="color:#698cf0; font-weight:bold">COMMENTAIRES</h3>
-                            <button data-toggle="modal" data-target="" type="submit" id="comment-btn" class="pull-right btn1" style="">Submit</button>
-                            <fieldset>
-                                <div class="row" style="display: flex;">
-                                    <div class="col-sm-3 col-lg-2 hidden-xs">
-                                        <img class="img-responsive" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
-                                    </div>
-                                    <div class="form-group col-xs-12 col-sm-9 col-lg-10" style="margin-left: 5px; margin-top: 0px">
-                                        <textarea class="form-control" id="message" placeholder="votre commentaire" required=""></textarea>
-                                    </div>
-                                </div>  	
-                            </fieldset>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
-    <button id="shared-resp-stud" data-toggle="modal" data-target="" style="font-size: 20px; font-weight: 300; width:180px; height:50px; background-color: #698cf0; border: 1px; color: #ffffff; border: 1px; margin-left:100px; margin-bottom: 50px">Renvoyer a l'enseignant</button>
-
-    {% elif not history.is_student and user.is_teacher %}
-
-    <section class="content-item" id="comments">
-        <div class="containr">   
-            <div class="row">
-                <div class="col-sm-8">   
+        <section class="" id="comments">
+            <div class="container"> 
+                <div class="col-sm-12">   
                     <form>
                         <h3 class="pull-left" style="color:#698cf0; font-weight:bold">COMMENTAIRES</h3>
-                        <button data-toggle="modal" data-target="#terminers" type="submit" id="comment-btn" class="pull-right btn1" style="">Submit</button>
+                        <button data-toggle="modal" data-target="" type="submit" id="comment-btn" class="pull-right btn1" style="">Poster</button>
                         <fieldset>
-                            <div class="row" style="display: flex;">
-                                <div class="col-sm-3 col-lg-2 hidden-xs">
+                            <div class="" style="display: flex;">
+                                {% comment %} <div class="col-sm-3 col-lg-2 hidden-xs">
                                     <img class="img-responsive" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
-                                </div>
-                                <div class="form-group col-xs-12 col-sm-9 col-lg-10" style="margin-left: 5px; margin-top: 0px">
+                                </div> {% endcomment %}
+                                <div class="form-group col-xs-12 col-sm-9 col-lg-12" style="margin-left: px; margin-top: 0px">
                                     <textarea class="form-control" id="message" placeholder="votre commentaire" required=""></textarea>
                                 </div>
                             </div>  	
@@ -629,11 +677,42 @@ animation: iconosani 1.2s forwards;
                     </form>
                 </div>
             </div>
+        </section>
+    <button id="shared-resp-stud" data-toggle="modal" data-target="" style="font-size: 20px; font-weight: 300; width:250px; height:50px; background-color: #698cf0; border: 1px; color: #ffffff; border: 1px; margin-left:100px; margin-bottom: 50px">Renvoyer a l'enseignant</button>
+
+    {% elif not history.is_student and user.is_teacher %}
+
+    <section class="" id="comments">
+        <div class="container">  
+            <div class="col-sm-12">   
+                <form>
+                    <h3 class="pull-left" style="color:#698cf0; font-weight:bold">COMMENTAIRES</h3>
+                    <button data-toggle="modal" data-target="#terminers" type="submit" id="comment-btn" class="pull-right btn1" style="">Poster</button>
+                    <fieldset>
+                        <div class="" style="display: flex;">
+                            {% comment %} <div class="col-sm-3 col-lg-2 hidden-xs">
+                                <img class="img-responsive" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                            </div> {% endcomment %}
+                            <div class="form-group col-xs-12 col-sm-9 col-lg-12" style="margin-left: 5px; margin-top: 0px">
+                                <textarea class="form-control" id="message" placeholder="votre commentaire" required=""></textarea>
+                            </div>
+                        </div>  	
+                    </fieldset>
+                </form>
+                <div style="display: flex; justify-content: space-between; margin-left: 20%; margin-right: 20%">
+                    <div>
+                        <button id="shared-resp-stud" data-toggle="modal" data-target="" style="font-size: 20px; font-weight: 300; width:200px; height:50px; background-color: #698cf0; border: 1px; color: #ffffff; border: 1px; margin-left:px; margin-bottom: 50px">Renvoyer a l'etudiant</button>
+                    </div>
+                    <div>
+                        <button id="" data-toggle="modal" data-target="#terminer" style="font-size: 20px; font-weight: 300; width:180px; height:50px; background-color: #698cf0; border: 1px; color: #ffffff; border: 1px; margin-left:px; margin-bottom: 50px">Terminé</button>
+                    </div>
+                    <div>
+                        <button id="" data-toggle="modal" data-target="#transferer"  style="font-size: 20px; font-weight: 300; width:180px; height:50px; background-color: #698cf0; border: 1px; color: #ffffff; border: 1px; margin-left:px; margin-bottom: 50px">Transférer</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
-    <button id="shared-resp-stud" data-toggle="modal" data-target="" style="font-size: 20px; font-weight: 300; width:200px; height:50px; background-color: #698cf0; border: 1px; color: #ffffff; border: 1px; margin-left:100px; margin-bottom: 50px">Renvoyer a l'etudiant</button>
-    <button id="" data-toggle="modal" data-target="#terminer" style="font-size: 20px; font-weight: 300; width:180px; height:50px; background-color: #698cf0; border: 1px; color: #ffffff; border: 1px; margin-left:100px; margin-bottom: 50px">Terminé</button>
-    <button id="" data-toggle="modal" data-target="#transferer"  style="font-size: 20px; font-weight: 300; width:180px; height:50px; background-color: #698cf0; border: 1px; color: #ffffff; border: 1px; margin-left:100px; margin-bottom: 50px">Transférer</button>
 
     {% endif %}
    {% comment %} <h1>{{template.id}}</h1> {% endcomment %}

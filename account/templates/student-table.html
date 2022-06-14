@@ -110,6 +110,12 @@ table.table td a.edit {
 a.delete {
 	color: #F44336;
 }
+span.material-icons{
+	color: #F44336;
+}
+a.material-icons{
+	color: #F44336;
+}
 table.table td i {
 	font-size: 19px;
 }
@@ -612,7 +618,8 @@ $(document).ready(function(){
 						<div class="c-dashboardInfo ">
 							<div class="wrap">
 								<p style="float: right; color: #ccc"> {{ element.publish_date }} </p><br>
-								<p style="float: left; color: black; font-weight: bold">Responsable: <a href="{% url 'request:follow' element.id %}" style="text-decoration: none"> {{ element.responsable }} </a> </p><br><br>
+								{% comment %} <p style="float: left; color: black; font-weight: bold">Responsable: <a href="{% url 'request:follow' element.id %}" style="text-decoration: none"> {{ element.responsable }} </a> </p><br><br> {% endcomment %}
+								<p style="float: left; color: black; font-weight: bold">Responsable: {{ element.responsable }} </p><br><br>
 								<p style="float: left; color: black"> Objet: {{ element.objet }} </p><br><br>
 								{% comment %} <div style="display: flex; justify-content: space-between"> {% endcomment %}
 							
@@ -621,10 +628,12 @@ $(document).ready(function(){
 										<span class="badge badge-primary">{{ element.status }}</span>
 									</div>
 									<div >
-										{% if element.status == "loading"  %}
+										{% comment %} {% if element.status == "loading"  %}
 											<a class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-										{% endif %}
-										<a href="#deleteEmployeeModal" class="delete" data-toggle="modal" onclick="changeID('{{ element.id }}', '{{ element.responsable }}', '{{ element.objet }}');"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+										{% endif %} {% endcomment %}
+										{% comment %} <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" onclick="changeID('{{ element.id }}', '{{ element.responsable }}', '{{ element.objet }}');"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a> {% endcomment %}
+										{% comment %} <a href="#"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE87C;</i></a> {% endcomment %}
+										<span class="material-icons"><a href="{% url 'request:follow' element.id %}" class="material-icons" style="text-decoration: none">remove_red_eye</a></span>
 									</div>
 								</div>
 							</div>
@@ -713,7 +722,32 @@ $(document).ready(function(){
 			</div>
 		</div>
 	</div>
+
 	<a href="{% url 'account:student' %}"><div class="fab"> + </div></a>
+	{% comment %} <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><div class="fab"> + </div></a> {% endcomment %}
+
+	<div id="deleteEmployeeModal" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form>
+					<div class="modal-header">						
+						<h4 class="modal-title">Supprimer une requete</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">					
+						{% comment %} <p>Ete vous sur de vouloir supprimer la requete {{element.}}</p> {% endcomment %}
+						<p class=""><small>Etes-vous sûr de vouloir supprimer la requête concernant <span id="obj" style="color: black"></span> 
+							adréssé à l'enseignant <span id="res" style="color: black"></span> ?</small></p>
+					</div>
+					<div class="modal-footer">
+						<input type="button" class="btn btn-default" data-dismiss="modal" value="Annuler">
+						<input type="submit" class="btn btn-danger" value="Supprimer" id="delete">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
 </body>
 <script>
 	var id;
