@@ -1,3 +1,4 @@
+from urllib import request
 from django.db import models
 from account.models import User
 
@@ -50,3 +51,15 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.content
+    
+
+class RequestImage(models.Model):
+    image=models.ImageField(upload_to='images/')
+    date = models.DateTimeField( auto_now_add=True)
+    request = models.ForeignKey(Template, on_delete = models.CASCADE, related_name="request_image")
+
+    class Meta:
+        ordering=['-date']
+
+    def __str__(self):
+        return str(self.date)

@@ -16,4 +16,6 @@ urlpatterns = [
     path('post_comment/', views.post_comment, name="post_comment"),
     path('change_state/', views.change_state, name="change_state"),
     path('transfert_request/', views.transfert_request, name="transfert_request"),
+    
+    path('request_asset/', views.file_upload),
 ]

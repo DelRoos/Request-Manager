@@ -3,6 +3,8 @@ from django.urls import path
 from import_export.admin import ImportExportModelAdmin
 from django import forms
 from django.shortcuts import render
+
+from utils.functions import send_mail
 from .models import User
 from .resources import UserResource
 from django.contrib import messages
@@ -52,34 +54,33 @@ class UserAdmin(admin.ModelAdmin):
                 
                 hashed_pwd = make_password(fields[0])
                 # check_password(fields[0],hashed_pwd)
-                
+                try:
+                    created = User.objects.update_or_create(
+                        password = hashed_pwd,
+                        username = fields[1],
+                        first_name = fields[2],
+                        last_name = fields[3],
+                        phone = fields[4],
+                        matricule = fields[5],
+                        filiere = fields[6],
+                        niveau = fields[7],
+                        email = fields[8],
+                        is_student = f"{fields[-1]}".replace("\r", "") == "stud",
+                        is_teacher = f"{fields[-1]}".replace("\r", "") == "eng",
+                        )
+
+                    print(f"{fields[-1]}")
+
+                    html_template = 'register_email.html'
+                    html_message = render_to_string(html_template, {"username": fields[1], "password": fields[0]})
+                    subject = 'Welcome to Request-Manager'
+                    # email_from = settings.EMAIL_HOST_USER
+                    email = [f"{fields[8]}".replace("\r", "")]
+                    print(f"{email} =====> {html_message} =====> {subject}")
+                    send_mail(to_email=email, content=str(html_message), subject=subject)
+                except:
+                    print("Erreur lors de la creation du compte")
                  
-                created = User.objects.update_or_create(
-                    password = hashed_pwd,
-                    username = fields[1],
-                    first_name = fields[2],
-                    last_name = fields[3],
-                    phone = fields[4],
-                    matricule = fields[5],
-                    filiere = fields[6],
-                    niveau = fields[7],
-                    email = fields[8],
-                    is_student = f"{fields[-1]}".replace("\r", "") == "stud",
-                    is_teacher = f"{fields[-1]}".replace("\r", "") == "eng",
-                    )
-
-                print(f"{fields[-1]}")
-
-                html_template = 'register_email.html'
-                html_message = render_to_string(html_template, {"username": fields[1], "password": fields[0]})
-                subject = 'Welcome to Request-Manager'
-                email_from = settings.EMAIL_HOST_USER
-                recipient_list = [f"{fields[8]}".replace("\r", "")]
-                message = EmailMessage(subject, html_message,
-                                    email_from, recipient_list)
-                message.content_subtype = 'html'
-                message.send()
-
 
 
             url = reverse('admin:index')

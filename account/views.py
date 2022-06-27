@@ -7,8 +7,10 @@ from .resources import UserResource
 from tablib import Dataset
 from request.models import Template, RequestHistory, Comment
 from django.db.models.query import QuerySet
+from django.contrib.auth.decorators import login_required
 
 
+@login_required(login_url='/')
 def teacher(request):
     templates = Template.objects.filter()
     requests = []
@@ -25,10 +27,12 @@ def teacher(request):
     return render(request, 'teacher.html', {'templates': requests})
 
 
+@login_required(login_url='/')
 def student(request):
     return render(request,'student.html')
 
 
+@login_required(login_url='/')
 def studenttable(request):
     template = Template.objects.filter(student=request.user.id)
     if not template.exists():

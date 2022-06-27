@@ -5,16 +5,17 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import datetime
 from django.conf import settings
-from django.core.mail import send_mail
 from django import forms
-from .models import Template, RequestHistory, Comment
+
+from utils.functions import send_mail
+from .models import RequestImage, Template, RequestHistory, Comment
 from django.contrib import messages
 import datetime
-from django.db.models import Q
-from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
-
+@login_required(login_url='/')
 def NoteRequest(request):
     currentdate = datetime.date.today()
     teacher = User.objects.filter(is_teacher=True)
@@ -39,7 +40,7 @@ def NoteRequest(request):
         except Template.DoesNotExist:
             raise Http404("Vous ne pouvez pas accerdez a cette requette")
     
-
+@login_required(login_url='/')
 @csrf_exempt
 def operation_requete(request):
     exam = request.POST.get("examen")
@@ -49,7 +50,8 @@ def operation_requete(request):
     resp = request.POST.get("responsable")
     asset = request.POST.get("asset")
     objet = request.POST.get("object")
-
+    
+    print(request.FILES)
     teacher = User.objects.filter(pk=int(resp))[0]
 
     template = Template.objects.create(
@@ -63,13 +65,21 @@ def operation_requete(request):
         objet = objet,
         publish_date = datetime.date.today()
     )
+
+    
+    files=request.FILES.get('file')    
+    # images = RequestImage.objects.create(image=files, request=request)
+    
+    print(files)
+    
     return JsonResponse(
         {
             "id":f"{template.id}",
             "operation_result": f"{template.examen} - {template.note1} - {template.note2} - {template.commentaire} -"
         }
     )
-    
+   
+@login_required(login_url='/')    
 @csrf_exempt
 def operation_edit_requete(request, id):
     exam = request.POST.get("examen")
@@ -113,6 +123,7 @@ def operation_edit_requete(request, id):
     except Template.DoesNotExist:
         raise Http404("Vous ne pouvez pas accerdez a cette requette")
 
+@login_required(login_url='/')
 def notification(request, id):
     template = get_object_or_404(Template, pk = id)
     template.status = "pending"
@@ -129,10 +140,14 @@ def notification(request, id):
     message = f"Vous avez recu une requete de l'etudiant {template.student.last_name} {template.student.first_name} en {template.student.filiere}-{template.student.niveau}. Concernant un probleme de {template.objet}"
    
     email = template.responsable.email
-    send_mail(subject, message, settings.EMAIL_HOST_USER, [email], fail_silently=False)
+    # send_mail(subject, message, settings.EMAIL_HOST_USER, [email], fail_silently=False)
+    
+    send_mail(to_email=email, content=message, subject=subject)
+    
     return redirect('account:studenttable')
-    return render(request, {'email':email})
+    # return render(request, {'email':email})
 
+@login_required(login_url='/')
 def preview(request, id):
     
     try:
@@ -145,7 +160,8 @@ def preview(request, id):
     except Template.DoesNotExist:
         raise Http404("Vous ne pouvez pas accerdez a cette requette")
     
-# Detail d'une requete    
+# Detail d'une requete  
+@login_required(login_url='/')  
 def detail_request(request, id):
     template = get_object_or_404(Template, pk = id)
     
@@ -154,12 +170,14 @@ def detail_request(request, id):
     })
     
 # Delete request 
+@login_required(login_url='/')
 def delete_template(request, template_id):
     template = Template.objects.get(pk=template_id)
     template.delete()
     messages.info(request, 'Template successfully delete')
     return redirect('index')
 
+@login_required(login_url='/')
 def edit(request, id = None):
     currentdate = datetime.date.today()
     teacher = User.objects.filter(is_teacher=True)
@@ -176,6 +194,7 @@ def edit(request, id = None):
     except Template.DoesNotExist:
         raise Http404("Vous ne pouvez pas accerdez a cette requette")
 
+@login_required(login_url='/')
 def follow(request, id):
     try:
         teachers = User.objects.filter(is_teacher=True)
@@ -193,7 +212,7 @@ def follow(request, id):
     except Template.DoesNotExist:
         raise Http404("Vous ne pouvez pas accerdez a cette requette")
     
-
+@login_required(login_url='/')
 @csrf_exempt
 def post_comment(request):
     try:    
@@ -224,7 +243,7 @@ def post_comment(request):
         print(excp)
         raise Http404("Vous ne pouvez pas accerdez a cette requette")
     
-
+@login_required(login_url='/')
 @csrf_exempt
 def change_state(request):
     try:    
@@ -243,7 +262,9 @@ def change_state(request):
             message = f"L'enseignant {user.first_name} {user.last_name} a repondu a votre requete "
         
             email = user.email
-            send_mail(subject, message, settings.EMAIL_HOST_USER, [email], fail_silently=False)
+            # send_mail(subject, message, settings.EMAIL_HOST_USER, [email], fail_silently=False)
+            send_mail(to_email=email, content=message, subject=subject)
+            
         else:
             
             request_history.is_student = True
@@ -252,7 +273,9 @@ def change_state(request):
             message = f"L'etudiant {user.first_name} {user.last_name} a repondu a votre requete "
         
             email = user.email
-            send_mail(subject, message, settings.EMAIL_HOST_USER, [email], fail_silently=False)
+            # send_mail(subject, message, settings.EMAIL_HOST_USER, [email], fail_silently=False)
+            send_mail(to_email=email, content=message, subject=subject)
+            
             request_history.is_student = False
 
         request_history.save()            
@@ -268,7 +291,7 @@ def change_state(request):
         raise Http404("Vous ne pouvez pas accerdez a cette requette")
     
 
-
+@login_required(login_url='/')
 @csrf_exempt
 def transfert_request(request):
     try:
@@ -290,7 +313,9 @@ def transfert_request(request):
         message = f"M.{user.first_name} {user.last_name} Vous a transferez une requete de l'etudiant {template.student.last_name} {template.student.first_name} en {template.student.filiere}-{template.student.niveau}. Concernant un probleme de {template.objet}"
     
         email = to_teacher.email
-        send_mail(subject, message, settings.EMAIL_HOST_USER, [email], fail_silently=False)
+        send_mail(to_email=email, content=message, subject=subject)
+        
+        # send_mail(subject, message, settings.EMAIL_HOST_USER, [email], fail_silently=False)
         # return redirect('account:teacher')
 
         return JsonResponse(
@@ -300,3 +325,17 @@ def transfert_request(request):
         )
     except Template.DoesNotExist:
         raise Http404("Vous ne pouvez pas accerdez a cette requette")
+
+
+def file_upload(request):
+    if request.method == 'POST':
+        my_file=request.FILES.get('file')
+        request_id=int(request.GET.get('request'))
+        request = Template.objects.get(pk=request_id)
+        image = RequestImage.objects.create(image=my_file, request=request)
+        return JsonResponse(
+            {
+                "id":f"{image.image}",
+            }
+        )
+    return JsonResponse({'post':'fasle'})

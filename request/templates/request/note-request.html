@@ -15,8 +15,10 @@
 
         <!-- bootstrap -->
         <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
+        {% comment %} <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css"> {% endcomment %}
+        {% comment %} <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script> {% endcomment %}
+        <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
         <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script> 
         <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>  
 
@@ -294,144 +296,48 @@
               }
 
         </style>
+        <style>
+            #files-area {
+                width: 30%;
+                margin: 0 auto;
+              }
+              
+              .file-block {
+                border-radius: 10px;
+                background-color: rgba(144, 163, 203, 0.2);
+                margin: 5px;
+                color: initial;
+                display: inline-flex;
+              }
+              .file-block > span.name {
+                padding-right: 10px;
+                width: max-content;
+                display: inline-flex;
+              }
+              
+              .file-delete {
+                display: flex;
+                width: 24px;
+                color: initial;
+                background-color: #6eb4ff00;
+                font-size: large;
+                justify-content: center;
+                margin-right: 3px;
+                cursor: pointer;
+              }
+              .file-delete:hover {
+                background-color: rgba(144, 163, 203, 0.2);
+                border-radius: 10px;
+              }
+              .file-delete > span {
+                transform: rotate(45deg);
+              }
+        </style>
+
     </head>
 
     <body>
-        
-    {% comment %} <div style="border: 1px solid #11; border: 5px double #698cf0; margin-left: 30px; margin-bottom:30px; margin-right: 30px; margin-top: 150px">
-        <div style="margin-left: 100px; margin-right: 100px; margin-top: 50px; font-size: 18px">
-            <div style="display: flex; justify-content: space-between">
-                <div>
-                    <p>Nom: {{ student.last_name }}</p>
-                    <p>Prenom: {{ student.first_name }}</p>
-                    <p>Matricule: {{ student.matricule }}</p>
-                    <p>Email: {{ student.email }}</p>
-                    <p>Niveau: {{ student.niveau }}</p>
-                    <p>Filiere: {{ student.filiere }}</p>
-                    <p>Telephone: {{ student.phone }}</p>
-                </div>
-                <div>
-                    {% language 'fr' %}
-                        <p>date: Le, {{current_date}}</span></p>
-                    {% endlanguage %}
-                </div>
-            </div>
-            <div style="display: flex; justify-content: space-between">
-                <div>
-
-                </div>
-                <div>
-                    <p>A</P>
-                    <select title="options" onChange="update()" name = "teacher" id = "id_teacher" style="width: 350px; height:35px; font-size: 18px">
-                        <option  disabled selected>Selectioner un</option>
-                        {% for teachers in teacher %}
-                            {% if template.responsable.id == teachers.id %}
-                                <option id="options" selected value = "{{ teachers.id }}"> {{ teachers }} --- {{ teachers.email }} </option>
-                            {% else %}
-                                <option id="options" value = "{{ teachers.id }}"> {{ teachers }} --- {{ teachers.email }} </option>
-                            {% endif %}
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
-            <div style="display: flex; justify-content: space-between">
-                <div>
-                    <p>
-                        <span style="text-decoration:underline; font-weight: bold">Objet: </span><span id="objects" style="text-decoration:none; font-weight: normal">Rectification de notes<span></p>
-                </div>
-                <div>
-
-                </div>
-            </div><br>
-            <div>
-                <p>
-                    En effet lors de l'examen <a href="#" id="exame"></a> j'ai eu la note de 
-                    <a href="#" id="note" data-type="text" data-placement="right" data-title="Note de base">{{template.note1}}</a>/20
-                    mais après sorti des notes je reretrouve avec la note de 
-                    <a href="#" id="note" data-type="text" data-placement="right" data-title="Note mise">{{template.note2}}</a>/20.
-                </p>
-            </div>
-            <br>
-            <div style="background-color:; padding-top: 1px; padding-bottom: 1px; padding-left:5px; margin-bottom: 10px">
-                <h4 style="color:#111">COMMENTAIRE*</h4>
-            </div>
-
-            {% if template %}
-                <textarea id="comment" style="height:200px; width:96.5%; padding: 20px; font-size: 18px" placeholder="Une brève description de votre problème ..." required>{{template.commentaire}}</textarea> 
-            {% else %}
-                <textarea id="comment" style="height:200px; width:96.5%; padding: 20px; font-size: 18px" placeholder="Une brève description de votre problème ..." required></textarea> 
-            {% endif %}
-
-            <br><br>    
-            <div style="background-color:; padding-top: 1px; padding-bottom: 1px; padding-left:5px; margin-bottom: 10px">
-                <h4 style="color:#111">PIECES JOINTES*</h4>
-            </div>
-
-            <SECTION>
-                <DIV id="dropzone">
-                    <FORM class="dropzone needsclick" id="demo-upload" action="/upload">
-                        <DIV id="files" class="dz-message needsclick">    
-                            Drop files here or click to upload.<BR>
-                        </DIV>
-                    </FORM>
-                </DIV>
-            </SECTION>
-
-            <br/>
-            <div id="preview-template" style="display: none;">
-                <div class="dz-preview dz-file-preview">
-                    <div class="dz-image"><IMG data-dz-thumbnail="">
-                    </div>
-                    <div class="dz-details">
-                        <div class="dz-size">
-                            <span data-dz-size=""></span>
-                        </div>
-                        <div class="dz-filename">
-                            <span data-dz-name=""></span>
-                        </div>
-                    </div>
-                    <div class="dz-progress">
-                        <span class="dz-upload" data-dz-uploadprogress=""></span>
-                    </div>
-                    <div class="dz-error-message">
-                        <span data-dz-errormessage=""></span>
-                    </div>
-                    <div class="dz-success-mark">
-                        <svg width="54px" height="54px" viewBox="0 0 54 54" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-                            <title>Check</title>
-                            <desc>Created with Sketch.</desc>
-                            <defs></defs>
-                            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-                                <path d="M23.5,31.8431458 L17.5852419,25.9283877 C16.0248253,24.3679711 13.4910294,24.366835 11.9289322,25.9289322 C10.3700136,27.4878508 10.3665912,30.0234455 11.9283877,31.5852419 L20.4147581,40.0716123 C20.5133999,40.1702541 20.6159315,40.2626649 20.7218615,40.3488435 C22.2835669,41.8725651 24.794234,41.8626202 26.3461564,40.3106978 L43.3106978,23.3461564 C44.8771021,21.7797521 44.8758057,19.2483887 43.3137085,17.6862915 C41.7547899,16.1273729 39.2176035,16.1255422 37.6538436,17.6893022 L23.5,31.8431458 Z M27,53 C41.3594035,53 53,41.3594035 53,27 C53,12.6405965 41.3594035,1 27,1 C12.6405965,1 1,12.6405965 1,27 C1,41.3594035 12.6405965,53 27,53 Z" id="Oval-2" stroke-opacity="0.198794158" stroke="#747474" fill-opacity="0.816519475" fill="#FFFFFF" sketch:type="MSShapeGroup"></path>
-                            </g>
-                        </svg>
-                    </div>
-                    <div class="dz-error-mark">
-                        <svg width="54px" height="54px" viewBox="0 0 54 54" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-                            <title>error</title>
-                            <desc>Created with Sketch.</desc>
-                            <defs></defs>
-                            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-                                <g id="Check-+-Oval-2" sketch:type="MSLayerGroup" stroke="#747474" stroke-opacity="0.198794158" fill="#FFFFFF" fill-opacity="0.816519475">
-                                    <path d="M32.6568542,29 L38.3106978,23.3461564 C39.8771021,21.7797521 39.8758057,19.2483887 38.3137085,17.6862915 C36.7547899,16.1273729 34.2176035,16.1255422 32.6538436,17.6893022 L27,23.3431458 L21.3461564,17.6893022 C19.7823965,16.1255422 17.2452101,16.1273729 15.6862915,17.6862915 C14.1241943,19.2483887 14.1228979,21.7797521 15.6893022,23.3461564 L21.3431458,29 L15.6893022,34.6538436 C14.1228979,36.2202479 14.1241943,38.7516113 15.6862915,40.3137085 C17.2452101,41.8726271 19.7823965,41.8744578 21.3461564,40.3106978 L27,34.6568542 L32.6538436,40.3106978 C34.2176035,41.8744578 36.7547899,41.8726271 38.3137085,40.3137085 C39.8758057,38.7516113 39.8771021,36.2202479 38.3106978,34.6538436 L32.6568542,29 Z M27,53 C41.3594035,53 53,41.3594035 53,27 C53,12.6405965 41.3594035,1 27,1 C12.6405965,1 1,12.6405965 1,27 C1,41.3594035 12.6405965,53 27,53 Z" id="Oval-2" sketch:type="MSShapeGroup"></path>
-                                </g>
-                            </g>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-            <br> {% endcomment %}
-            {% comment %} <button class="" data-toggle="modal" data-target="#success_tic" id="fetch-call" style="width:200px; height:50px; margin-bottom:50px; font-size:19px; color:grey; font-weight: 700; border: 2px solid grey; background-color: #FFFFFF;" type="submit">Enregistrer</button> {% endcomment %}
-            {% comment %} <button id="fetch-call" class="two" type="submit">Enregistrer</button>
-            <br>
-            <br>
-        </div>
-    </div> {% endcomment %}
-
-
-
-
-
+  
     {% comment %} <div class="container"> {% endcomment %}
         <div class="zero" style="margin-left: 30px; margin-right: 30px; margin-top: 130px; margin-bottom: 50px;">
             {% comment %} <div class="one">
@@ -511,15 +417,19 @@
                         <h4 style="color:#111">PIECES JOINTES*</h4>
                     </div>
                     <SECTION>
-                        <DIV id="dropzone">
-                            <FORM class="dropzone needsclick" id="demo-upload" action="/upload">
-                                <DIV id="files" class="dz-message needsclick">    
-                                    Drop files here or click to upload.<BR>
-                                    {% comment %} <SPAN class="note needsclick">(This is just a demo dropzone. Selected 
-                                    files are <STRONG>not</STRONG> actually uploaded.)</SPAN> {% endcomment %}
-                                </DIV>
-                            </FORM>
-                        </DIV>
+                        <p class="mt-5 text-center">
+                            <label for="attachment">
+                                <a class="btn btn-primary text-light" role="button" aria-disabled="false">+ Add</a>
+                                
+                            </label>
+                            <input type="file" name="file[]" accept=".pdf,.png,.jpg,.jpeg" id="attachment" style="visibility: hidden; position: absolute;" multiple/>
+                            
+                        </p>
+                        <p id="files-area">
+                            <span id="filesList">
+                                <span id="files-names"></span>
+                            </span>
+                        </p>
                     </SECTION>
         
                     <br/>
@@ -609,75 +519,49 @@
                 ]
             });
         });
+
     </script>
+
     <script>
-        
-        var dropzone = new Dropzone('#demo-upload', {
-            previewTemplate: document.querySelector('#preview-template').innerHTML,
-            parallelUploads: 2,
-            thumbnailHeight: 120,
-            thumbnailWidth: 120,
-            maxFilesize: 3,
-            filesizeBase: 1000,
-            thumbnail: function(file, dataUrl) {
-            if (file.previewElement) {
-                file.previewElement.classList.remove("dz-file-preview");
-                var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
-                for (var i = 0; i < images.length; i++) {
-                var thumbnailElement = images[i];
-                thumbnailElement.alt = file.name;
-                thumbnailElement.src = dataUrl;
-                }
-                setTimeout(function() { file.previewElement.classList.add("dz-image-preview"); }, 1);
+
+
+        const dt = new DataTransfer(); // Permet de manipuler les fichiers de l'input file
+        $("#attachment").on('change', function(e){
+            for(var i = 0; i < this.files.length; i++){
+                let fileBloc = $('<span/>', {class: 'file-block'}),
+                    fileName = $('<span/>', {class: 'name', text: this.files.item(i).name});
+                fileBloc.append('<span class="file-delete"><span>+</span></span>')
+                    .append(fileName);
+                $("#filesList > #files-names").append(fileBloc);
+            };
+            // Ajout des fichiers dans l'objet DataTransfer
+            for (let file of this.files) {
+                dt.items.add(file);
             }
-            }
-        
-        });
-        
-        
-        // Now fake the file upload, since GitHub does not handle file uploads
-        // and returns a 404
-        
-        var minSteps = 6,
-            maxSteps = 60,
-            timeBetweenSteps = 100,
-            bytesPerStep = 100000;
-        
-        dropzone.uploadFiles = function(files) {
-            var self = this;
-        
-            for (var i = 0; i < files.length; i++) {
-        
-            var file = files[i];
-            totalSteps = Math.round(Math.min(maxSteps, Math.max(minSteps, file.size / bytesPerStep)));
-        
-            for (var step = 0; step < totalSteps; step++) {
-                var duration = timeBetweenSteps * (step + 1);
-                setTimeout(function(file, totalSteps, step) {
-                return function() {
-                    file.upload = {
-                    progress: 100 * (step + 1) / totalSteps,
-                    total: file.size,
-                    bytesSent: (step + 1) * file.size / totalSteps
-                    };
-        
-                    self.emit('uploadprogress', file, file.upload.progress, file.upload.bytesSent);
-                    if (file.upload.progress == 100) {
-                    file.status = Dropzone.SUCCESS;
-                    self.emit("success", file, 'success', null);
-                    self.emit("complete", file);
-                    self.processQueue();
-                    //document.getElementsByClassName("dz-success-mark").style.opacity = "1";
+            // Mise à jour des fichiers de l'input file après ajout
+            this.files = dt.files;
+            files = dt.files;
+
+            // EventListener pour le bouton de suppression créé
+            $('span.file-delete').click(function(){
+                let name = $(this).next('span.name').text();
+                // Supprimer l'affichage du nom de fichier
+                $(this).parent().remove();
+                for(let i = 0; i < dt.items.length; i++){
+                    // Correspondance du fichier et du nom
+                    if(name === dt.items[i].getAsFile().name){
+                        // Suppression du fichier dans l'objet DataTransfer
+                        dt.items.remove(i);
+                        continue;
                     }
-                };
-                }(file, totalSteps, step), duration);
-            }
-            }
-        }
+                }
+                // Mise à jour des fichiers de l'input file après suppression
+                document.getElementById('attachment').files = dt.files;
+            });
+        });
 
-    </script>
 
-    <script>
+
         function getCookie(name) {
             let cookieValue = null;
 
@@ -704,9 +588,11 @@
             let request_uri =   "{% url 'request:operation_requete' %}";
             let req_id = current_uri.searchParams.get("req");
 
+            Dropzone.autoDiscover=false;
             
 
             {% comment %} console.log(request_uri) {% endcomment %}
+
             
             form.append("examen", document.querySelector("#examen").innerText);
             form.append("object", document.querySelector("#objects").innerText);
@@ -714,12 +600,17 @@
             form.append("note2", document.querySelector("#note2").innerText);
             form.append("commentaire", document.querySelector("#comment").value);
             form.append("responsable", document.querySelector("#id_teacher").value);
-            form.append("asset", document.querySelector("#files").file);
+            // alert(document.querySelector("#id_teacher").value)
+            // form.append("asset", document.querySelector("#files").file);
+
+
+            dt.files.forEach((elt) =>{
+                form.append("file[]", elt);
+            })
 
 
             let url_request = "";
             if(current_uri.pathname.search("/edit/") >= 0) {
-                
                 url_request = current_uri.origin+"/operation_edit_requete/"+current_uri.pathname.split("/")[2]+"/";
             } else {
                 url_request = current_uri.origin+"/operation_requete/";
@@ -730,7 +621,10 @@
             //let csrfTokenValue = document.querySelector('[name=csrfmiddlewaretoken]').value;
             let request = new Request(url_request, {method: 'POST',
                                                             body: form,
-                                                            headers: {"X-CSRFToken": getCookie("csrftoken")}
+                                                            headers: {
+                                                                "X-CSRFToken": getCookie("csrftoken"),
+                                                                "Content-Type": "application/form-data"
+                                                            }
                                                             })
                                                             
         
@@ -741,11 +635,8 @@
                 
                 )
                 .then(data => {
-                //console.log(request)
-                    window.location.href = current_uri.origin+"/preview/"+data["id"]+"/"
                     console.log(data);
-                    //let resultParagraph = document.querySelector("#operation");
-                    //resultParagraph.innerHTML = result["operation_result"];
+
                 })
         })
     </script>
