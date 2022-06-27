@@ -5,7 +5,7 @@ from django.http import JsonResponse
 import datetime
 from  . import models
 from django.conf import settings
-from django.core.mail import send_mail
+from utils.functions import send_mail
 
 # Create your views here.
 
@@ -51,12 +51,12 @@ def operation_requete(request):
 
     # print(message.sid)
    
-    # select_option = request.POST.get('options')
-    # if select_option:
-    #     subject = 'Notification'
-    #     message = 'Une requête est en attente'
-    #     email = select_option.email
-    #     send_mail(subject, message, settings.EMAIL_HOST_USER, [email], fail_silently=False)
+    select_option = request.POST.get('options')
+    if select_option:
+        subject = 'Notification'
+        message = 'Une requête est en attente'
+        email = select_option.email
+        send_mail(to_email=email, content=message, subject=subject)
 
     return JsonResponse({"operation_result": f"{template.examen} - {template.note1} - {template.note2} - {template.commentaire}"})
 
@@ -66,5 +66,5 @@ def notification(request):
         subject = 'Notification'
         message = 'Une requête est en attente \n lien de la plateforme: http://delroos.pythonanywhere.com/'
         email = request.POST.get('email')
-        send_mail(subject, message, settings.EMAIL_HOST_USER, [email], fail_silently=False)
+        send_mail(to_email=email, content=message, subject=subject)
         return render(request, 'request/email_sent.html', {'email':email})
