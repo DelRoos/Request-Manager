@@ -417,19 +417,22 @@
                         <h4 style="color:#111">PIECES JOINTES*</h4>
                     </div>
                     <SECTION>
-                        <p class="mt-5 text-center">
-                            <label for="attachment">
-                                <a class="btn btn-primary text-light" role="button" aria-disabled="false">+ Add</a>
+                        <form action="" method="post" id="upload_form">
+                            {% csrf_token %}
+                            <p class="mt-5 text-center">
+                                <label for="attachment">
+                                    <a class="btn btn-primary text-light" role="button" aria-disabled="false">+ Add</a>
+                                    
+                                </label>
+                                <input type="file" name="file[]" accept=".pdf,.png,.jpg,.jpeg" id="attachment" style="visibility: hidden; position: absolute;" multiple/>
                                 
-                            </label>
-                            <input type="file" name="file[]" accept=".pdf,.png,.jpg,.jpeg" id="attachment" style="visibility: hidden; position: absolute;" multiple/>
-                            
-                        </p>
-                        <p id="files-area">
-                            <span id="filesList">
-                                <span id="files-names"></span>
-                            </span>
-                        </p>
+                            </p>
+                            <p id="files-area">
+                                <span id="filesList">
+                                    <span id="files-names"></span>
+                                </span>
+                            </p>
+                        </form>
                     </SECTION>
         
                     <br/>
@@ -588,11 +591,6 @@
             let request_uri =   "{% url 'request:operation_requete' %}";
             let req_id = current_uri.searchParams.get("req");
 
-            Dropzone.autoDiscover=false;
-            
-
-            {% comment %} console.log(request_uri) {% endcomment %}
-
             
             form.append("examen", document.querySelector("#examen").innerText);
             form.append("object", document.querySelector("#objects").innerText);
@@ -602,11 +600,6 @@
             form.append("responsable", document.querySelector("#id_teacher").value);
             // alert(document.querySelector("#id_teacher").value)
             // form.append("asset", document.querySelector("#files").file);
-
-
-            dt.files.forEach((elt) =>{
-                form.append("file[]", elt);
-            })
 
 
             let url_request = "";
@@ -623,7 +616,6 @@
                                                             body: form,
                                                             headers: {
                                                                 "X-CSRFToken": getCookie("csrftoken"),
-                                                                "Content-Type": "application/form-data"
                                                             }
                                                             })
                                                             
@@ -635,7 +627,29 @@
                 
                 )
                 .then(data => {
+
+
                     console.log(data);
+                    let content = new FormData();
+
+
+                    files.forEach((elt) =>{
+                        content.append("file[]", elt);
+                    })
+                    //let csrfTokenValue = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                    let request_image = new Request("/request_asset/?request="+data["id"], {method: 'POST',
+                    body: content,
+                    headers: {
+                        "X-CSRFToken": getCookie("csrftoken"),
+                    }
+                    })
+
+                    fetch(request_image).then(response => 
+                        response.json()
+                
+                     )
+
+
 
                 })
         })

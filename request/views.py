@@ -51,7 +51,6 @@ def operation_requete(request):
     asset = request.POST.get("asset")
     objet = request.POST.get("object")
     
-    print(request.FILES)
     teacher = User.objects.filter(pk=int(resp))[0]
 
     template = Template.objects.create(
@@ -67,10 +66,6 @@ def operation_requete(request):
     )
 
     
-    files=request.FILES.get('file')    
-    # images = RequestImage.objects.create(image=files, request=request)
-    
-    print(files)
     
     return JsonResponse(
         {
@@ -332,6 +327,9 @@ def file_upload(request):
         my_file=request.FILES.get('file')
         request_id=int(request.GET.get('request'))
         request = Template.objects.get(pk=request_id)
+        
+
+        print(f" ==========>{my_file}")
         image = RequestImage.objects.create(image=my_file, request=request)
         return JsonResponse(
             {
