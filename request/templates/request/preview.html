@@ -376,6 +376,11 @@
                     <br><br>    
                     <div style="background-color:; padding-top: 1px; padding-bottom: 1px; padding-left:5px; margin-bottom: 30px">
                         <h4 style="color:#111">PIECES JOINTES*</h4>
+                        {% for item in template.request_image.all %}
+                            {% if item.image_url is not None %}
+                                <img src="{{ item.image_url }}" class="card-img-top img-fluid">
+                            {% endif %}
+                        {% endfor %}
                     </div>
                     {{ file }}
                     <br>

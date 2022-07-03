@@ -336,7 +336,7 @@
 
     </head>
 
-    <body>
+    <body onload="loadAsset()">
   
     {% comment %} <div class="container"> {% endcomment %}
         <div class="zero" style="margin-left: 30px; margin-right: 30px; margin-top: 130px; margin-bottom: 50px;">
@@ -413,12 +413,12 @@
                     {% endif %}
         
                     <br><br>    
-                    <div style="background-color:; padding-top: 1px; padding-bottom: 1px; padding-left:5px; margin-bottom: 10px">
+                    <div id="id_image" style="background-color:; padding-top: 1px; padding-bottom: 1px; padding-left:5px; margin-bottom: 10px">
                         <h4 style="color:#111">PIECES JOINTES*</h4>
                     </div>
                     <SECTION>
                         <form action="" method="post" id="upload_form">
-                            {% csrf_token %}
+                            {% comment %} {% csrf_token %} {% endcomment %}
                             <p class="mt-5 text-center">
                                 <label for="attachment">
                                     <a class="btn btn-primary text-light" role="button" aria-disabled="false">+ Add</a>
@@ -526,7 +526,20 @@
     </script>
 
     <script>
+        function loadAsset() {
+            let current_uri = new URL(document.URL);
+            if(current_uri.pathname.search("/edit/") >= 0) {
+                let add_piece = document.getElementById("id_image");
 
+                {% for item in template.request_image.all %}
+                    {% if item.image_url is not None %}
+                        add_piece.innerHTML += '<img src="{{ item.image_url }}" class="card-img-top img-fluid">'
+                    {% endif %}
+                {% endfor %}
+
+            }
+
+        }
 
         const dt = new DataTransfer(); // Permet de manipuler les fichiers de l'input file
         $("#attachment").on('change', function(e){
@@ -629,26 +642,33 @@
                 .then(data => {
 
 
-                    console.log(data);
-                    let content = new FormData();
+                    if(typeof files !== 'undefined') {
 
-
-                    files.forEach((elt) =>{
-                        content.append("file[]", elt);
-                    })
-                    //let csrfTokenValue = document.querySelector('[name=csrfmiddlewaretoken]').value;
-                    let request_image = new Request("/request_asset/?request="+data["id"], {method: 'POST',
-                    body: content,
-                    headers: {
-                        "X-CSRFToken": getCookie("csrftoken"),
+                        files.forEach(async (elt) => {
+                            let content = new FormData();
+    
+                            content.append("file[]", elt);
+                            let request_image = new Request("/request_asset/?request="+data["id"], {method: 'POST',
+                            body: content,
+                            headers: {
+                                "X-CSRFToken": getCookie("csrftoken"),
+                            }
+                            })
+        
+                            await fetch(request_image).then(response => 
+                                response.json()
+                        
+                             )
+        
+    
+    
+                        })
+    
                     }
-                    })
 
-                    fetch(request_image).then(response => 
-                        response.json()
-                
-                     )
 
+                    window.location.href = current_uri.origin+"/preview/"+data["id"]+"/"
+                    //let csrfTokenValue = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
 
                 })

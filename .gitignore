@@ -4,7 +4,7 @@
 *.pyc
 __pycache__
 db.sqlite3
-media
+media/
 
 # Backup files # 
 *.bak 
@@ -32,6 +32,7 @@ media
 .Python build/ 
 develop-eggs/ 
 dist/ 
+downloads/ 
 downloads/ 
 eggs/ 
 .eggs/ 

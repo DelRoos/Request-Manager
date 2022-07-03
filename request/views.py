@@ -147,6 +147,11 @@ def preview(request, id):
     
     try:
         template = Template.objects.filter(student=request.user, id=id)[0]
+        images = template.request_image.all()
+        
+        # for item in images:
+        #     print(item.image_url)
+         
         # print(template.id)
        
         return render(request, 'request/preview.html', context={
@@ -324,7 +329,7 @@ def transfert_request(request):
 
 def file_upload(request):
     if request.method == 'POST':
-        my_file=request.FILES.get('file')
+        my_file=request.FILES.get('file[]')
         request_id=int(request.GET.get('request'))
         request = Template.objects.get(pk=request_id)
         

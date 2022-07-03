@@ -20,9 +20,10 @@ def teacher(request):
     for template in templates:
         list_history = RequestHistory.objects.filter(request=template).last()
         # print(list_history.responsable.username)
-        if list_history.responsable.id == request.user.id:
-            print(list_history.responsable.username)
-            requests.append(template)
+        if list_history is not None:
+            if list_history.responsable.id == request.user.id:
+                print(list_history.responsable.username)
+                requests.append(template)
         
     return render(request, 'teacher.html', {'templates': requests})
 

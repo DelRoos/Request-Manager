@@ -63,3 +63,8 @@ class RequestImage(models.Model):
 
     def __str__(self):
         return str(self.date)
+    
+    @property
+    def image_url(self):    
+        if self.image and hasattr(self.image, 'url'):        
+            return self.image.url
