@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -133,6 +135,133 @@
         transition: all 200ms linear;
     }
 
+
+
+
+
+
+
+    .navigation{
+        /*position: fixed;*/
+        position: fixed;
+        top: 12px;
+        right: 20px;
+        width: 120px;
+        height: 60px;
+        /*background: #0084f4;*/
+        background: white;
+        box-shadow: 0 25px 35px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: space-between;
+        transition: height 0.5s, width 0.5s;
+        transition-delay: 0s, 0.75s;
+        overflow: hidden;
+    }
+    .navigation.active{
+        width: 300px;
+        height: 300px;
+        transition: width 0.5s, height 0.5s;
+        transition-delay: 0s, 0.75s;
+    }
+    .navigation .userBx{
+        position: relative;
+        width: 60px;
+        height: 60px;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        transition: 0.5s;
+        transition-delay: 0s;
+    }
+    .navigation.active .userBx{
+        width: calc(100% - 60px);
+    }
+    .navigation .userBx .username{
+        white-space: nowrap;
+        color: #555;
+        padding-top:13px;
+        font-size: 1.1rem;
+    }
+    .navigation .userBx .imgBx{
+        position: relative;
+        min-width: 60px;
+        height: 60px;
+        overflow: hidden;
+        background: #000;
+        border-radius: 50%;
+        border: 10px solid #fff;
+    }
+    .navigation .userBx .imgBx img{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .navigation .menuToggle{
+        position: relative;
+        width: 60px;
+        height: 60px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .navigation .menuToggle::before{
+        content: '';
+        position: absolute;
+        width: 32px;
+        height: 2px;
+        background: #555;
+        transform: translateY(-10px);
+        box-shadow: 0 10px #555;
+        transition: 0.5s;
+    }
+    .navigation .menuToggle::after{
+        content: '';
+        position: absolute;
+        width: 32px;
+        height: 2px;
+        background: #555;
+        transform: translateY(10px);
+        transition: 0.5s;
+    }
+    .navigation.active .menuToggle::before{
+        transform: translateY(0px) rotate(45deg);
+        box-shadow: 0 0 #555;
+    }
+    .navigation.active .menuToggle::after{
+        transform: translateY(0px) rotate(-45deg);
+    }
+    .menu{
+        position: absolute;
+        width: 100%;
+        height: calc(100% - 60px);
+        margin-top: 60px;
+        padding: 20px;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    .menu li{
+        list-style: none;
+    }
+    .menu li a{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 20px 0;
+        font-size: 1rem;
+        text-decoration: none;
+        color: #555;
+    }
+    .menu li a:hover{
+        color: #0084f4;
+    }
+    .menu li a ion-icon{
+        font-size: 1.5rem;
+    }
+
 </style>
 </head>
 <body>
@@ -144,36 +273,49 @@
 					<nav class="navbar navbar-expand-md navbar-light">
 					
 						{% comment %} <a class="navbar-brand" href="https://front.codes/" target="_blank"><img src="https://assets.codepen.io/1462889/fcy.png" alt=""></a>	 {% endcomment %}
-						<a class="navbar-brand" href="#" style="font-weight: 700; font-size: 25px"> R-M </a>
+						<a class="navbar-brand" href="#" style="font-weight: 700; font-size: 25px">R-M</a>
 
 						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 							<span class="navbar-toggler-icon"></span>
 						</button>
                         <div class="collapse navbar-collapse in show" id="navbarSupportedContent">
                             <ul class="navbar-nav ml-auto py-4 py-md-0">
-                                <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                                {% comment %} <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
                                     <a class="nav-link" style="font-size: 15px;" href="#">Template</a>
-                                </li>
-                                <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                                </li> {% endcomment %}
+                                {% comment %} <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
                                     <a class="nav-link" style="font-size: 15px" href="{% url 'account:studenttable' %}">Dashboard</a>
                                 </li>
                                 <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
                                     <a class="nav-link" style="font-size: 15px" href="{% url 'account:student' %}">Model</a>
-                                </li>
-                                <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-                                    <a class="nav-link" style="font-size: 15px" href="#">Aide</a>
-                                </li>
-                                <li style="cursor: pointer" class="nav- pl-4 pl-md-0 ml-0 ml-md-4">
-                                    <i id="dropdownMenuButton" data-toggle="dropdown" style="font-size: 30px" class="fa fa-user"></i>
-                                    <span class="material-icons md-48">face</span>
-                                    <div class="dropdown">
-                                        {% comment %} <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button> {% endcomment %}
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="{% url 'account:user_login' %}">Logout<i class="fa fa-arrow"></i></a>
-                                        </div>
-                                    </div>
-                                </li>
+                                </li> {% endcomment %}
                             </ul>
+                            <div class="navigation">
+								<div class="userBx">
+									<div class="imgBx">
+										<img src="{% static 'images/logo.png' %}">
+									</div>
+									<p class="username">{{ user.username }}</p>
+								</div>
+								<div class="menuToggle"></div>
+								<ul class="menu">
+									{% comment %} <li> <a href="#"><ion-icon name="person-outline"></ion-icon>My Profile</a> </li>
+									<li> <a href="#"><ion-icon name="chatbubble-outline"></ion-icon>Messages</a> </li> {% endcomment %}
+									<li> <a href="{% url 'account:student' %}"><ion-icon name="receipt-outline"></ion-icon>Model</a> </li>
+									<li> <a href="{% url 'account:studenttable' %}"><ion-icon name="clipboard-outline"></ion-icon>Dashboard</a>
+									<li> <a href="#"><ion-icon name="help-outline"></ion-icon>Help & Support</a> </li>
+									<li> <a href="{% url 'account:user_login' %}"><ion-icon name="log-out-outline"></ion-icon>Logout</a> </li>
+								</ul>
+							</div>
+							<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+							<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+							<script>
+								let menuToggle = document.querySelector('.menuToggle');
+								let navigation = document.querySelector('.navigation');
+								menuToggle.onclick = function(){
+									navigation.classList.toggle('active');
+								}
+							</script>
                         </div>
 					</nav>		
 				</div>
