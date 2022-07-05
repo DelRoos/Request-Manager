@@ -27,98 +27,146 @@ body {
 
 
 
+/* #Navigation
+================================================== */
 
-
-
-
-
-
- .c-dashboardInfo {
-	margin-bottom: 15px;
-  }
-  .c-dashboardInfo .wrap {
-	background: #ffffff;
-	box-shadow: 2px 10px 20px rgba(0, 0, 0, 0.1);
-	border-radius: 7px;
-	text-align: center;
-	position: relative;
-	overflow: hidden;
-	padding: 40px 25px 20px;
-	height: 100%;
-  }
-  .c-dashboardInfo__title,
-  .c-dashboardInfo__subInfo {
-	color: #6c6c6c;
-	font-size: 1.18em;
-  }
-  .c-dashboardInfo span {
-	display: block;
-  }
-  .c-dashboardInfo__count {
-	font-weight: 600;
-	font-size: 2.5em;
-	line-height: 64px;
-	color: #323c43;
-  }
-  .c-dashboardInfo .wrap:after {
-	display: block;
-	position: absolute;
+.start-header {
+	opacity: 1;
+	transform: translateY(0);
+	padding: 20px 0;
+	box-shadow: 0 10px 30px 0 rgba(138, 155, 165, 0.15);
+	-webkit-transition : all 0.3s ease-out;
+	transition : all 0.3s ease-out;
+}
+.start-header.scroll-on {
+	box-shadow: 0 5px 10px 0 rgba(138, 155, 165, 0.15);
+	padding: 10px 0;
+	-webkit-transition : all 0.3s ease-out;
+	transition : all 0.3s ease-out;
+}
+.start-header.scroll-on .navbar-brand img{
+	height: 24px;
+	-webkit-transition : all 0.3s ease-out;
+	transition : all 0.3s ease-out;
+}
+.navigation-wrap{
+	position: fixed;
+	width: 100%;
 	top: 0;
 	left: 0;
-	width: 100%;
-	height: 10px;
-	content: "";
-  }
-  
-  .c-dashboardInfo:nth-child(1) .wrap:after {
-	background: linear-gradient(81.67deg, #0084f4 0%, #1a4da2 100%);
-  }
-  .c-dashboardInfo:nth-child(2) .wrap:after {
-	background: linear-gradient(82.59deg, #00c48c 0%, #00a173 100%);
-  }
-  .c-dashboardInfo:nth-child(3) .wrap:after {
-	background: linear-gradient(69.83deg, #0084f4 0%, #00c48c 100%);
-  }
-  .c-dashboardInfo:nth-child(4) .wrap:after {
-	background: linear-gradient(81.67deg, #ff647c 0%, #1f5dc5 100%);
-  }
-  .c-dashboardInfo__title svg {
-	color: #d7d7d7;
-	margin-left: 5px;
-  }
-  .MuiSvgIcon-root-19 {
-	fill: currentColor;
-	width: 1em;
-	height: 1em;
+	z-index: 1000;
+	-webkit-transition : all 0.3s ease-out;
+	transition : all 0.3s ease-out;
+}
+.navbar{
+	padding: 0;
+}
+.navbar-brand img{
+	height: 28px;
+	width: auto;
+	display: block;
+  filter: brightness(10%);
+	-webkit-transition : all 0.3s ease-out;
+	transition : all 0.3s ease-out;
+}
+.navbar-toggler {
+	float: right;
+	border: none;
+	padding-right: 0;
+}
+.navbar-toggler:active,
+.navbar-toggler:focus {
+	outline: none;
+}
+.navbar-light .navbar-toggler-icon {
+	width: 24px;
+	height: 17px;
+	background-image: none;
+	position: relative;
+	border-bottom: 1px solid #000;
+    transition: all 300ms linear;
+}
+.navbar-light .navbar-toggler-icon:after, 
+.navbar-light .navbar-toggler-icon:before{
+	width: 24px;
+	position: absolute;
+	height: 1px;
+	background-color: #000;
+	top: 0;
+	left: 0;
+	content: '';
+	z-index: 2;
+    transition: all 300ms linear;
+}
+.navbar-light .navbar-toggler-icon:after{
+	top: 8px;
+}
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon:after {
+	transform: rotate(45deg);
+}
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon:before {
+	transform: translateY(8px) rotate(-45deg);
+}
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+	border-color: transparent;
+}
+.nav-link{
+	color: #212121 !important;
+	font-weight: 500;
+    transition: all 200ms linear;
+}
+.nav-item:hover .nav-link{
+	color: #698cf0 !important;
+}
+.nav-item.active .nav-link{
+	color: #777 !important;
+}
+.nav-link {
+	position: relative;
+	padding: 5px 0 !important;
 	display: inline-block;
-	font-size: 24px;
-	transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-	user-select: none;
-	flex-shrink: 0;
-  }
+}
+.nav-item:after{
+	position: absolute;
+	bottom: -5px;
+	left: 0;
+	width: 100%;
+	height: 2px;
+	content: '';
+	background-color: #698cf0;
+	opacity: 0;
+    transition: all 200ms linear;
+}
+.nav-item:hover:after{
+	bottom: 0;
+	opacity: 1;
+}
+.nav-item.active:hover:after{
+	opacity: 0;
+}
+.nav-item{
+	position: relative;
+    transition: all 200ms linear;
+}   
 
 
 
-.first{
-    margin-top: 3rem;
-    margin-bottom: 3rem;
-}
-.one{
-    text-align: center;
-}
-.box{
-    text-align: justify;
-    text-justify: inter-word;
-}
+
+
+
+
+
 
 
 .navigation{
+    /*position: fixed;*/
     position: fixed;
-    top: 20px;
+    top: 12px;
     right: 20px;
     width: 120px;
     height: 60px;
     /*background: #0084f4;*/
+    background: white;
     box-shadow: 0 25px 35px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
@@ -128,7 +176,7 @@ body {
 }
 .navigation.active{
     width: 300px;
-    height: 400px;
+    height: 200px;
     transition: width 0.5s, height 0.5s;
     transition-delay: 0s, 0.75s;
 }
@@ -149,6 +197,7 @@ body {
 .navigation .userBx .username{
     white-space: nowrap;
     color: #555;
+    padding-top:13px;
     font-size: 1.1rem;
 }
 .navigation .userBx .imgBx{
@@ -238,6 +287,101 @@ body {
 
 
 
+
+
+
+
+
+
+ .c-dashboardInfo {
+	margin-bottom: 15px;
+  }
+  .c-dashboardInfo .wrap {
+	background: #ffffff;
+	box-shadow: 2px 10px 20px rgba(0, 0, 0, 0.1);
+	border-radius: 7px;
+	text-align: center;
+	position: relative;
+	overflow: hidden;
+	padding: 40px 25px 20px;
+	height: 100%;
+  }
+  .c-dashboardInfo__title,
+  .c-dashboardInfo__subInfo {
+	color: #6c6c6c;
+	font-size: 1.18em;
+  }
+  .c-dashboardInfo span {
+	display: block;
+  }
+  .c-dashboardInfo__count {
+	font-weight: 600;
+	font-size: 2.5em;
+	line-height: 64px;
+	color: #323c43;
+  }
+  .c-dashboardInfo .wrap:after {
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 10px;
+	content: "";
+  }
+  
+  .c-dashboardInfo:nth-child(1) .wrap:after {
+	background: linear-gradient(81.67deg, #0084f4 0%, #1a4da2 100%);
+  }
+  .c-dashboardInfo:nth-child(2) .wrap:after {
+	background: linear-gradient(82.59deg, #00c48c 0%, #00a173 100%);
+  }
+  .c-dashboardInfo:nth-child(3) .wrap:after {
+	background: linear-gradient(69.83deg, #0084f4 0%, #00c48c 100%);
+  }
+  .c-dashboardInfo:nth-child(4) .wrap:after {
+	background: linear-gradient(81.67deg, #ff647c 0%, #1f5dc5 100%);
+  }
+  .c-dashboardInfo__title svg {
+	color: #d7d7d7;
+	margin-left: 5px;
+  }
+  .MuiSvgIcon-root-19 {
+	fill: currentColor;
+	width: 1em;
+	height: 1em;
+	display: inline-block;
+	font-size: 24px;
+	transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+	user-select: none;
+	flex-shrink: 0;
+  }
+
+
+
+.first{
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+.one{
+    text-align: center;
+}
+.box{
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 </style>
 <script>
 $(document).ready(function(){
@@ -268,7 +412,76 @@ $(document).ready(function(){
 <body>
 
 
-    <div class="navigation">
+    <div class="navigation-wrap bg-light start-header start-style">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<nav class="navbar navbar-expand-md navbar-light">
+					
+						{% comment %} <a class="navbar-brand" href="https://front.codes/" target="_blank"><img src="https://assets.codepen.io/1462889/fcy.png" alt=""></a>	 {% endcomment %}
+						<a class="navbar-brand" href="#" style="font-weight: 700; font-size: 25px"> R-M </a>
+
+						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+						
+						<div class="collapse navbar-collapse" id="navbarSupportedContent">
+							<ul class="navbar-nav ml-auto py-4 py-md-0">
+								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+									<a class="nav-link" style="font-size: 15px" href="#">Tableau de Bord</a>
+								</li>
+								{% comment %} <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+									<a class="nav-link" style="font-size: 15px" href="#">Aide</a>
+								</li>
+								<li style="cursor: pointer" class="nav- pl-4 pl-md-0 ml-0 ml-md-4">
+									<i id="dropdownMenuButton" data-toggle="dropdown" style="font-size: 30px" class="fa fa-user"></i>
+									<div class="dropdown"> {% endcomment %}
+										{% comment %} <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button> {% endcomment %}
+										{% comment %} <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+											<a class="dropdown-item" href="{% url 'account:user_login' %}">Logout<i class="fa fa-arrow"></i></a>
+										</div>
+									</div>
+								</li> {% endcomment %}
+							</ul>
+							<div class="navigation">
+								<div class="userBx">
+									<div class="imgBx">
+										<img src="{% static 'images/logo.png' %}">
+									</div>
+									<p class="username">{{ user.username }}</p>
+								</div>
+								<div class="menuToggle"></div>
+								<ul class="menu">
+									{% comment %} <li> <a href="#"><ion-icon name="person-outline"></ion-icon>My Profile</a> </li>
+									<li> <a href="#"><ion-icon name="chatbubble-outline"></ion-icon>Messages</a> </li>
+									<li> <a href="#"><ion-icon name="notifications-outline"></ion-icon>Notifications</a> </li>
+									<li> <a href="#"><ion-icon name="settings-outline"></ion-icon>Settings</a> </li> {% endcomment %}
+									<li> <a href="#"><ion-icon name="help-outline"></ion-icon>Help & Support</a> </li>
+									<li> <a href="{% url 'account:user_login' %}"><ion-icon name="log-out-outline"></ion-icon>Logout</a> </li>
+								</ul>
+							</div>
+							<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+							<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+							<script>
+								let menuToggle = document.querySelector('.menuToggle');
+								let navigation = document.querySelector('.navigation');
+								menuToggle.onclick = function(){
+									navigation.classList.toggle('active');
+								}
+							</script>
+						</div>
+					</nav>		
+				</div>
+			</div>
+		</div>
+	</div>
+    
+
+
+
+
+
+    {% comment %} <div class="navigation">
         <div class="userBx">
             <div class="imgBx">
                 <img src="{% static 'images/logo.png' %}">
@@ -276,13 +489,13 @@ $(document).ready(function(){
             <p class="username">{{ user.username }}</p>
         </div>
         <div class="menuToggle"></div>
-        <ul class="menu">
-            <li> <a href="#"><ion-icon name="person-outline"></ion-icon>My Profile</a> </li>
+        <ul class="menu"> {% endcomment %}
+            {% comment %} <li> <a href="#"><ion-icon name="person-outline"></ion-icon>My Profile</a> </li>
             <li> <a href="#"><ion-icon name="chatbubble-outline"></ion-icon>Messages</a> </li>
             <li> <a href="#"><ion-icon name="notifications-outline"></ion-icon>Notifications</a> </li>
-            <li> <a href="#"><ion-icon name="settings-outline"></ion-icon>Settings</a> </li>
-            <li> <a href="#"><ion-icon name="help-outline"></ion-icon>Help & Support</a> </li>
-            <li> <a href="#"><ion-icon name="log-out-outline"></ion-icon>Logout</a> </li>
+            <li> <a href="#"><ion-icon name="settings-outline"></ion-icon>Settings</a> </li> {% endcomment %}
+            {% comment %} <li> <a href="#"><ion-icon name="help-outline"></ion-icon>Help & Support</a> </li>
+            <li> <a href="{% url 'account:user_login' %}"><ion-icon name="log-out-outline"></ion-icon>Logout</a> </li>
         </ul>
     </div>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
@@ -293,7 +506,7 @@ $(document).ready(function(){
         menuToggle.onclick = function(){
             navigation.classList.toggle('active');
         }
-    </script>
+    </script> {% endcomment %}
 
 {% comment %} {% extends 'base.html' %}
 {% load static %}
@@ -304,7 +517,7 @@ $(document).ready(function(){
 {% include 'parts/popup.html' %} {% endcomment %}
 {% comment %} <br>
 <h1> hello {{ user.username }} your role is student</h1> {% endcomment %}
-<section class="bg-img-full price-section" style="padding-top: 40px;" data-scroll-index="4">
+<section class="bg-img-full price-section" style="padding-top: 100px;" data-scroll-index="4">
 {% comment %} <section class="bg-img-full price-section" style="background-image: url({% static 'images/img02.jpg' %}); padding-top: 20px;" data-scroll-index="4"> {% endcomment %}
     <div class="container">
         <!-- main heading start here -->
