@@ -176,7 +176,7 @@ body {
 }
 .navigation.active{
     width: 300px;
-    height: 200px;
+    height: 250px;
     transition: width 0.5s, height 0.5s;
     transition-delay: 0s, 0.75s;
 }
@@ -456,7 +456,8 @@ $(document).ready(function(){
 									<li> <a href="#"><ion-icon name="chatbubble-outline"></ion-icon>Messages</a> </li>
 									<li> <a href="#"><ion-icon name="notifications-outline"></ion-icon>Notifications</a> </li>
 									<li> <a href="#"><ion-icon name="settings-outline"></ion-icon>Settings</a> </li> {% endcomment %}
-									<li> <a href="#"><ion-icon name="help-outline"></ion-icon>Help & Support</a> </li>
+									<li> <a href="{% url 'account:studenttable' %}"><ion-icon name="clipboard-outline"></ion-icon>Dashboard</a>
+                                    <li> <a href="#"><ion-icon name="help-outline"></ion-icon>Help & Support</a> </li>
 									<li> <a href="{% url 'account:user_login' %}"><ion-icon name="log-out-outline"></ion-icon>Logout</a> </li>
 								</ul>
 							</div>
