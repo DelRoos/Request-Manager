@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load static %}
 
 
 <!DOCTYPE html>
@@ -7,28 +8,36 @@
         <meta charset="utf-8">
         <title>Follow</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+        {% include 'request/nav.html' %}
         <!-- bootstrap -->
         <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
+        {% comment %} <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css"> {% endcomment %}
+        {% comment %} <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>  {% endcomment %}
         <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script> 
-        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>  
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+
+
+        {% comment %} <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> {% endcomment %}
+
 
         <!-- x-editable (bootstrap version) -->
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+        {% comment %} <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"> {% endcomment %}
         <link rel="stylesheet" href="https://unpkg.com/@primer/css@^18.0.0/dist/primer.css" />
-        <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.6/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet"/>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.6/bootstrap-editable/js/bootstrap-editable.min.js"></script>
+        {% comment %} <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.6/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.6/bootstrap-editable/js/bootstrap-editable.min.js"></script> {% endcomment %}
+    
         <style>
-            #success_tic .page-body{
+            /*#success_tic .page-body{
                 max-width:300px;
                 background-color:#FFFFFF;
                 margin:10% auto;
             }
             #success_tic .page-body .head{
                 text-align:center;
-            }
+            }*/
             /* #success_tic .tic{
                 font-size:186px;
             } */
@@ -482,11 +491,334 @@ animation: iconosani 1.2s forwards;
 
 
 
+
+
+
+  /* #Navigation
+================================================== */
+
+.start-header {
+	opacity: 1;
+	transform: translateY(0);
+	padding: 20px 0;
+	box-shadow: 0 10px 30px 0 rgba(138, 155, 165, 0.15);
+	-webkit-transition : all 0.3s ease-out;
+	transition : all 0.3s ease-out;
+}
+.start-header.scroll-on {
+	box-shadow: 0 5px 10px 0 rgba(138, 155, 165, 0.15);
+	padding: 10px 0;
+	-webkit-transition : all 0.3s ease-out;
+	transition : all 0.3s ease-out;
+}
+.start-header.scroll-on .navbar-brand img{
+	height: 24px;
+	-webkit-transition : all 0.3s ease-out;
+	transition : all 0.3s ease-out;
+}
+.navigation-wrap{
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+	-webkit-transition : all 0.3s ease-out;
+	transition : all 0.3s ease-out;
+}
+.navbar{
+	padding: 0;
+}
+.navbar-brand img{
+	height: 28px;
+	width: auto;
+	display: block;
+  filter: brightness(10%);
+	-webkit-transition : all 0.3s ease-out;
+	transition : all 0.3s ease-out;
+}
+.navbar-toggler {
+	float: right;
+	border: none;
+	padding-right: 0;
+}
+.navbar-toggler:active,
+.navbar-toggler:focus {
+	outline: none;
+}
+.navbar-light .navbar-toggler-icon {
+	width: 24px;
+	height: 17px;
+	background-image: none;
+	position: relative;
+	border-bottom: 1px solid #000;
+    transition: all 300ms linear;
+}
+.navbar-light .navbar-toggler-icon:after, 
+.navbar-light .navbar-toggler-icon:before{
+	width: 24px;
+	position: absolute;
+	height: 1px;
+	background-color: #000;
+	top: 0;
+	left: 0;
+	content: '';
+	z-index: 2;
+    transition: all 300ms linear;
+}
+.navbar-light .navbar-toggler-icon:after{
+	top: 8px;
+}
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon:after {
+	transform: rotate(45deg);
+}
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon:before {
+	transform: translateY(8px) rotate(-45deg);
+}
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+	border-color: transparent;
+}
+.nav-link{
+	color: #212121 !important;
+	font-weight: 500;
+    transition: all 200ms linear;
+}
+.nav-item:hover .nav-link{
+	color: #698cf0 !important;
+}
+.nav-item.active .nav-link{
+	color: #777 !important;
+}
+.nav-link {
+	position: relative;
+	padding: 5px 0 !important;
+	display: inline-block;
+}
+.nav-item:after{
+	position: absolute;
+	bottom: -5px;
+	left: 0;
+	width: 100%;
+	height: 2px;
+	content: '';
+	background-color: #698cf0;
+	opacity: 0;
+    transition: all 200ms linear;
+}
+.nav-item:hover:after{
+	bottom: 0;
+	opacity: 1;
+}
+.nav-item.active:hover:after{
+	opacity: 0;
+}
+.nav-item{
+	position: relative;
+    transition: all 200ms linear;
+}   
+
+
+
+
+
+
+
+
+
+
+.navigation{
+    /*position: fixed;*/
+    position: fixed;
+    top: 12px;
+    right: 20px;
+    width: 120px;
+    height: 60px;
+    /*background: #0084f4;*/
+    background: white;
+    box-shadow: 0 25px 35px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    transition: height 0.5s, width 0.5s;
+    transition-delay: 0s, 0.75s;
+    overflow: hidden;
+}
+.navigation.active{
+    width: 300px;
+    height: 250px;
+    transition: width 0.5s, height 0.5s;
+    transition-delay: 0s, 0.75s;
+}
+.navigation .userBx{
+    position: relative;
+    width: 60px;
+    height: 60px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    transition: 0.5s;
+    transition-delay: 0s;
+}
+.navigation.active .userBx{
+    width: calc(100% - 60px);
+}
+.navigation .userBx .username{
+    white-space: nowrap;
+    color: #555;
+    padding-top:13px;
+    font-size: 1.1rem;
+}
+.navigation .userBx .imgBx{
+    position: relative;
+    min-width: 60px;
+    height: 60px;
+    overflow: hidden;
+    background: #000;
+    border-radius: 50%;
+    border: 10px solid #fff;
+}
+.navigation .userBx .imgBx img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.navigation .menuToggle{
+    position: relative;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.navigation .menuToggle::before{
+    content: '';
+    position: absolute;
+    width: 32px;
+    height: 2px;
+    background: #555;
+    transform: translateY(-10px);
+    box-shadow: 0 10px #555;
+    transition: 0.5s;
+}
+.navigation .menuToggle::after{
+    content: '';
+    position: absolute;
+    width: 32px;
+    height: 2px;
+    background: #555;
+    transform: translateY(10px);
+    transition: 0.5s;
+}
+.navigation.active .menuToggle::before{
+    transform: translateY(0px) rotate(45deg);
+    box-shadow: 0 0 #555;
+}
+.navigation.active .menuToggle::after{
+    transform: translateY(0px) rotate(-45deg);
+}
+.menu{
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 60px);
+    margin-top: 60px;
+    padding: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+.menu li{
+    list-style: none;
+}
+.menu li a{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+    font-size: 1rem;
+    text-decoration: none;
+    color: #555;
+}
+.menu li a:hover{
+    color: #0084f4;
+}
+.menu li a ion-icon{
+    font-size: 1.5rem;
+}
+
+
+
+
+
+
+
             
         </style>
     </head>
 <body>
-    <div class="zero" style="margin-left: 30px; margin-right: 30px; margin-top: 30px;">
+    {% comment %} <div class="navigation-wrap bg-light start-header start-style">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<nav class="navbar navbar-expand-md navbar-light">
+						<a class="navbar-brand" href="#" style="font-weight: 700; font-size: 25px"> R-M </a>
+
+						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+						
+						<div class="collapse navbar-collapse" id="navbarSupportedContent">
+							<ul class="navbar-nav ml-auto py-4 py-md-0">
+								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+									<a class="nav-link" style="font-size: 15px" href="#">Suivi</a>
+								</li>
+							</ul>
+							<div class="navigation">
+								<div class="userBx">
+									<div class="imgBx">
+										<img src="{% static 'images/logo.png' %}">
+									</div>
+									<p class="username">{{ user.username }}</p>
+								</div>
+								<div class="menuToggle"></div>
+								<ul class="menu">
+									{% if user.is_student %}
+                                        <li> <a href="{% url 'account:studenttable' %}"><ion-icon name="clipboard-outline"></ion-icon>Dashboard</a>
+                                    {% endif %}
+                                    {% if user.is_teacher %}
+                                        <li> <a href="{% url 'account:teacher' %}"><ion-icon name="clipboard-outline"></ion-icon>Dashboard</a>
+                                    {% endif %}
+                                        <li> <a href="#"><ion-icon name="help-outline"></ion-icon>Help & Support</a> </li>
+									<li> <a href="{% url 'account:user_login' %}"><ion-icon name="log-out-outline"></ion-icon>Logout</a> </li>
+								</ul>
+							</div>
+							<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+							<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+							<script>
+								let menuToggle = document.querySelector('.menuToggle');
+								let navigation = document.querySelector('.navigation');
+								menuToggle.onclick = function(){
+									navigation.classList.toggle('active');
+								}
+							</script>
+						</div>
+					</nav>		
+				</div>
+			</div>
+		</div>
+	</div>  {% endcomment %}
+    
+
+
+
+
+
+
+
+
+
+
+    <div class="zero" style="margin-left: 30px; margin-right: 30px; margin-top: 150px;">
         {% comment %} <div class="one">
             <h1>SUIVI</h1>
         </div> {% endcomment %}
@@ -725,25 +1057,9 @@ animation: iconosani 1.2s forwards;
    
     
 
-    <!-- popup -->
-    <div class="popScroll modal fade" id="terminer" role="dialog">
-        <div class="popup"> 
-            <h1>REQUEST-MANAGER</h1>
-            <div class="subscribe-widget">
-            </div>
-            <p>Etes-vous d'avoir terminé avec la requête ?</p>
-            <div id="option">
-                <a href="#" id="home" class="boxi">OUI</a> 
-                <em>ou</em>
-                <a href="#" id="close" class="boxi closei">NON</a>
-            </div>
-        </div>
-    </div>
-    <!-- popup -->
-    <!-- Delete Modal HTML -->
 	<div id="transferer" class="modal fade">
 		<div class="modal-dialog">
-			<div class="modal-content">
+			<div class="modal-content" style="margin-top: 60px">
 				<form>
 					<div class="modal-header">						
 						<h4 class="modal-title">Transférer une requete</h4>
@@ -751,7 +1067,6 @@ animation: iconosani 1.2s forwards;
 					</div>
 					<div class="modal-body">
                         <select title="options"  name = "teacher" id = "id_teacher" style="width: 350px; height:35px; font-size: 18px">
-                            {% comment %} <option selected>Selectioner un</option> {% endcomment %}
                             {% for teacher in teachers %}
                                 {% if teacher != user %}
                                     <option id="options" value="{{ teacher.id }}"> {{ teacher }} </option>
@@ -766,21 +1081,32 @@ animation: iconosani 1.2s forwards;
 				</form>
 			</div>
 		</div>
-	</div>
-    <!-- popup -->
-    <div class="popScroll modal fade" id="terminers" role="dialog">
-        <div class="popup"> 
-            <h1>REQUEST-MANAGER</h1>
-            <div class="subscribe-widget">
-            </div>
-            <p>Etes-vous sur de vouloir soumettre le commentaire ?</p>
-            <div id="option">
-                <a href="#" id="home" class="boxi">OUI</a> 
-                <em>ou</em>
-                <a href="#" id="close" class="boxi closei">NON</a>
+	</div> 
+
+
+
+    <!-- Modal -->
+    {% comment %} <div class="modal fade" id="transferer">
+        <div class="modal-dialog">
+            <div class="modal-content" style="margin-top: 60px">
+                <div class="modal-header" style="display: flex; justify-content: space-between">
+                    <div>
+                        <h4 class="modal-title" id="myModalLabel">Modal with multiple buttons</h4>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    The body of the modal, where you can show a message in single or multi-line. Even include a video. <br />
+                    For example, embed a youtube video! OR <br />
+                    Add some picture.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn btn-info" data-dismiss="modal">OK</button>
+                    <button type="button" class="btn btn btn-warning" data-dismiss="modal">Save</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                </div>
             </div>
         </div>
-    </div>
+    </div>  {% endcomment %}
     
 <script>
     function getCookie(name) {
