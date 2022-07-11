@@ -9,6 +9,9 @@
         <title>Follow</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         {% include 'request/navs.html' %}
+
+        <link rel="stylesheet" href=" {% static 'css/magicthumb.css' %}  ">
+        
         <!-- bootstrap -->
         <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
         {% comment %} <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css"> {% endcomment %}
@@ -1123,19 +1126,19 @@ animation: iconosani 1.2s forwards;
 
 
     {% comment %} Image Modal {% endcomment %}
-    <div class="modal fade" id="image-modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
+    <div class="modal fade" id="image-modal" tabindex="-1" role="dialog" style="height: 500px; width: 700px; ">
+        {% comment %} <div class="modal-dialog modal-lg" style="height: 200px"> {% endcomment %}
+          {% comment %} <div class="modal-content" style="margin-top: 0px; margin-bottom: 0px; width: 700px"> {% endcomment %}
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-              <div class="modal-title">Piece Jointe</div>
+              {% comment %} <div class="modal-title">Piece Jointe</div> {% endcomment %}
             </div>
-            <div class="modal-body">
-              <img class="img-responsive center-block" src="" alt="">
+            <div class="modal-body" style="height: 900px">
+              <img class="img-responsive center-block" src="" alt="" style="width: 200rem; height: 350px">
             </div>
-          </div>
-        </div>
-      </div>
+          {% comment %} </div> {% endcomment %}
+        {% comment %} </div> {% endcomment %}
+    </div>
 <script>
     $(function() {     
         $('a.thumbnail').click(function(e) {
