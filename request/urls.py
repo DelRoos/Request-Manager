@@ -6,6 +6,7 @@ app_name = "request"
 
 urlpatterns = [
     path('note/', views.NoteRequest, name='NoteRequest'),
+    path('evaluation/', views.EvaluationRequest, name='EvaluationRequest'),
     path('operation_requete/',views.operation_requete, name='operation_requete'),
     path('operation_edit_requete/<int:id>/',views.operation_edit_requete, name='operation_edit_requete'),
     path('notification/<int:id>/',views.notification, name='notification'),
