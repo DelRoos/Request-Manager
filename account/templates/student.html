@@ -656,6 +656,32 @@ $(document).ready(function(){
                     </div>
                 </div>
             </div>
+
+            <div class="row">
+                <div id="root" style="width: ">
+                    <div class="container pt-5 m-4">
+                        <div class="align-items-stretch">
+                            <div class="c-dashboardInfo ">
+                                <div class="wrap"  style="max-width: 332px; height: 300px;">
+                                    <header class="header">
+                                        {% comment %} <strong class="title text-uppercase">Audience</strong> {% endcomment %}
+                                        <span class="price-txt">
+                                            {% comment %} <span class="txt">Modele pour Faites une demande d'audience</span> {% endcomment %}
+                                        </span>
+                                    </header>
+                                    <div class="box">
+                                        <h3 class="text-uppercase" style="font-size: 20px; padding-bottom: 10px">Demande unique</h3>
+                                        <span class="txt" style="padding-bottom: 10px">Modèle pour Faire une demande unique</span>
+                                        <span class="divider"></span>
+                                        <p>Vous êtes arrivé sur la plateforme Request Manager et vous n'avez pas vu un modèle qui resoud votre problème alors utilisez celui ci<br>...</p>
+                                        <a href="{% url 'request:UniqueRequest' %}">Utiliser ce modele</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>

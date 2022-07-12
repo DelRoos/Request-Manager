@@ -73,6 +73,35 @@ def EvaluationRequest(request):
 
 
 
+@login_required(login_url='/')
+def UniqueRequest(request):
+    currentdate = datetime.date.today()
+    teacher = User.objects.filter(is_teacher=True)
+    # if request.GET == {}:
+        
+    return render(request,'request/unique-request.html', context={
+        "student": request.user,
+        'current_date':currentdate,
+        'teacher':teacher
+    })
+    # else:
+
+    #     try:
+    #         req = request.GET.get("req")
+    #         template = Template.objects.get(student=request.user, pk=req)
+    #         return render(request,'request/evaluation-request.html', context={
+    #             "student": request.user,
+    #             'current_date': currentdate,
+    #             'teacher': teacher,
+    #             "template": template,
+    #         })
+    #     except Template.DoesNotExist:
+    #         raise Http404("Vous ne pouvez pas accerdez a cette requette")
+
+
+
+
+
     
 @login_required(login_url='/')
 @csrf_exempt
