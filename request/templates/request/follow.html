@@ -9,8 +9,6 @@
         <title>Follow</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         {% include 'request/navs.html' %}
-
-        <link rel="stylesheet" href=" {% static 'css/magicthumb.css' %}  ">
         
         <!-- bootstrap -->
         <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
@@ -1071,16 +1069,17 @@ animation: iconosani 1.2s forwards;
    
     
 
-	<div id="transferer" class="modal fade">
-		<div class="modal-dialog">
-			<div class="modal-content" style="margin-top: 60px">
+	<div id="transferer" class="modal fade" style="height: 277px; width: 500px;">
+		{% comment %} <div class="modal-dialog">
+			<div class="modal-content" style="margin-top: 60px"> {% endcomment %}
 				<form>
 					<div class="modal-header">						
 						<h4 class="modal-title">Transférer une requete</h4>
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 					</div>
-					<div class="modal-body">
-                        <select title="options"  name = "teacher" id = "id_teacher" style="width: 350px; height:35px; font-size: 18px">
+					<div class="modal-body" style="height: 150px">
+                        <p>Veillez choisir l'enseignant à qui vous souhaitez transférer la requête: </p><br>
+                        <select title="options"  name = "teacher" id = "id_teacher" style="width: 450px; height:40px; font-size: 18px">
                             {% for teacher in teachers %}
                                 {% if teacher != user %}
                                     <option id="options" value="{{ teacher.id }}"> {{ teacher }} </option>
@@ -1089,12 +1088,12 @@ animation: iconosani 1.2s forwards;
                         </select>		
 					</div>
 					<div class="modal-footer">
-						<input type="button" class="btn btn-default" data-dismiss="modal" value="Annuler">
-						<input type="submit" class="btn btn-danger" value="envoyer" id="transfert">
+						<input type="button" class="" data-dismiss="modal" value="Annuler" style="width: 100px; height: 35px">
+						<input type="submit" class="" value="envoyer" id="transfert" style="background-color: #698cf0; width: 100px; height: 35px">
 					</div>
 				</form>
-			</div>
-		</div>
+			{% comment %} </div>
+		</div> {% endcomment %}
 	</div> 
 
 
@@ -1134,7 +1133,7 @@ animation: iconosani 1.2s forwards;
               {% comment %} <div class="modal-title">Piece Jointe</div> {% endcomment %}
             </div>
             <div class="modal-body" style="height: 900px">
-              <img class="img-responsive center-block" src="" alt="" style="width: 200rem; height: 350px">
+              <img class="img-responsive center-block" src="" alt="" style="width: 100%; height: 350px">
             </div>
           {% comment %} </div> {% endcomment %}
         {% comment %} </div> {% endcomment %}
