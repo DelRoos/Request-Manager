@@ -12,12 +12,15 @@ class Template(models.Model):
         ('end', 'Terminer'),
     ]
     
-    OBJET = [
-        ('1', 'Rectification de note'),
-    ]
+    # OBJET = [
+    #     ('0', ''),
+    #     ('1', 'Rectification de note'),
+    #     ('2', 'Rectification de note'),
+    #     ('3', 'Rectification de note'),
+    # ]
     
-    objet = models.CharField(max_length = 3, choices=OBJET,)
-    commentaire = models.TextField()
+    objet = models.CharField(max_length = 255,)
+    # commentaire = models.TextField()
     student = models.ForeignKey(User, on_delete = models.CASCADE, related_name="student_request")
     responsable = models.ForeignKey(User, on_delete = models.CASCADE, related_name="responsable_request")
     publish_date = models.DateField()
@@ -42,7 +45,7 @@ class RequestHistory(models.Model):
     transfert_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.responsable} - {self.request.objet}"
+        return f"{self.responsable}"
     
 class Comment(models.Model):
     request_history = models.ForeignKey(RequestHistory, on_delete = models.CASCADE, related_name="request_comment")
@@ -62,7 +65,7 @@ class RequestImage(models.Model):
         ordering=['-date']
 
     def __str__(self):
-        return str(self.date)
+        return f"{self.request.objet}"
     
     @property
     def image_url(self):    

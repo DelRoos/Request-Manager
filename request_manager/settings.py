@@ -202,7 +202,7 @@ JAZZMIN_SETTINGS = {
     "copyright": "request-manager@uy1",
 
     # The model admin to search from the search bar, search bar omitted if excluded
-    "search_model": "auth.User",
+    # "search_model": "account.User",
 
     # Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user
     "user_avatar": None,
@@ -254,7 +254,7 @@ JAZZMIN_SETTINGS = {
     "hide_models": [],
 
     # List of apps (and/or models) to base side menu ordering off of (does not need to contain all apps/models)
-    "order_with_respect_to": ["auth", "books", "books.author", "books.book"],
+    # "order_with_respect_to": ["auth", "books", "books.author", "books.book"],
 
     # Custom links to append to app groups, keyed on app name
     # "custom_links": {

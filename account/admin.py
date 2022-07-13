@@ -16,14 +16,14 @@ from django.contrib import messages
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from django.conf import settings
-
+from django.contrib.auth.models import Group
 
 
 class CsvImportForm(forms.Form):
     csv_upload = forms.FileField()
 
 class UserAdmin(admin.ModelAdmin):
-    # list_display = ('password','username', 'first_name', 'last_name' ,'email','is_student')
+    list_display = ('last_name', 'first_name', 'email', 'is_student', 'is_teacher')
 
     def get_urls(self):
         urls = super().get_urls()
@@ -36,7 +36,7 @@ class UserAdmin(admin.ModelAdmin):
             csv_file = request.FILES["csv_upload"]
             
             if not csv_file.name.endswith('.csv'):
-                messages.warning(request, 'The wrong file type was uploaded')
+                messages.warning(request, 'Fichier invalide')
                 return HttpResponseRedirect(request.path_info)
             
             file_data = csv_file.read().decode("utf-8")
@@ -45,7 +45,6 @@ class UserAdmin(admin.ModelAdmin):
             for x in csv_data:
                 print('sdc')
                 print(x)
-                print('xvcbjkjhjjj')
                 fields = x.split(";")
                 print(fields)
 
@@ -101,3 +100,4 @@ class UserAdmin(admin.ModelAdmin):
 
 # admin.site.register(customer, CustomerAdmin)
 admin.site.register(User, UserAdmin)
+admin.site.unregister(Group)
