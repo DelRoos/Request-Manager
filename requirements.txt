@@ -6,3 +6,4 @@ pillow==9.1.0
 django_widget_tweaks==1.4.12
 django_import_export==2.8.0
 sendgrid==6.9.7
+django-jazzmin==2.5.0
