@@ -114,13 +114,15 @@ def operation_requete(request):
     asset = request.POST.get("asset")
     objet = request.POST.get("object")
     
+    print(f"Exam: {exam} | Note1: {note1} | Note2: {note2} | Comment: {comment} | Resp: {resp} | Objet: {objet}")
+    
     teacher = User.objects.filter(pk=int(resp))[0]
 
     template = Template.objects.create(
         examen = exam, 
         note1 = note1,
         note2 = note2,
-        commentaire = comment,
+        # commentaire = comment,
         student=request.user,
         responsable = teacher,
         asset = asset,
@@ -133,7 +135,7 @@ def operation_requete(request):
     return JsonResponse(
         {
             "id":f"{template.id}",
-            "operation_result": f"{template.examen} - {template.note1} - {template.note2} - {template.commentaire} -"
+            "operation_result": f"{template.examen} - {template.note1} - {template.note2} -"
         }
     )
    
@@ -263,7 +265,7 @@ def follow(request, id):
         teachers = User.objects.filter(is_teacher=True)
         templates = Template.objects.filter(id = id)[0]
         list_history = RequestHistory.objects.filter(request=templates)
-        
+        print(templates.request_image.all())
 
         return render(request, 'request/follow.html', context={
             "histories": list_history,

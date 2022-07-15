@@ -348,13 +348,12 @@
 
                         </div>
                         <div>
-                            <p>A</P>
-                            <p> {{ template.responsable }}</p>
+                            <p>A {{ template.responsable }}</p>
                         </div>
                     </div>
                     <div style="display: flex; justify-content: space-between">
                         <div>
-                            <p><span style="text-decoration:underline; font-weight: bold">Objet: </span><span>{{template.objet}}</span></p>
+                            <p style="display: flex;"><span style="text-decoration:underline; font-weight: bold">Objet: </span><span>{{template.objet}}</span></p>
                         </div>
                         <div>
 
@@ -370,30 +369,40 @@
                     </div>
                     <br>
                     <div style="background-color:; padding-top: 1px; padding-bottom: 1px; padding-left:5px; margin-bottom: 10px">
-                        <h4 style="color:#111">COMMENTAIRE*</h4>
+                        <h4 style="color:#111">COMMENTAIRE</h4>
                     </div>
                     {{template.commentaire}}             
-                    <br><br>    
-                    <div style="background-color:; padding-top: 1px; padding-bottom: 1px; padding-left:5px; margin-bottom: 30px">
-                        <h4 style="color:#111">PIECES JOINTES*</h4>
-                        {% for item in template.request_image.all %}
-                            {% if item.image_url is not None %}
-                                <img src="{{ item.image_url }}" class="card-img-top img-fluid">
-                            {% endif %}
-                        {% endfor %}
+                    <br><br> 
+
+                    <div class="container col-12 row" style="margin-righ: 100px">
+
+                        <div class="" style="display: flex; flex-wrap: wrap; margin: 2px;">
+
+                            {% for item in template.request_image.all %}
+                                {% if item.image_url is not None %}
+                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                        <a href="#" class="thumbnail" style="margin: 10px 10px 10px 10px;">
+                                            <img src="{{ item.image_url }}" width="200" alt="...">
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="modal fade" id="image-modal" tabindex="-1" role="dialog" style="height: 500px; width: 700px; ">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            </div>
+                            <div class="modal-body" style="height: 900px">
+                              <img class="img-responsive center-block" src="" alt="" style="width: 100%; height: 350px">
+                            </div>
                     </div>
                     {{ file }}
                     <br>
                     <div style="text-align: right">
-                        {% comment %} <form method="POST" action="{% url 'request:delete_view' template.id %}">
-                            {% csrf_token %}
-                            <button style="width:180px; height:50px; margin-bottom:50px; font-size:19px; color:#fff; font-weight: 700; border:none; background-color: #b33a3a; cursor: pointer" type="submit">Supprimer</button> {% endcomment %}
                             <button class="btn1" onclick="location.href='{% url 'request:edit' template.id %}'" style="" type="submit">Editer</button>
                             <button onclick="location.href='{% url 'request:notification' template.id %}'" class="btn2" data-toggle="modal" data-target="#success_tic" style="" type="submit">Soumettre</button> 
-                        {% comment %} </form> {% endcomment %}
-                        {% comment %} <a href="{% url 'request:delete-template' 20 %}">delete</a> {% endcomment %}
-                        {% comment %} <a href="{% url 'request:edit' %}?req={{template.id}}">Edit</a> {% endcomment %}
-                        {% comment %} <a href="{% url 'request:notification' template.id %}">Soumettre</a> {% endcomment %}
+
                     </div>
                     <!-- Modal -->
                     <div id="success_tic" class="modal fade" role="dialog">
@@ -424,4 +433,18 @@
             </div>
     </div>
     </div>
+
+    <script>
+
+        $(function() {     
+            $('a.thumbnail').click(function(e) {
+            e.preventDefault();
+            $('#image-modal .modal-body img').attr('src', $(this).find('img').attr('src'));
+            $("#image-modal").modal('show');
+            });
+            $('#image-modal .modal-body img').on('click', function() {
+            $("#image-modal").modal('hide')
+            });
+        });
+    </script>
 </body>

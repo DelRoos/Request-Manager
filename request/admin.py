@@ -15,3 +15,4 @@ class TemplateAdmin(admin.ModelAdmin):
 
 admin.site.register(Comment, CommentAdmin)
 admin.site.register(Template, TemplateAdmin)
+admin.site.register(RequestImage)
