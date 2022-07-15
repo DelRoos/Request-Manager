@@ -1,4 +1,4 @@
-python==3.9.6
+python==3.10.5
 asgiref==3.5.0
 sqlparse==0.4.2
 wheel==0.37.1
