@@ -278,7 +278,7 @@ def edit(request, id = None):
         template = Template.objects.get(student=request.user, pk=id, status="loading")
         # print(template.id)
        
-        return render(request, 'request/note-request.html', context={
+        return render(request, 'edit_template/edit.html', context={
             "student": request.user,
             'current_date':currentdate,
             'teacher':teacher,
