@@ -191,16 +191,9 @@
                 //comment = document.getElementById("comment");
 
                 var resps = [];
-                var current_resp = -1;
 
                 {% for teachers in teacher %}
-                    let text = '{{ teachers }} -- {{ teachers.email }}';
-                    let value = '{{ teachers.id }}';
-                    resps.push({value: value, text: text}),
-                
-                    {% if template.responsable.id == teachers.id %}
-                        current_resp = '{{ teachers.id }}';
-                    {% endif %}
+                    resps.push({value: '{{ teachers }} -- {{ teachers.email }}', text: {{ teachers.id }}}),
                 {% endfor %}
                 
 

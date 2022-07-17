@@ -1,0 +1,35 @@
+<div class="modal" tabindex="-1" id="share_modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Transferer la requete</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+            <div class="form-group">
+                <label for="describe">Pour transferer ??</label>
+                <input type="text" class="form-control" id="describe" placeholder="L'etudiant a ..." aria-describedby="emailHelp">
+            </div>
+
+            <div class="form-group">
+              <label for="teacher">A qui transferez vous? </label>
+              <select class="form-control" id="teacher">
+                {% for teacher in teachers %}
+                    {% if teacher != user %}
+                        <option id="options" value="{{ teacher.id }}"> {{ teacher }} </option>
+                    {% endif %}
+                {% endfor %}
+              </select>
+            </div>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="close_share" class="btn btn-danger" data-dismiss="modal">Annuler</button>
+          <button type="button" id="valid_share" class="btn btn-success">Transferer</button>
+        </div>
+      </div>
+    </div>
+</div>

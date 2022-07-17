@@ -391,6 +391,7 @@ def transfert_request(request):
         
         template_id = request.POST.get("template")
         to_teach_id = request.POST.get("to_teacher")
+        reason = request.POST.get("reason")
         user = request.user
         
         template = Template.objects.get(id=template_id)
@@ -400,6 +401,7 @@ def transfert_request(request):
         request_history = RequestHistory.objects.create(
             request = template,
             responsable = to_teacher,
+            reason=reason,
         )
         
         subject = "Requete transferer"

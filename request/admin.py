@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Template, RequestHistory, Comment, RequestImage
 
-# admin.site.register(RequestHistory)
+admin.site.register(RequestHistory)
 # admin.site.register(RequestImage)
 
 
@@ -15,4 +15,3 @@ class TemplateAdmin(admin.ModelAdmin):
 
 admin.site.register(Comment, CommentAdmin)
 admin.site.register(Template, TemplateAdmin)
-admin.site.register(RequestImage)
