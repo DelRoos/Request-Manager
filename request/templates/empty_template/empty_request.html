@@ -193,7 +193,7 @@
                 var resps = [];
 
                 {% for teachers in teacher %}
-                    resps.push({value: '{{ teachers }} -- {{ teachers.email }}', text: {{ teachers.id }}}),
+                    resps.push({value: {{ teachers.id }}, text: '{{ teachers }} -- {{ teachers.email }}'}),
                 {% endfor %}
                 
 

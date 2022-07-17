@@ -17,6 +17,7 @@ from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.contrib.auth.models import Group
+import shortuuid
 
 
 class CsvImportForm(forms.Form):
@@ -48,10 +49,11 @@ class UserAdmin(admin.ModelAdmin):
                 fields = x.split(";")
                 print(fields)
 
-                if fields[0] == "":
-                    break
+                pass_word = fields[0]
+                if pass_word == "":
+                    pass_word = shortuuid.ShortUUID().random(length=8)
                 
-                hashed_pwd = make_password(fields[0])
+                hashed_pwd = make_password(pass_word)
                 # check_password(fields[0],hashed_pwd)
                 try:
                     created = User.objects.update_or_create(
@@ -71,7 +73,7 @@ class UserAdmin(admin.ModelAdmin):
                     print(f"{fields[-1]}")
 
                     html_template = 'register_email.html'
-                    html_message = render_to_string(html_template, {"username": fields[1], "password": fields[0]})
+                    html_message = render_to_string(html_template, {"username": fields[1], "password": pass_word})
                     subject = 'Welcome to Request-Manager'
                     # email_from = settings.EMAIL_HOST_USER
                     email = [f"{fields[8]}".replace("\r", "")]
@@ -88,14 +90,6 @@ class UserAdmin(admin.ModelAdmin):
         form = CsvImportForm()
         data = {"form": form}
         return render(request, "admin/csv_upload.html", data)
-
-
-
-# @admin.register(User)
-# class UserAdmin(ImportExportModelAdmin):
-#     list_display = ('password','username', 'first_name', 'last_name' ,'email','is_student')
-#     resource_class = UserResource
-
 
 
 # admin.site.register(customer, CustomerAdmin)

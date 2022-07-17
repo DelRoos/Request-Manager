@@ -382,7 +382,39 @@ def change_state(request):
     except Exception as excp:
         print(excp)
         raise Http404("Vous ne pouvez pas accerdez a cette requette")
+   
+@login_required(login_url='/')
+@csrf_exempt
+def end_request(request, id):
+    try:    
+        
+        user = request.user
+        
+        # request_history = RequestHistory.objects.get(id=req_id)
+        template = Template.objects.get(id=id)
+        
+        if user.is_teacher:
+            subject = f"Fin de la requete"
+            message = f"Le responsable {user.first_name} {user.last_name} a mis fin a votre requete "
+            template.state = True
+            template.save()
+        
+            email = user.email
+            # send_mail(subject, message, settings.EMAIL_HOST_USER, [email], fail_silently=False)
+            send_mail(to_email=email, content=message, subject=subject)
+        
+
+        # return redirect('follow', kwargs={'id': template_id})
+        return JsonResponse(
+            {
+                "id":f"{id}",
+            }
+        )
+    except Exception as excp:
+        print(excp)
+        raise Http404("Vous ne pouvez pas accerdez a cette requette")
     
+ 
 
 @login_required(login_url='/')
 @csrf_exempt

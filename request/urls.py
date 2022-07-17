@@ -19,6 +19,7 @@ urlpatterns = [
     path('change_state/', views.change_state, name="change_state"),
     path('transfert_request/', views.transfert_request, name="transfert_request"),
     path('empty_template/', views.emptyTemplate, name="empty_template"),
+    path('end_request/<int:id>/', views.end_request, name="end_request"),
     
     path('request_asset/', views.file_upload),
 ]

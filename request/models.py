@@ -24,6 +24,7 @@ class Template(models.Model):
         choices=STATE,
         default="loading",
     )
+    state = models.BooleanField(default=False)
     asset = models.FileField(blank = True, null=True)
     note1 = models.CharField(max_length = 10, blank = True, null=True)
     note2 = models.CharField(max_length = 10, blank = True, null=True)
