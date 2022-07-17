@@ -14,6 +14,32 @@ import datetime
 from django.contrib.auth.decorators import login_required
 
 
+
+@login_required(login_url='/')
+def emptyTemplate(request):
+    currentdate = datetime.date.today()
+    teacher = User.objects.filter(is_teacher=True)
+    if request.GET == {}:
+        
+        return render(request,'empty_template/empty_request.html', context={
+            "student": request.user,
+            'current_date': currentdate,
+            'teacher': teacher
+        })
+    else:
+        # try except logic
+        try:
+            req = request.GET.get("req")
+            template = Template.objects.get(student=request.user, pk=req)
+            return render(request,'empty_template/empty_request.html', context={
+                "student": request.user,
+                'current_date': currentdate,
+                'teacher': teacher,
+                "template": template,
+            })
+        except Template.DoesNotExist:
+            raise Http404("Vous ne pouvez pas accerdez a cette requette")
+
 # Create your views here.
 @login_required(login_url='/')
 def NoteRequest(request):
@@ -109,10 +135,11 @@ def operation_requete(request):
     exam = request.POST.get("examen")
     note1 = request.POST.get("note1")
     note2 = request.POST.get("note2")
-    comment = request.POST.get("commentaire")
+    comment = request.POST.get("comment")
     resp = request.POST.get("responsable")
     asset = request.POST.get("asset")
     objet = request.POST.get("object")
+    existant = request.POST.get("existant")
     
     print(f"Exam: {exam} | Note1: {note1} | Note2: {note2} | Comment: {comment} | Resp: {resp} | Objet: {objet}")
     
@@ -122,7 +149,8 @@ def operation_requete(request):
         examen = exam, 
         note1 = note1,
         note2 = note2,
-        # commentaire = comment,
+        describe = comment,
+        existant = existant,
         student=request.user,
         responsable = teacher,
         asset = asset,
