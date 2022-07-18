@@ -107,8 +107,8 @@
                                 au responsable
                             {% endif %}
                             </button>
-                            <button type="button" id="share" class="btn btn-warning px-3"><i class="fas fa-share"></i> transferer</button>
                             {% if user.is_teacher %}
+                                <button type="button" id="share" class="btn btn-warning px-3"><i class="fas fa-share"></i> transferer</button>
                                 <button type="button" id="end_request" class="btn btn-success px-3"><i class="fas fa-check " aria-hidden="true"></i>  terminer</button>
                             {% endif %}
                         
@@ -193,7 +193,7 @@
             {% endif %}
   
         <script src="{% static 'js/jquery.min.js' %}" type="text/javascript"></script>
-        {% comment %} <script src="{% static 'js/bootstrap.bundle.min.js' %}" type="text/javascript"></script> {% endcomment %}
+        <script src="{% static 'js/bootstrap.bundle.min.js' %}" type="text/javascript"></script>
         <script src="{% static 'plugins/moment/moment.js' %}" type="text/javascript"></script>
         
         <script>
