@@ -497,7 +497,7 @@
     <script src="{% static 'plugins/moment/moment.js' %}" type="text/javascript"></script>
 
     <script src="{% static 'plugins/x-editable/js/bootstrap-editable.min.js' %}" type="text/javascript"></script> 
-    <script src="{% static 'js/upload_file.js' %}" type="text/javascript"></script>
+    {% comment %} <script src="{% static 'js/upload_file.js' %}" type="text/javascript"></script> {% endcomment %}
 
     <script>
 
@@ -511,43 +511,13 @@
             $("#image-modal").modal('hide')
             });
         });
-    </script>
-
-    <script>
 
         var note1 = null;
         var note2 = null;
         var teacher = null;
         var exam = null;
         var comment = null;
- 
-
-
-        {% if template %}
-            let current_uri = new URL(document.URL);
-
-            if(current_uri.pathname.search("/edit/") >= 0) {
-                document.getElementById("note1").innerHTML = {{template.note1}};
-                document.getElementById("note2").innerHTML = {{template.note2}};
-                document.getElementById("examen").innerHTML = '{{template.examen}}';
-
-                {% for teach in teacher %}
-                    let text = '{{ teach }} -- {{ teach.email }}';
-                    let value = {{ teach.id }};
-                    console.log()
-                    {% if template.responsable.id == teach.id %}
-                        teacher = {{ teach.id }};
-                        document.getElementById("teacher").innerHTML = text;
-                    {% endif %}
-                {% endfor %}
-                note1 = {{template.note1}};
-                note2 = {{template.note2}};
-                exam = '{{template.examen}}';
-                
-            }
-        {% endif %}
-
-
+        var existant = 1;
 
         $(document).ready(function() {
 
@@ -561,9 +531,7 @@
             var current_resp = -1;
         
             {% for teachers in teacher %}
-                let text = '{{ teachers }} -- {{ teachers.email }}';
-                let value = '{{ teachers.id }}';
-                resps.push({value: value, text: text}),
+                resps.push({value: {{ teachers.id }}, text: '{{ teachers }} -- {{ teachers.email }}'}),
             
                 {% if template.responsable.id == teachers.id %}
                     current_resp = '{{ teachers.id }}';

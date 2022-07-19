@@ -47,7 +47,7 @@ def NoteRequest(request):
     teacher = User.objects.filter(is_teacher=True)
     if request.GET == {}:
         
-        return render(request,'request/note-request.html', context={
+        return render(request,'note-request/note-request.html', context={
             "student": request.user,
             'current_date':currentdate,
             'teacher':teacher
@@ -81,21 +81,6 @@ def EvaluationRequest(request):
         'current_date':currentdate,
         'teacher':teacher
     })
-    # else:
-
-    #     try:
-    #         req = request.GET.get("req")
-    #         template = Template.objects.get(student=request.user, pk=req)
-    #         return render(request,'request/evaluation-request.html', context={
-    #             "student": request.user,
-    #             'current_date': currentdate,
-    #             'teacher': teacher,
-    #             "template": template,
-    #         })
-    #     except Template.DoesNotExist:
-    #         raise Http404("Vous ne pouvez pas accerdez a cette requette")
-
-
 
 
 
@@ -110,21 +95,6 @@ def UniqueRequest(request):
         'current_date':currentdate,
         'teacher':teacher
     })
-    # else:
-
-    #     try:
-    #         req = request.GET.get("req")
-    #         template = Template.objects.get(student=request.user, pk=req)
-    #         return render(request,'request/evaluation-request.html', context={
-    #             "student": request.user,
-    #             'current_date': currentdate,
-    #             'teacher': teacher,
-    #             "template": template,
-    #         })
-    #     except Template.DoesNotExist:
-    #         raise Http404("Vous ne pouvez pas accerdez a cette requette")
-
-
 
 
 
@@ -140,6 +110,7 @@ def operation_requete(request):
     asset = request.POST.get("asset")
     objet = request.POST.get("object")
     existant = request.POST.get("existant")
+    ue = request.POST.get("ue")
     
     print(f"Exam: {exam} | Note1: {note1} | Note2: {note2} | Comment: {comment} | Resp: {resp} | Objet: {objet}")
     
@@ -155,6 +126,7 @@ def operation_requete(request):
         responsable = teacher,
         asset = asset,
         objet = objet,
+        ue=ue,
         publish_date = datetime.date.today()
     )
 
@@ -173,10 +145,11 @@ def operation_edit_requete(request, id):
     exam = request.POST.get("examen")
     note1 = request.POST.get("note1")
     note2 = request.POST.get("note2")
-    comment = request.POST.get("commentaire")
+    comment = request.POST.get("comment")
     resp = request.POST.get("responsable")
     asset = request.POST.get("asset")
     objet = request.POST.get("object")
+    ue = request.POST.get("ue")
         
     teacher = User.objects.filter(pk=int(resp))[0]
 
@@ -193,10 +166,11 @@ def operation_edit_requete(request, id):
         template.examen = exam
         template.note1 = note1
         template.note2 = note2
-        template.commentaire = comment
+        template.describe = comment
         template.responsale = teacher
         template.asset = asset
         template.objet = objet
+        template.ue = ue
         template.publish_date = datetime.date.today()
         
         template.save()
@@ -204,7 +178,7 @@ def operation_edit_requete(request, id):
         return JsonResponse(
             {
                 "id":f"{template.id}",
-                "operation_result": f"{template.examen} - {template.note1} - {template.note2} - {template.commentaire} -"
+                "operation_result": f"{template.examen} - {template.note1} - {template.note2} - {template.describe} -"
             }
         )
         

@@ -427,21 +427,6 @@ $(document).ready(function(){
 						
 						<div class="collapse navbar-collapse" id="navbarSupportedContent">
 							<ul class="navbar-nav ml-auto py-4 py-md-0">
-								{% comment %} <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-									<a class="nav-link" style="font-size: 15px" href="#">Modèles</a>
-								</li> {% endcomment %}
-								{% comment %} <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-									<a class="nav-link" style="font-size: 15px" href="#">Aide</a>
-								</li>
-								<li style="cursor: pointer" class="nav- pl-4 pl-md-0 ml-0 ml-md-4">
-									<i id="dropdownMenuButton" data-toggle="dropdown" style="font-size: 30px" class="fa fa-user"></i>
-									<div class="dropdown"> {% endcomment %}
-										{% comment %} <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button> {% endcomment %}
-										{% comment %} <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-											<a class="dropdown-item" href="{% url 'account:user_login' %}">Logout<i class="fa fa-arrow"></i></a>
-										</div>
-									</div>
-								</li> {% endcomment %}
 							</ul>
 							<div class="navigation">
 								<div class="userBx">
@@ -452,10 +437,6 @@ $(document).ready(function(){
 								</div>
 								<div class="menuToggle"></div>
 								<ul class="menu">
-									{% comment %} <li> <a href="#"><ion-icon name="person-outline"></ion-icon>My Profile</a> </li>
-									<li> <a href="#"><ion-icon name="chatbubble-outline"></ion-icon>Messages</a> </li>
-									<li> <a href="#"><ion-icon name="notifications-outline"></ion-icon>Notifications</a> </li>
-									<li> <a href="#"><ion-icon name="settings-outline"></ion-icon>Settings</a> </li> {% endcomment %}
 									<li> <a href="{% url 'account:studenttable' %}"><ion-icon name="clipboard-outline"></ion-icon>Dashboard</a>
                                     <li> <a href="#"><ion-icon name="help-outline"></ion-icon>Help & Support</a> </li>
 									<li> <a href="{% url 'account:user_login' %}"><ion-icon name="log-out-outline"></ion-icon>Logout</a> </li>
@@ -479,49 +460,8 @@ $(document).ready(function(){
     
 
 
-
-
-
-    {% comment %} <div class="navigation">
-        <div class="userBx">
-            <div class="imgBx">
-                <img src="{% static 'images/logo.png' %}">
-            </div>
-            <p class="username">{{ user.username }}</p>
-        </div>
-        <div class="menuToggle"></div>
-        <ul class="menu"> {% endcomment %}
-            {% comment %} <li> <a href="#"><ion-icon name="person-outline"></ion-icon>My Profile</a> </li>
-            <li> <a href="#"><ion-icon name="chatbubble-outline"></ion-icon>Messages</a> </li>
-            <li> <a href="#"><ion-icon name="notifications-outline"></ion-icon>Notifications</a> </li>
-            <li> <a href="#"><ion-icon name="settings-outline"></ion-icon>Settings</a> </li> {% endcomment %}
-            {% comment %} <li> <a href="#"><ion-icon name="help-outline"></ion-icon>Help & Support</a> </li>
-            <li> <a href="{% url 'account:user_login' %}"><ion-icon name="log-out-outline"></ion-icon>Logout</a> </li>
-        </ul>
-    </div>
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <script>
-        let menuToggle = document.querySelector('.menuToggle');
-        let navigation = document.querySelector('.navigation');
-        menuToggle.onclick = function(){
-            navigation.classList.toggle('active');
-        }
-    </script> {% endcomment %}
-
-{% comment %} {% extends 'base.html' %}
-{% load static %}
-
-{% block content %} {% endcomment %}
-
-{% comment %} {% include 'parts/navbar.html' %}
-{% include 'parts/popup.html' %} {% endcomment %}
-{% comment %} <br>
-<h1> hello {{ user.username }} your role is student</h1> {% endcomment %}
 <section class="bg-img-full price-section" style="padding-top: 100px;" data-scroll-index="4">
-{% comment %} <section class="bg-img-full price-section" style="background-image: url({% static 'images/img02.jpg' %}); padding-top: 20px;" data-scroll-index="4"> {% endcomment %}
     <div class="container">
-        <!-- main heading start here -->
         <header class="first">
             <div class="one">
                 <h2 class="text-uppercase"><span>Modeles</span> plus utiliser</h2>
@@ -529,24 +469,7 @@ $(document).ready(function(){
                 <p style="margin-bottom: -45px;">Grande famille de requete et quelque probleme frequement rancontrer par les  etudiants</p>
             </div>
         </header>
-        <!-- main heading end here -->
-        <div class="row">
-            {% comment %} <div class="col-xs-12 col-sm-6 col-md-4 ">
-                <div class="price-box" style="box-shadow: #698cf0 0px 2px 8px 0px;">
-                    <header class="header">
-                        <strong class="title text-uppercase">Notes</strong>
-                        <span class="price-txt">
-                            <span class="txt">Modeles pour gérer tous vos probleme de note</span>
-                        </span>
-                    </header>
-                    <div class="box">
-                        <h3 class="text-uppercase">Absence de note</h3>
-                        <span class="divider"></span><br>
-                        <p>Vous avez composer un examen (controle continue, travaux pratique, session normale) et votre note n'est pas sortie, ...</p>
-                        <a href="{% url 'request:NoteRequest' %}">utiliser ce modèle</a>
-                    </div>
-                </div>
-            </div> {% endcomment %}
+        <div class="row d-flex justify-content-center">
             <div class="row">
                 <div id="root" style="width: ">
                     <div class="container pt-5 m-4">
@@ -554,12 +477,8 @@ $(document).ready(function(){
                             <div class="c-dashboardInfo ">
                                 <div class="wrap"  style="max-width: 332px; height: 300px;">
                                     <header class="header">
-                                        {% comment %} <strong class="title text-uppercase">Notes</strong> {% endcomment %}
                                         <span class="price-txt">
-                                            {% comment %} <span class="price main-color">125</span> {% endcomment %}
-                                            {% comment %} <span class="txt"  style="">Modeles pour gérer tous vos probleme de note</span> {% endcomment %}
                                         </span>
-                                        {% comment %} <p>Gerer tous vos probleme de note</p> {% endcomment %}
                                     </header>
                                     <div class="box">
                                         <h3 class="text-uppercase" style="font-size: 20px; padding-bottom: 10px">Absence de note</h3>
@@ -574,22 +493,8 @@ $(document).ready(function(){
                     </div>
                 </div>
             </div>
-            {% comment %} <div class="col-xs-12 col-sm-6 col-md-4 pad-bottom-sm">
-                <div class="price-box" style="box-shadow: #698cf0 0px 2px 8px 0px;">
-                    <header class="header">
-                        <strong class="title text-uppercase">Information</strong>
-                        <span class="price-txt">
-                            <span class="txt">Modeles pour gérer toutes les erreur lie a vos informations</span>
-                        </span>
-                    </header>
-                    <div class="box">
-                        <h3 class="text-uppercase">PROBLEME SUR LES INFORMATIONS</h3>
-                        <span class="divider"></span>
-                        <p>Les listes definitive sont sorite votre nom est mal ecrit, vous n'etes pas dans la filiere choisi, ...</p>
-                        <a href="#">Utiliser ce modele</a>
-                    </div>
-                </div>
-            </div> {% endcomment %}
+           
+          
             <div class="row">
                 <div id="root" style="width: ">
                     <div class="container pt-5 m-4">
@@ -597,76 +502,7 @@ $(document).ready(function(){
                             <div class="c-dashboardInfo ">
                                 <div class="wrap"  style="max-width: 332px; height: 300px;">
                                     <header class="header">
-                                        {% comment %} <strong class="title text-uppercase">Information</strong> {% endcomment %}
                                         <span class="price-txt">
-                                            {% comment %} <span class="txt">Modeles pour gérer toutes les erreur lie a vos informations</span> {% endcomment %}
-                                        </span>
-                                    </header>
-                                    <div class="box">
-                                        <h3 class="text-uppercase" style="font-size: 20px; padding-bottom: 10px">PROBLEME SUR LES INFORMATIONS</h3>
-                                        <span class="txt" style="padding-bottom: 10px">Modèle pour gérer toutes les erreurs liées a vos informations</span>
-                                        <span class="divider"></span>
-                                        <p>Les listes definitives sont sortie votre nom est mal ecrit, vous n'êtes pas dans la filiere choisi, ...</p>
-                                        <a href="#">Utiliser ce modele</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% comment %} <div class="col-xs-12 col-sm-6 col-md-4 pad-bottom-sm">
-                <div class="price-box" style="box-shadow: #698cf0 0px 2px 8px 0px;">
-                    <header class="header">
-                        <strong class="title text-uppercase">Audience</strong>
-                        <span class="price-txt">
-                            <span class="txt">Modele pour Faites une demande d'audience</span>
-                        </span>
-                    </header>
-                    <div class="box">
-                        <h3 class="text-uppercase">Demande d'evaluation</h3>
-                        <span class="divider"></span>
-                        <p>Vous avez été absent lors d'une evaluation pour une raison ou une autre vous aimeriez qu'on puisse vous reévaluer,<br>...</p>
-                        <a href="#">Utiliser ce modele</a>
-                    </div>
-                </div>
-            </div> {% endcomment %}
-            <div class="row">
-                <div id="root" style="width: ">
-                    <div class="container pt-5 m-4">
-                        <div class="align-items-stretch">
-                            <div class="c-dashboardInfo ">
-                                <div class="wrap"  style="max-width: 332px; height: 300px;">
-                                    <header class="header">
-                                        {% comment %} <strong class="title text-uppercase">Audience</strong> {% endcomment %}
-                                        <span class="price-txt">
-                                            {% comment %} <span class="txt">Modele pour Faites une demande d'audience</span> {% endcomment %}
-                                        </span>
-                                    </header>
-                                    <div class="box">
-                                        <h3 class="text-uppercase" style="font-size: 20px; padding-bottom: 10px">Demande d'evaluation</h3>
-                                        <span class="txt" style="padding-bottom: 10px">Modèle pour Faire une demande d'audience</span>
-                                        <span class="divider"></span>
-                                        <p>Vous avez été absent lors d'une évaluation pour une raison ou une autre vous aimeriez qu'on puisse vous reévaluer,<br>...</p>
-                                        <a href="{% url 'request:EvaluationRequest' %}">Utiliser ce modele</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div id="root" style="width: ">
-                    <div class="container pt-5 m-4">
-                        <div class="align-items-stretch">
-                            <div class="c-dashboardInfo ">
-                                <div class="wrap"  style="max-width: 332px; height: 300px;">
-                                    <header class="header">
-                                        {% comment %} <strong class="title text-uppercase">Audience</strong> {% endcomment %}
-                                        <span class="price-txt">
-                                            {% comment %} <span class="txt">Modele pour Faites une demande d'audience</span> {% endcomment %}
                                         </span>
                                     </header>
                                     <div class="box">
@@ -685,17 +521,6 @@ $(document).ready(function(){
         </div>
     </div>
 </section>
-
-{% comment %} {% endblock content %} {% endcomment %}
-
-{% comment %} <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>student page</title>
-</head>
-<body>
-    <h1> hello {{ user.username }} your role is student</h1> {% endcomment %}
     
 </body>
 </html>

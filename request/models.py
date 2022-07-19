@@ -29,6 +29,7 @@ class Template(models.Model):
     note1 = models.CharField(max_length = 10, blank = True, null=True)
     note2 = models.CharField(max_length = 10, blank = True, null=True)
     examen = models.CharField(max_length = 10, blank = True, null=True)
+    ue = models.CharField(max_length = 50, blank = True, null=True)
 
     def __str__(self):
         return self.objet

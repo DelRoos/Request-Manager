@@ -61,18 +61,51 @@
                 <h5 class="mr-2">Objet:  </h5><span class="font-weight-bold">{{template.objet}}</span>
             </div>
 
+            {% if template.existant == 1 %}
+                <section class="">
+                    <div class="container py-3 ">
+                    <div class="row d-flex justify-content-center align-items-center h-100">
+                        <div class="col-12 p-0">
+                
+                        <figure class="bg-light p-4"
+                            style="border-left: .35rem solid red; border-top: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                            <i class="fas fa-quote-left fa-2x mb-4" style="color: red;"></i>
+                            <blockquote class="blockquote pb-2">
+                                <p>
+                                    Lors de la sortie de note de 
+                                    <span class="badge badge-pill badge-dark">{{template.examen}}</span>
+                                    de l'unite d'enseignement 
+                                    <span class="badge badge-pill badge-dark">{{template.ue}}</span>
+                                    j’ai remarque une difference entre ma note et la note qui est sur les resultat definitif.
+                                    En effet j'ai eu la note de 
+                                    <span class="badge badge-pill badge-dark">{{template.note2}}</span>
+                                    /20
+                                    hors sur les resultats on a mis la note de 
+                                    <span class="badge badge-pill badge-dark">{{template.note1}}</span>/20
+                                </p>
+                            </blockquote>
+                            <figcaption class="blockquote-footer mb-0">
+                                <cite title="Source Title">important</cite>
+                            </figcaption>
+                        </figure>
+                
+                        </div>
+                    </div>
+                    </div>
+                </section>
+            {% endif %}
 
             <div>
                 <hr>
             </div>
 
-            <div class="font-weight-bold">
+            {% if template.describe != "undefined" and template.describe is not None %}
                 {{ template.describe|safe }}
-            </div>
-
-            <div>
-                <hr>
-            </div>
+                <div>
+                    <hr>
+                </div>
+            {% endif %}
+            
             <div class="container col-12 row" style="margin-righ: 100px">
                 <h5 class="mr-2">Pieces jointe:  </h5>
                 <div class="" style="display: flex; flex-wrap: wrap; margin: 2px;">

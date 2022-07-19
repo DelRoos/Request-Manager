@@ -98,37 +98,73 @@
                 <h5 class="mr-2">Objet:  </h5><span class="font-weight-bold">{{template.objet}}</span>
             </div>
 
-
-            <div>
-                <hr>
-            </div>
-
-            <div class="font-weight-bold">
-                {{ template.describe|safe }}
-            </div>
-
-            <div>
-                <hr>
-            </div>
-            <div class="container col-12 row" style="margin-righ: 100px">
-                <h5 class="mr-2">Pieces jointe:  </h5>
-                <div class="" style="display: flex; flex-wrap: wrap; margin: 2px;">
-
-                    {% for item in template.request_image.all %}
-                        {% if item.image_url is not None %}
-                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                                <a href="#" class="thumbnail" style="margin: 10px 10px 10px 10px;">
-                                    <img src="{{ item.image_url }}" width="100%" alt="...">
-                                </a>
+                {% if template.existant == 1 %}
+                    <section class="">
+                        <div class="container py-3 ">
+                        <div class="row d-flex justify-content-center align-items-center h-100">
+                            <div class="col-12 p-0">
+                    
+                            <figure class="bg-light p-4"
+                                style="border-left: .35rem solid red; border-top: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                <i class="fas fa-quote-left fa-2x mb-4" style="color: red;"></i>
+                                <blockquote class="blockquote pb-2">
+                                    <p>
+                                        Lors de la sortie de note de 
+                                        <span class="badge badge-pill badge-dark">{{template.examen}}</span>
+                                        de l'unite d'enseignement 
+                                        <span class="badge badge-pill badge-dark">{{template.ue}}</span>
+                                        j’ai remarque une difference entre ma note et la note qui est sur les resultat definitif.
+                                        En effet j'ai eu la note de 
+                                        <span class="badge badge-pill badge-dark">{{template.note2}}</span>
+                                        /20
+                                        hors sur les resultats on a mis la note de 
+                                        <span class="badge badge-pill badge-dark">{{template.note1}}</span>/20
+                                    </p>
+                                </blockquote>
+                                <figcaption class="blockquote-footer mb-0">
+                                    <cite title="Source Title">important</cite>
+                                </figcaption>
+                            </figure>
+                    
                             </div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-            </div>
+                        </div>
+                        </div>
+                    </section>
+                {% endif %}
 
             <div>
                 <hr>
             </div>
+            {% if template.describe != "undefined" and template.describe is not None %}
+                {{ template.describe|safe }}
+                <div>
+                    <hr>
+                </div>
+            {% endif %}
+
+            {% if template.request_image.all %}
+                <div class="container col-12 row" style="margin-righ: 100px">
+                    <h5 class="mr-2">Pieces jointe:  </h5>
+                    <div class="" style="display: flex; flex-wrap: wrap; margin: 2px;">
+
+                        {% for item in template.request_image.all %}
+                            {% if item.image_url is not None %}
+                                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                    <a href="#" class="thumbnail" style="margin: 10px 10px 10px 10px;">
+                                        <img src="{{ item.image_url }}" width="100%" alt="...">
+                                    </a>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div>
+                    <hr>
+                </div>
+            {% endif %}
+            
+
 
             <div class="container row d-flex flex-row-reverse">
                 <button type="button" class="btn btn-success" id="save">Envoyer</button>
@@ -179,196 +215,5 @@
             });
         </script>
         
-        {% comment %} <script>
-
-
-            var comment = null;
-            var objet = null;
-            var teacher = null;
-            var existant = 0;
-
-
-            $('#summernote').summernote({
-                placeholder: 'En effet je suis...',
-                tabsize: 6,
-                height: 300,
-                lang: "fr-FR",
-
-                toolbar: [
-                    ['style', ['style']],
-                    ['font', ['bold', 'underline', 'clear']],
-                    //['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['table', ['table']],
-                    ['insert', ['link', 'picture',]],
-                    ['view', ['fullscreen',]]
-                ]
-            });
-
-            $(document).ready(function() {
-                //comment = document.getElementById("comment");
-
-                var resps = [];
-                var current_resp = -1;
-
-                {% for teachers in teacher %}
-                    let text = '{{ teachers }} -- {{ teachers.email }}';
-                    let value = '{{ teachers.id }}';
-                    resps.push({value: value, text: text}),
-                
-                    {% if template.responsable.id == teachers.id %}
-                        current_resp = '{{ teachers.id }}';
-                    {% endif %}
-                {% endfor %}
-                
-
-                $('#objet').editable({
-                    mode: 'inline',
-                    inputclass: 'form-control-sm col-12',
-                    validate: function (value) {
-                        if ($.trim(value) == '') return 'Le champ est requis';
-                        objet = value;
-                    },
-                });
-                $('#teacher').editable({
-                    prepend: "selectionner un responsable",
-                    mode: 'inline',
-                    inputclass: 'form-control-sm',
-                    //value: current_resp == -1 ? undefined : current_resp,
-                    source: resps,
-
-                    validate: function (value) {
-                        teacher = value
-                        if ($.trim(value) == '') return 'Le champ est requis';
-                    },
-                });
-
-
-                const dt = new DataTransfer(); // Permet de manipuler les fichiers de l'input file
-                $("#attachment").on('change', function(e){
-                    for(var i = 0; i < this.files.length; i++){
-                        let fileBloc = $('<div/>', {class: 'file-block'}),
-                            fileName = $('<span/>', {class: 'name', text: this.files.item(i).name});
-                        fileBloc.append('<span class="file-delete" style="margin-left: 10px"><span>+</span></span>')
-                            .append(fileName);
-                        $("#filesList > #files-names").append(fileBloc);
-                    };
-                    // Ajout des fichiers dans l'objet DataTransfer
-                    for (let file of this.files) {
-                        dt.items.add(file);
-                    }
-                    // Mise à jour des fichiers de l'input file après ajout
-                    this.files = dt.files;
-
-                    // EventListener pour le bouton de suppression créé
-                    $('span.file-delete').click(function(){
-                        let name = $(this).next('span.name').text();
-                        // Supprimer l'affichage du nom de fichier
-                        $(this).parent().remove();
-                        for(let i = 0; i < dt.items.length; i++){
-                            // Correspondance du fichier et du nom
-                            if(name === dt.items[i].getAsFile().name){
-                                // Suppression du fichier dans l'objet DataTransfer
-                                dt.items.remove(i);
-                                continue;
-                            }
-                        }
-                        // Mise à jour des fichiers de l'input file après suppression
-                        document.getElementById('attachment').files = dt.files;
-                    });
-                });
-
-                $("#save").click(function() {
-                    event.preventDefault();
-
-                    comment = $("#summernote").summernote("code");
-
-                    if (
-                        objet == null || objet == "" ||
-                        comment.value == "" ||
-                        teacher == null
-                    ) {
-                        document.querySelector("#modal-error").click();
-                    }else{
-
-                        let form = new FormData();
-                        let current_uri = new URL(document.URL);
-                        let request_uri =   "{% url 'request:operation_requete' %}";
-                        let req_id = current_uri.searchParams.get("req");
-                    
-                        console.log(comment);
-                        form.append("responsable", teacher);
-                        form.append("comment", comment);
-                        form.append("object", objet);
-                        form.append("existant", existant);
-
-                        // let url_request = "";
-                        // if(current_uri.pathname.search("/edit/") >= 0) {
-                        //     url_request = current_uri.origin+"/operation_edit_requete/"+current_uri.pathname.split("/")[2]+"/";
-                        // } else {
-                        url_request = current_uri.origin+"/operation_requete/";
-                        // }
-
-                        let request = new Request(
-                                            url_request, 
-                                            {
-                                                method: 'POST',
-                                                body: form,
-                                                headers: {
-                                                    "X-CSRFToken": getCookie("csrftoken"),
-                                                }
-                                            }
-                                        );
-                        fetch(request).then(response => {
-                            return response.json()
-                        }).then(data => {
-                            if (typeof dt.files !== "undefined") {
-                                var files = dt.files;
-                                const tab = [...files]
-
-                                tab.forEach(async (elt) => {
-                                    let content = new FormData();
-                                    content.append("file[]", elt);
-
-                                    let request_image = new Request("/request_asset/?request="+data["id"], {method: 'POST',
-                                        body: content,
-                                        headers: {
-                                            "X-CSRFToken": getCookie("csrftoken"),
-                                        }
-                                    });
-                                    
-                                    await fetch(request_image).then(response => {
-                                        response.json()
-                                    })
-                                })
-                                
-                            }
-
-                            window.location.href = current_uri.origin+"/preview/"+data["id"]+"/"
-                        })
-                    }
-                });
-
-                function getCookie(name) {
-                    let cookieValue = null;
-
-                    if(document.cookie && document.cookie != "") {
-                        const cookies = document.cookie.split(";");
-                        
-                        for (let i = 0; i < cookies.length; i++) {
-                            const cookie = cookies[i].trim();
-
-                            if (cookie.substring(0, name.length+1) === name+"=") {
-                                cookieValue = decodeURIComponent(cookie.substring(name.length+1));
-                                break;
-                            }
-                        }
-                    }
-                    return cookieValue;
-                }
-            
-            })
-
-        </script> {% endcomment %}
     </body>
 </html>

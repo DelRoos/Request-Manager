@@ -5,7 +5,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Utilisé un modele vide</title>
+        <title>Modifier la requete</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -93,10 +93,62 @@
             <div class="d-flex col-6 pl-0 py-4">
                 <h5 class="mr-2">Objet:  </h5>
 
-                <a href="#" id="objet" data-type="text" data-placement="right" data-title="">Pourquoi ecrire la requete
-                    <span style="display: inline; color: red">*</span>
-                </a>
+                {% if template.existant == 1 %}
+                    <span class="font-weight-bold" id="objet">Demande de revision de note</span>
+                {% else %}
+                    <a href="#" id="objet" data-type="text" data-placement="right" data-title="">Pourquoi ecrire la requete
+                        <span style="display: inline; color: red">*</span>
+                    </a>
+                {% endif %}
             </div>
+
+            {% if template.existant == 1 %}
+                <section class="">
+                    <div class="container py-3 ">
+                    <div class="row d-flex justify-content-center align-items-center h-100">
+                        <div class="col-12 p-0">
+                
+                        <figure class="bg-light p-4"
+                            style="border-left: .35rem solid red; border-top: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                            <i class="fas fa-quote-left fa-2x mb-4" style="color: red;"></i>
+                            <blockquote class="blockquote pb-2">
+                                <p>
+                                    Lors de la sortie de note de 
+                                    <a href="#" data-type="select" data-placement="type d'examen" id="examen">type d'examen
+                                        <span style="display: inline; color: red">*</span>
+                                    </a>
+                                    {% comment %} type examen {% endcomment %}
+                                    de l'unite d'enseignement <a href="#" id="ue" data-type="text" data-placement="right" data-title="">UE
+                                        <span style="display: inline; color: red">*</span>
+                                    </a>
+                                    {% comment %} unite d'enseignemen {% endcomment %}, 
+                                    j’ai remarque une difference entre ma note et la note qui est sur les resultat definitif.
+                                    En effet j'ai eu la note de 
+                                    {% comment %} note sur la copie {% endcomment %} 
+                                    
+                                    <a href="#" id="note2" data-type="text" data-placement="right" data-title="">ma note
+                                        <span style="display: inline; color: red">*</span>
+                                    </a>
+                                    /20
+                                    hors sur les resultats on a mis la note de 
+                                    {% comment %} mauvaise note {% endcomment %}
+                                    <a href="#" id="note1" data-type="text" data-placement="right" data-title="">note donnee
+                                        <span style="display: inline; color: red">*</span>
+                                    </a>/20
+    
+                                </p>
+                            </blockquote>
+                            <figcaption class="blockquote-footer mb-0">
+                                <cite title="Source Title">important</cite>
+                            </figcaption>
+                        </figure>
+                
+                        </div>
+                    </div>
+                    </div>
+                </section>
+            {% endif %}
+              
 
             <div class="form-group">
                 <h5>
@@ -104,7 +156,22 @@
                 </h5>
             </div>
 
-            <div id="summernote">{{template.describe|safe}}</div>
+            {% if template.describe != "undefined" and template.describe is not None %}
+                <div class="">
+                    <div id="summernote">
+                        {{ template.describe|safe }}
+                    </div>
+                </div>
+                <div>
+                    <hr>
+                </div>
+            {% else %}
+                <div id="summernote"></div>
+                <div>
+                    <hr>
+                </div>
+            {% endif %}
+
 
             <section class="container  py-4">
                 <form action="" method="post" id="upload_form">
@@ -154,8 +221,6 @@
         <script src="{% static 'plugins/summernote/summernote-fr-FR.min.js' %}" type="text/javascript"></script> 
         <script>
 
-
-
             $(function() {     
                 $('a.thumbnail').click(function(e) {
                 e.preventDefault();
@@ -166,32 +231,6 @@
                 $("#image-modal").modal('hide')
                 });
             });
-
-            var comment = null;
-            var objet = null;
-            var teacher = null;
-            var existant = 0;
-
-
-            // document.getElementById("note2").innerHTML = {{template.note2}};
-            // document.getElementById("examen").innerHTML = '{{template.examen}}';
-            existant = {{template.existant}}
-            objet = '{{template.objet}}';
-            document.getElementById("objet").innerHTML = '{{template.objet}}';
-
-            {% for teach in teacher %}
-                let text = '{{ teach }} -- {{ teach.email }}';
-                let value = {{ teach.id }};
-                console.log()
-                {% if template.responsable.id == teach.id %}
-                    teacher = {{ teach.id }};
-                    document.getElementById("teacher").innerHTML = text;
-                {% endif %}
-            {% endfor %}
-            //note1 = {{template.note1}};
-            exam = '{{template.examen}}';
-                    
-
             $('#summernote').summernote({
                 placeholder: 'En effet je suis...',
                 tabsize: 6,
@@ -209,164 +248,360 @@
                 ]
             });
 
-            $(document).ready(function() {
-                //comment = document.getElementById("comment");
 
-                var resps = [];
-                var current_resp = -1;
+            function getCookie(name) {
+                let cookieValue = null;
 
-                {% for teachers in teacher %}
-                    let text = '{{ teachers }} -- {{ teachers.email }}';
-                    let value = '{{ teachers.id }}';
-                    resps.push({value: value, text: text}),
-                
-                    {% if template.responsable.id == teachers.id %}
-                        current_resp = '{{ teachers.id }}';
+                if(document.cookie && document.cookie != "") {
+                    const cookies = document.cookie.split(";");
+                    
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+
+                        if (cookie.substring(0, name.length+1) === name+"=") {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length+1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+            let comment = null;
+            let objet = null;
+            let teacher = null;
+            let existant = {{template.existant}};
+            let note1 = null;
+            let note2 = null;
+            let exam = null;
+            let ue = null;
+    
+
+            {% if template.existant == 1 %}
+                $(document).ready(function() {
+
+
+                    existant = {{template.existant}}
+                    console.log('{{ template.objet }}')
+
+                    objet = '{{template.objet}}';
+                    document.getElementById("objet").innerHTML = '{{template.objet}}';
+
+                    note1 = {{template.note1}};
+                    document.getElementById("note1").innerHTML = '{{template.note1}}';
+
+                    note2 = {{template.note2}};
+                    document.getElementById("note2").innerHTML = '{{template.note2}}';
+
+                    ue = '{{template.ue}}';
+                    document.getElementById("ue").innerHTML = '{{template.ue}}';
+
+                    exam = '{{template.examen}}';
+                    document.getElementById("examen").innerHTML = exam;
+
+
+                    {% for teach in teacher %}
+                        {% if template.responsable.id == teach.id %}
+                            teacher = {{ teach.id }};
+                            console.log('{{ teach }}')
+                            document.getElementById("teacher").innerHTML = '{{ teach }} -- {{ teach.email }}';
+                        {% endif %}
+                    {% endfor %}
+                    //note1 = {{template.note1}};
+                    exam = '{{template.examen}}';
+
+
+
+                    const dt = new DataTransfer(); // Permet de manipuler les fichiers de l'input file
+                    $("#attachment").on('change', function(e){
+                        for(var i = 0; i < this.files.length; i++){
+                            let fileBloc = $('<div/>', {class: 'file-block'}),
+                                fileName = $('<span/>', {class: 'name', text: this.files.item(i).name});
+                            fileBloc.append('<span class="file-delete" style="margin-left: 10px"><span>+</span></span>')
+                                .append(fileName);
+                            $("#filesList > #files-names").append(fileBloc);
+                        };
+                        // Ajout des fichiers dans l'objet DataTransfer
+                        for (let file of this.files) {
+                            dt.items.add(file);
+                        }
+                        // Mise à jour des fichiers de l'input file après ajout
+                        this.files = dt.files;
+        
+                        // EventListener pour le bouton de suppression créé
+                        $('span.file-delete').click(function(){
+                            let name = $(this).next('span.name').text();
+                            // Supprimer l'affichage du nom de fichier
+                            $(this).parent().remove();
+                            for(let i = 0; i < dt.items.length; i++){
+                                // Correspondance du fichier et du nom
+                                if(name === dt.items[i].getAsFile().name){
+                                    // Suppression du fichier dans l'objet DataTransfer
+                                    dt.items.remove(i);
+                                    continue;
+                                }
+                            }
+                            // Mise à jour des fichiers de l'input file après suppression
+                            document.getElementById('attachment').files = dt.files;
+                        });
+                    });
+        
+
+                    $("#save").click(function() {
+                        event.preventDefault();
+
+                        comment = $("#summernote").summernote("code");
+                        console.log(ue, note1, note2, teacher, exam, objet.innerText)
+
+                        if (
+                            ue == null || ue == "" ||
+                            note1 == null || note1 == "" ||
+                            note2 == null || note2 == "" ||
+                            teacher == null ||
+                            exam == null || exam == ""
+                        ) {
+                            $('#modal-error').modal('show'); 
+                        }else if (isNaN(note1) || isNaN(note2) || note1 > 20 || note2 > 20) {
+                            $('#modal-data-error').modal('show'); 
+                        }else{
+
+                            let form = new FormData();
+                            let current_uri = new URL(document.URL);
+                            let req_id = current_uri.searchParams.get("req");
+
+                            comment = $("#summernote").summernote("code");
+                        
+                            form.append("examen", exam);
+                            form.append("object", objet);
+                            form.append("note1", note1);
+                            form.append("note2", note2);
+                            form.append("comment", comment);
+                            form.append("responsable", teacher);
+                            form.append("existant", existant);
+                            form.append("ue", ue);
+
+                            let url_request = current_uri.origin+"/operation_edit_requete/"+current_uri.pathname.split("/")[2]+"/";
+
+                            let request = new Request(
+                                                url_request, 
+                                                {
+                                                    method: 'POST',
+                                                    body: form,
+                                                    headers: {
+                                                        "X-CSRFToken": getCookie("csrftoken"),
+                                                    }
+                                                }
+                                            );
+                            fetch(request).then(response => {
+                                return response.json()
+                            }).then(data => {
+                                if (typeof dt.files !== "undefined") {
+                                    var files = dt.files;
+                                    const tab = [...files]
+
+                                    tab.forEach(async (elt) => {
+                                        let content = new FormData();
+                                        content.append("file[]", elt);
+
+                                        let request_image = new Request("/request_asset/?request="+data["id"], {method: 'POST',
+                                            body: content,
+                                            headers: {
+                                                "X-CSRFToken": getCookie("csrftoken"),
+                                            }
+                                        });
+                                        
+                                        await fetch(request_image).then(response => {
+                                            response.json()
+                                        })
+                                    })
+                                    
+                                }
+
+                                window.location.href = current_uri.origin+"/preview/"+data["id"]+"/"
+                            })
+                        }
+                    });
+
+                })
+
+            {% else %}
+
+
+                existant = {{template.existant}}
+                console.log('{{ template.objet }}')
+
+                objet = '{{template.objet}}';
+                document.getElementById("objet").innerHTML = '{{template.objet}}';
+
+                {% for teach in teacher %}
+                    {% if template.responsable.id == teach.id %}
+                        teacher = {{ teach.id }};
+                        console.log('{{ teach }}')
+                        document.getElementById("teacher").innerHTML = '{{ teach }} -- {{ teach.email }}';
                     {% endif %}
                 {% endfor %}
-                
-
-                $('#objet').editable({
-                    mode: 'inline',
-                    inputclass: 'form-control-sm col-12',
-                    validate: function (value) {
-                        if ($.trim(value) == '') return 'Le champ est requis';
-                        objet = value;
-                    },
-                });
-                $('#teacher').editable({
-                    prepend: "selectionner un responsable",
-                    mode: 'inline',
-                    inputclass: 'form-control-sm',
-                    //value: current_resp == -1 ? undefined : current_resp,
-                    source: resps,
-
-                    validate: function (value) {
-                        teacher = value
-                        if ($.trim(value) == '') return 'Le champ est requis';
-                    },
-                });
-
-
-                const dt = new DataTransfer(); // Permet de manipuler les fichiers de l'input file
-                $("#attachment").on('change', function(e){
-                    for(var i = 0; i < this.files.length; i++){
-                        let fileBloc = $('<div/>', {class: 'file-block'}),
-                            fileName = $('<span/>', {class: 'name', text: this.files.item(i).name});
-                        fileBloc.append('<span class="file-delete" style="margin-left: 10px"><span>+</span></span>')
-                            .append(fileName);
-                        $("#filesList > #files-names").append(fileBloc);
-                    };
-                    // Ajout des fichiers dans l'objet DataTransfer
-                    for (let file of this.files) {
-                        dt.items.add(file);
-                    }
-                    // Mise à jour des fichiers de l'input file après ajout
-                    this.files = dt.files;
-
-                    // EventListener pour le bouton de suppression créé
-                    $('span.file-delete').click(function(){
-                        let name = $(this).next('span.name').text();
-                        // Supprimer l'affichage du nom de fichier
-                        $(this).parent().remove();
-                        for(let i = 0; i < dt.items.length; i++){
-                            // Correspondance du fichier et du nom
-                            if(name === dt.items[i].getAsFile().name){
-                                // Suppression du fichier dans l'objet DataTransfer
-                                dt.items.remove(i);
-                                continue;
-                            }
-                        }
-                        // Mise à jour des fichiers de l'input file après suppression
-                        document.getElementById('attachment').files = dt.files;
-                    });
-                });
-
-                $("#save").click(function() {
-                    event.preventDefault();
-
-                    comment = $("#summernote").summernote("code");
-
-                    if (
-                        objet == null || objet == "" ||
-                        comment.value == "" ||
-                        teacher == null
-                    ) {
-                        document.querySelector("#modal-error").click();
-                    }else{
-
-                        let form = new FormData();
-                        let current_uri = new URL(document.URL);
-                        let req_id = current_uri.searchParams.get("req");
+                //note1 = {{template.note1}};
+                exam = '{{template.examen}}';
                     
-                        console.log(comment);
-                        form.append("responsable", teacher);
-                        form.append("comment", comment);
-                        form.append("object", objet);
-                        form.append("existant", existant);
 
-                        let url_request = current_uri.origin+"/operation_edit_requete/"+current_uri.pathname.split("/")[2]+"/";
+                $(document).ready(function() {
+                    //comment = document.getElementById("comment");
 
-                        let request = new Request(
-                                            url_request, 
-                                            {
-                                                method: 'POST',
-                                                body: form,
-                                                headers: {
-                                                    "X-CSRFToken": getCookie("csrftoken"),
+                    var resps = [];
+                    var current_resp = -1;
+
+                    {% for teachers in teacher %}
+                        resps.push({value: {{ teachers.id }}, text: '{{ teachers }} -- {{ teachers.email }}'}),
+                    
+                        {% if template.responsable.id == teachers.id %}
+                            current_resp = '{{ teachers.id }}';
+                        {% endif %}
+                    {% endfor %}
+                    
+
+                    $('#objet').editable({
+                        mode: 'inline',
+                        inputclass: 'form-control-sm col-12',
+                        validate: function (value) {
+                            if ($.trim(value) == '') return 'Le champ est requis';
+                            objet = value;
+                        },
+                    });
+                    $('#teacher').editable({
+                        prepend: "selectionner un responsable",
+                        mode: 'inline',
+                        inputclass: 'form-control-sm',
+                        //value: current_resp == -1 ? undefined : current_resp,
+                        source: resps,
+
+                        validate: function (value) {
+                            teacher = value
+                            if ($.trim(value) == '') return 'Le champ est requis';
+                        },
+                    });
+
+
+                    const dt = new DataTransfer(); // Permet de manipuler les fichiers de l'input file
+                    $("#attachment").on('change', function(e){
+                        for(var i = 0; i < this.files.length; i++){
+                            let fileBloc = $('<div/>', {class: 'file-block'}),
+                                fileName = $('<span/>', {class: 'name', text: this.files.item(i).name});
+                            fileBloc.append('<span class="file-delete" style="margin-left: 10px"><span>+</span></span>')
+                                .append(fileName);
+                            $("#filesList > #files-names").append(fileBloc);
+                        };
+                        // Ajout des fichiers dans l'objet DataTransfer
+                        for (let file of this.files) {
+                            dt.items.add(file);
+                        }
+                        // Mise à jour des fichiers de l'input file après ajout
+                        this.files = dt.files;
+
+                        // EventListener pour le bouton de suppression créé
+                        $('span.file-delete').click(function(){
+                            let name = $(this).next('span.name').text();
+                            // Supprimer l'affichage du nom de fichier
+                            $(this).parent().remove();
+                            for(let i = 0; i < dt.items.length; i++){
+                                // Correspondance du fichier et du nom
+                                if(name === dt.items[i].getAsFile().name){
+                                    // Suppression du fichier dans l'objet DataTransfer
+                                    dt.items.remove(i);
+                                    continue;
+                                }
+                            }
+                            // Mise à jour des fichiers de l'input file après suppression
+                            document.getElementById('attachment').files = dt.files;
+                        });
+                    });
+
+                    $("#save").click(function() {
+                        event.preventDefault();
+
+                        comment = $("#summernote").summernote("code");
+
+                        if (
+                            objet == null || objet == "" ||
+                            comment.value == "" ||
+                            teacher == null
+                        ) {
+                            document.querySelector("#modal-error").click();
+                        }else{
+
+                            let form = new FormData();
+                            let current_uri = new URL(document.URL);
+                            let req_id = current_uri.searchParams.get("req");
+                        
+                            console.log(comment);
+                            form.append("responsable", teacher);
+                            form.append("comment", comment);
+                            form.append("object", objet);
+                            form.append("existant", existant);
+
+                            let url_request = current_uri.origin+"/operation_edit_requete/"+current_uri.pathname.split("/")[2]+"/";
+
+                            let request = new Request(
+                                                url_request, 
+                                                {
+                                                    method: 'POST',
+                                                    body: form,
+                                                    headers: {
+                                                        "X-CSRFToken": getCookie("csrftoken"),
+                                                    }
                                                 }
+                                            );
+                            
+                            fetch(request).then(response => {
+                                return response.json()
+                            }).then(data => {
+                                if (typeof dt.files !== "undefined") {
+                                    var files = dt.files;
+                                    const tab = [...files]
+
+                                    tab.forEach(async (elt) => {
+                                        let content = new FormData();
+                                        content.append("file[]", elt);
+
+                                        let request_image = new Request("/request_asset/?request="+data["id"], {method: 'POST',
+                                            body: content,
+                                            headers: {
+                                                "X-CSRFToken": getCookie("csrftoken"),
                                             }
-                                        );
-                        
-                        fetch(request).then(response => {
-                            return response.json()
-                        }).then(data => {
-                            if (typeof dt.files !== "undefined") {
-                                var files = dt.files;
-                                const tab = [...files]
-
-                                tab.forEach(async (elt) => {
-                                    let content = new FormData();
-                                    content.append("file[]", elt);
-
-                                    let request_image = new Request("/request_asset/?request="+data["id"], {method: 'POST',
-                                        body: content,
-                                        headers: {
-                                            "X-CSRFToken": getCookie("csrftoken"),
-                                        }
-                                    });
-                                    
-                                    await fetch(request_image).then(response => {
-                                        response.json()
+                                        });
+                                        
+                                        await fetch(request_image).then(response => {
+                                            response.json()
+                                        })
                                     })
-                                })
-                                
-                            }
+                                    
+                                }
 
-                            window.location.href = current_uri.origin+"/preview/"+data["id"]+"/"
-                        })
-                    }
-                });
+                                window.location.href = current_uri.origin+"/preview/"+data["id"]+"/"
+                            })
+                        }
+                    });
+                
+                })
+            {% endif %}
 
-                function getCookie(name) {
-                    let cookieValue = null;
 
-                    if(document.cookie && document.cookie != "") {
-                        const cookies = document.cookie.split(";");
-                        
-                        for (let i = 0; i < cookies.length; i++) {
-                            const cookie = cookies[i].trim();
+            function getCookie(name) {
+                let cookieValue = null;
 
-                            if (cookie.substring(0, name.length+1) === name+"=") {
-                                cookieValue = decodeURIComponent(cookie.substring(name.length+1));
-                                break;
-                            }
+                if(document.cookie && document.cookie != "") {
+                    const cookies = document.cookie.split(";");
+                    
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+
+                        if (cookie.substring(0, name.length+1) === name+"=") {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length+1));
+                            break;
                         }
                     }
-                    return cookieValue;
                 }
-            
-            })
+                return cookieValue;
+            }
 
         </script>
     </body>

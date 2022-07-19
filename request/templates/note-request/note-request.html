@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Utilisé un modele vide</title>
+        <title>Utilisé un modele de rectification de note</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="">
@@ -64,8 +64,8 @@
     <body>
         
 
-        {% include 'empty_template/modal_error.html' %}
-        {% include 'empty_template/modal_join_piece.html' %}
+        {% include 'note-request/modal_error.html' %}
+        {% include 'note-request/modal_error_data.html' %}
 
 
         <div class="container  py-4">
@@ -94,28 +94,68 @@
 
             <div class="d-flex col-6 pl-0 py-4">
                 <h5 class="mr-2">Objet:  </h5>
-
-                <a href="#" id="objet" data-type="text" data-placement="right" data-title="">Pourquoi ecrire la requete
-                    <span style="display: inline; color: red">*</span>
-                </a>
+                <span class="font-weight-bold" id="objet">Demande de revision de note</span>
             </div>
+
+
+            <section class="">
+                <div class="container py-3 ">
+                  <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-12 p-0">
+              
+                      <figure class="bg-light p-4"
+                        style="border-left: .35rem solid red; border-top: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                        <i class="fas fa-quote-left fa-2x mb-4" style="color: red;"></i>
+                        <blockquote class="blockquote pb-2">
+                            <p>
+                                Lors de la sortie de note de 
+                                <a href="#" data-type="select" data-placement="type d'examen" id="examen">type d'examen
+                                    <span style="display: inline; color: red">*</span>
+                                </a>
+                                {% comment %} type examen {% endcomment %}
+                                de l'unite d'enseignement <a href="#" id="ue" data-type="text" data-placement="right" data-title="">UE
+                                    <span style="display: inline; color: red">*</span>
+                                </a>
+                                {% comment %} unite d'enseignemen {% endcomment %}, 
+                                j’ai remarque une difference entre ma note et la note qui est sur les resultat definitif.
+                                En effet j'ai eu la note de 
+                                {% comment %} note sur la copie {% endcomment %} 
+                                 
+                                <a href="#" id="note2" data-type="text" data-placement="right" data-title="">ma note
+                                    <span style="display: inline; color: red">*</span>
+                                </a>
+                                /20
+                                hors sur les resultats on a mis la note de 
+                                {% comment %} mauvaise note {% endcomment %}
+                                <a href="#" id="note1" data-type="text" data-placement="right" data-title="">note donnee
+                                    <span style="display: inline; color: red">*</span>
+                                </a>/20
+
+                            </p>
+                        </blockquote>
+                        <figcaption class="blockquote-footer mb-0">
+                            <cite title="Source Title">important</cite>
+                        </figcaption>
+                      </figure>
+              
+                    </div>
+                  </div>
+                </div>
+            </section>
+              
+
 
             <div class="form-group">
                 <h5>
                     <label for="comment">Decrivez votre probleme<span style="display: inline; color: red">*</span></label>
                 </h5>
-
-                {% comment %} {% if template %}
-                    <textarea class="form-control" id="comment" rows="9" placeholder="En effet lors de la sn j'ai ete mis dehors a tor faute de ..." required>{{template.describe}}</textarea> 
-                {% else %}
-                    <textarea class="form-control" id="comment" rows="9" placeholder="En effet lors de la sn j'ai ete mis dehors a tor faute de ..." required></textarea> 
-                {% endif %} {% endcomment %}
             </div>
 
             <div id="summernote">
             </div>
 
-            <section class="container  py-4">
+            
+              <section class="container  py-4">
                 <form action="" method="post" id="upload_form">
                     <div id="id_image" class="row" style="background-color:; padding-top: 1px; padding-bottom: 1px; padding-left:5px; margin-bottom: 10px; display:flex; justify-content: space-between;">
                         <h4 style="color:#111">Pieces jointes</h4>
@@ -163,11 +203,14 @@
         <script src="{% static 'plugins/summernote/summernote-fr-FR.min.js' %}" type="text/javascript"></script> 
         <script>
 
-
-            var comment = null;
-            var objet = null;
+            var ue = null;
+            var note1 = null;
+            var note2 = null;
             var teacher = null;
-            var existant = 0;
+            var exam = null;
+            var comment = null;
+            var existant = 1;
+
 
 
             $('#summernote').summernote({
@@ -187,23 +230,47 @@
                 ]
             });
 
+
             $(document).ready(function() {
-                //comment = document.getElementById("comment");
 
+                //get teacher
                 var resps = [];
-
+                var current_resp = -1;
+            
                 {% for teachers in teacher %}
                     resps.push({value: {{ teachers.id }}, text: '{{ teachers }} -- {{ teachers.email }}'}),
-                {% endfor %}
                 
+                    {% if template.responsable.id == teachers.id %}
+                        current_resp = '{{ teachers.id }}';
+                    {% endif %}
+                {% endfor %}
 
-                $('#objet').editable({
+                $('#note1').editable({
                     mode: 'inline',
-                    inputclass: 'form-control-sm col-12',
+                    inputclass: 'form-control-sm',
+                    //value: {{template.note1}},
                     validate: function (value) {
                         if ($.trim(value) == '') return 'Le champ est requis';
-                        objet = value;
+                        note1 = parseInt(value);
                     },
+                });
+                $('#ue').editable({
+                    mode: 'inline',
+                    inputclass: 'form-control-sm',
+                    //value: {{template.note1}},
+                    validate: function (value) {
+                        if ($.trim(value) == '') return 'Le champ est requis';
+                        ue = value;
+                    },
+                });
+                $('#note2').editable({
+                    validate: function (value) {
+                        if ($.trim(value) == '') return 'Le champ est requis';
+                        note2 = parseInt(value);
+                    },
+                    //value:{{template.note2}},
+                    mode: 'inline',
+                    inputclass: 'form-control-sm',
                 });
                 $('#teacher').editable({
                     prepend: "selectionner un responsable",
@@ -214,8 +281,25 @@
 
                     validate: function (value) {
                         console.log(value)
-                        teacher = value
                         if ($.trim(value) == '') return 'Le champ est requis';
+                        teacher = value
+                    },
+                });
+                $('#examen').editable({
+
+                    prepend: "type d'examen",
+                    mode: 'inline',
+                    inputclass: 'form-control-sm',
+                    //value: null,
+                    source: [
+                        {value: "CC", text: 'CC'},
+                        {value: "TP", text: 'TP'},
+                        {value: "SN", text: 'SN'}
+                    ],
+
+                    validate: function (value) {
+                        if ($.trim(value) == '') return 'Le champ est requis';
+                        exam = value
                     },
                 });
 
@@ -254,36 +338,41 @@
                     });
                 });
 
+
                 $("#save").click(function() {
                     event.preventDefault();
 
                     comment = $("#summernote").summernote("code");
+                    console.log(ue, note1, note2, teacher, exam, objet.innerText)
 
                     if (
-                        objet == null || objet == "" ||
-                        comment.value == "" ||
-                        teacher == null
+                        ue == null || ue == "" ||
+                        note1 == null || note1 == "" ||
+                        note2 == null || note2 == "" ||
+                        teacher == null ||
+                        exam == null || exam == ""
                     ) {
-                        document.querySelector("#modal-error").click();
+                        $('#modal-error').modal('show'); 
+                    }else if (isNaN(note1) || isNaN(note2) || note1 > 20 || note2 > 20) {
+                        $('#modal-data-error').modal('show'); 
                     }else{
 
                         let form = new FormData();
                         let current_uri = new URL(document.URL);
                         let request_uri =   "{% url 'request:operation_requete' %}";
                         let req_id = current_uri.searchParams.get("req");
+                        comment = $("#summernote").summernote("code");
                     
-                        console.log(comment);
-                        form.append("responsable", teacher);
+                        form.append("examen", exam);
+                        form.append("object", objet.innerText);
+                        form.append("note1", note1);
+                        form.append("note2", note2);
                         form.append("comment", comment);
-                        form.append("object", objet);
+                        form.append("responsable", teacher);
                         form.append("existant", existant);
+                        form.append("ue", ue);
 
-                        // let url_request = "";
-                        // if(current_uri.pathname.search("/edit/") >= 0) {
-                        //     url_request = current_uri.origin+"/operation_edit_requete/"+current_uri.pathname.split("/")[2]+"/";
-                        // } else {
                         url_request = current_uri.origin+"/operation_requete/";
-                        // }
 
                         let request = new Request(
                                             url_request, 
@@ -325,6 +414,7 @@
                     }
                 });
 
+
                 function getCookie(name) {
                     let cookieValue = null;
 
@@ -342,8 +432,7 @@
                     }
                     return cookieValue;
                 }
-            
-            })
+            });
 
         </script>
     </body>
